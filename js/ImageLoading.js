@@ -21,7 +21,7 @@ function beginLoadingImage(imgVar, fileName) { ////
 function loadImages() {
   var imageList = [ ////
     {varName:playerpic, theFile:"characterConceptV3.png"}, ////
-    {varName:backGroundPic, theFile:"testingBG.png"}, ////
+    {varName:backGroundPic, theFile:"arena00.png"}, ////
 	{varName: playerWeapon, theFile:"gunTest.png"}
     ]; ////
   
