@@ -5,40 +5,8 @@ var playerSpeed = 3;
 
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
-var shotList = [];
-var enemyList = [];
 
-function shotClass(startX, startY, shotAng, shotSpeed) {
-	this.x = startX;
-	this.y = startY;
-	this.xv = Math.cos(shotAng) * shotSpeed;
-	this.yv = Math.sin(shotAng) * shotSpeed;
-	this.lifeLeft = 100;
-	this.removeMe = false;
-	this.move = function() {
-		this.x += this.xv;
-		this.y += this.yv;
-		if (this.x < 0 && this.xv < 0) {
-			this.xv *= -1;
-		}
-		if (this.x > canvas.width && this.xv > 0) {
-			this.xv *= -1;
-		}
-		if (this.y < 0 && this.yv < 0) {
-			this.yv *= -1;
-		}
-		if (this.y > canvas.height && this.yv > 0) {
-			this.yv *= -1;
-		}
-		this.lifeLeft--;
-		if (this.lifeLeft < 0) {
-			this.removeMe = true;
-		}
-	};
-	this.draw = function() {
-		colorRect(this.x - 2, this.y - 2, 5, 5, "yellow");
-	};
-}
+
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect(),
 		root = document.documentElement;
@@ -100,6 +68,9 @@ function moveEverything() {
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].move();
 	}
+	for (var e = 0; e < enemyList.length; e++) {
+		enemyList[e].move();
+	}
 	for (var r = shotList.length - 1; r >= 0; r--) {
 		if (shotList[r].removeMe) {
 			shotList.splice(r, 1);
@@ -130,19 +101,13 @@ function drawEverything() {
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].draw();
 	}
+	for (var e = 0; e < enemyList.length; e++) {
+		enemyList[e].draw();
+	
+}
 } // end of drawEverything
 
-function enemyClass() {
-	this.x = eX;
-	this.y = eY;
-	
-	var randomSpawn = Math.random (0, 1000);
-	enemySpawn = function(){
-	if(randomSpawn >= 700){
-	colorRect(canvas.width - 10, canvas.height / 2, 10, 10, "red");
-	}
-	}
-}
+
 
 	  
 	  
