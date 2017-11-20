@@ -3,6 +3,7 @@ var key_Move_Up = false;
 var key_Move_Left = false;
 var key_Move_Right = false;
 var key_Move_Down = false;
+var key_Space = false;
 //key cases
 const KEY_W = 87;
 const KEY_A = 65;

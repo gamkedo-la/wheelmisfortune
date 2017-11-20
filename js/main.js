@@ -26,10 +26,9 @@ window.onload = function() {
 function loadingDoneSoStartGame() {
 	// these next few lines set up our game logic and render to happen 30 times per second
 	var framesPerSecond = 30;
+	gameController.changeState(defaultState);
 	setInterval(function() {
-		moveEverything();
-		drawEverything();
-		handleInput();
+		gameController.update();
 	}, 1000 / framesPerSecond);
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
