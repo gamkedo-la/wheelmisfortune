@@ -11,6 +11,9 @@ const KEY_S = 83;
 const KEY_D = 68;
 const KEY_SPACE = 32;
 
+var mouse_Left = false;
+var mouse_Right = false;
+
 var mouseX = 0;
 var mouseY = 0;
 
@@ -54,6 +57,32 @@ function keyReleased(evt) {
 			break;
 		case KEY_SPACE:
 			key_Space = false;
+			break;
+	}
+}
+
+function mousePressed(evt) {
+	switch (evt.button) {
+		case 0:
+			mouse_Left = true;
+			break;
+		case 2:
+			mouse_Right = true;
+			break;
+
+		default:
+			console.log("Unused MouseCode: " + evt.button);
+			break;
+	}
+}
+
+function mouseReleased(evt) {
+	switch (evt.button) {
+		case 0:
+			mouse_Left = false;
+			break;
+		case 2:
+			mouse_Right = false;
 			break;
 	}
 }

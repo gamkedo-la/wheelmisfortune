@@ -35,8 +35,20 @@ function loadingDoneSoStartGame() {
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	
+	document.onmousedown = function() {
+		return false;
+	};
+	
+	document.addEventListener("mousedown", mousePressed);
+	document.addEventListener("mouseup", mouseReleased);
+	
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
+	
+	//Disable right click context menu
+	document.oncontextmenu = function() {
+		return false;
+	};
 } //end of loadingDoneSoStartGame
 
 function windowOnFocus() {
@@ -52,7 +64,7 @@ function windowOnBlur() {
 }
 
 function handleInput(){
-	if (key_Space){
+	if (key_Space || mouse_Left){
 		fireShot();
 	}
 }
