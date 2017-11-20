@@ -29,11 +29,18 @@ function loadingDoneSoStartGame() {
 	setInterval(function() {
 		moveEverything();
 		drawEverything();
+		handleInput();
 	}, 1000 / framesPerSecond);
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	canvas.addEventListener("mousemove", calculateMousePos);
 } //end of loadingDoneSoStartGame
+
+function handleInput(){
+	if (key_Space){
+		fireShot();
+	}
+};
 
 function playerMove() {
 	if (key_Move_Left) {

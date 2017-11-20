@@ -31,3 +31,14 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
 		colorRect(this.x - 2, this.y - 2, 5, 5, "yellow");
 	};
 }
+
+function fireShot(){
+	shotList.push(
+		new shotClass(
+			playerX,
+			playerY,
+			Math.atan2(mouseY - playerY, mouseX - playerX),
+			5.0
+		)
+	);
+}
