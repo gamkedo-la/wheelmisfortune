@@ -25,34 +25,36 @@ window.onload = function() {
 };
 
 function loadingDoneSoStartGame() {
-	// these next few lines set up our game logic and render to happen 30 times per second
-	var framesPerSecond = 30;
-	animationFrameNumber = requestAnimationFrame(mainLoop);
+	// these next few lines set up our game logic and render to happen many times per second
+	gameController.changeState(defaultState);
+	
+	animationFrameNumber = requestAnimationFrame(gameController.update);
+	
+	canvas.addEventListener("mousemove", calculateMousePos);
+	
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
-	canvas.addEventListener("mousemove", calculateMousePos);
+	
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
 } //end of loadingDoneSoStartGame
 
-function mainLoop() {
-	moveEverything();
-	drawEverything();
-	if(gameRunning){
-		animationFrameNumber = requestAnimationFrame(mainLoop);
-	}
-}
-
 function windowOnFocus() {
 	if(!gameRunning){
 		gameRunning = true;
-		animationFrameNumber = requestAnimationFrame(mainLoop);
+		animationFrameNumber = requestAnimationFrame(gameController.update);
 	}
 }
 
 function windowOnBlur() {
 	gameRunning = false;
 	cancelAnimationFrame(animationFrameNumber);
+}
+
+function handleInput(){
+	if (key_Space){
+		fireShot();
+	}
 }
 
 function playerMove() {

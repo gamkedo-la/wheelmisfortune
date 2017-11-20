@@ -3,6 +3,7 @@ var key_Move_Up = false;
 var key_Move_Left = false;
 var key_Move_Right = false;
 var key_Move_Down = false;
+var key_Space = false;
 //key cases
 const KEY_W = 87;
 const KEY_A = 65;
@@ -28,14 +29,7 @@ function keyPressed(evt) {
 			key_Move_Right = true;
 			break;
 		case KEY_SPACE:
-			shotList.push(
-				new shotClass(
-					playerX,
-					playerY,
-					Math.atan2(mouseY - playerY, mouseX - playerX),
-					5.0
-				)
-			);
+			key_Space = true;
 			break;
 
 		default:
@@ -57,6 +51,9 @@ function keyReleased(evt) {
 			break;
 		case KEY_D:
 			key_Move_Right = false;
+			break;
+		case KEY_SPACE:
+			key_Space = false;
 			break;
 	}
 }
