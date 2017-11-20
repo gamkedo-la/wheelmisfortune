@@ -5,7 +5,8 @@ var playerSpeed = 3;
 
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
-
+var gameRunning = true;
+var animationFrameNumber;
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect(),
@@ -26,14 +27,33 @@ window.onload = function() {
 function loadingDoneSoStartGame() {
 	// these next few lines set up our game logic and render to happen 30 times per second
 	var framesPerSecond = 30;
-	setInterval(function() {
-		moveEverything();
-		drawEverything();
-	}, 1000 / framesPerSecond);
+	animationFrameNumber = requestAnimationFrame(mainLoop);
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	canvas.addEventListener("mousemove", calculateMousePos);
+	window.addEventListener("focus", windowOnFocus);
+	window.addEventListener("blur", windowOnBlur);
 } //end of loadingDoneSoStartGame
+
+function mainLoop() {
+	moveEverything();
+	drawEverything();
+	if(gameRunning){
+		animationFrameNumber = requestAnimationFrame(mainLoop);
+	}
+}
+
+function windowOnFocus() {
+	if(!gameRunning){
+		gameRunning = true;
+		animationFrameNumber = requestAnimationFrame(mainLoop);
+	}
+}
+
+function windowOnBlur() {
+	gameRunning = false;
+	cancelAnimationFrame(animationFrameNumber);
+}
 
 function playerMove() {
 	if (key_Move_Left) {
