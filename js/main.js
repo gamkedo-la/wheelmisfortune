@@ -8,6 +8,8 @@ var canvas, canvasContext;
 var gameRunning = true;
 var animationFrameNumber;
 
+
+
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect(),
 		root = document.documentElement;
@@ -98,6 +100,11 @@ function playerMove() {
 } //end of playerMove
 
 function moveEverything() {
+	if(wheelShowing){
+		wheelRadians += wheelSpinSpeed;
+		wheelSpinSpeed *= wheelFriction;
+		return; // skipping gamemovement while wheelShowing
+	}
 	playerMove();
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].move();
@@ -110,6 +117,7 @@ function moveEverything() {
 			shotList.splice(r, 1);
 		}
 	}
+	
 } //end of moveEverything
 
 function drawEverything() {
@@ -137,9 +145,13 @@ function drawEverything() {
 	}
 	for (var e = 0; e < enemyList.length; e++) {
 		enemyList[e].draw();
-	
-}
+	}
+	if(wheelShowing){
+		drawWheel();
+	}
 } // end of drawEverything
+
+
 
 
 

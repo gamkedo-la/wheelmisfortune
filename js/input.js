@@ -10,6 +10,7 @@ const KEY_A = 65;
 const KEY_S = 83;
 const KEY_D = 68;
 const KEY_SPACE = 32;
+const KEY_M = 77;
 
 var mouse_Left = false;
 var mouse_Right = false;
@@ -33,6 +34,12 @@ function keyPressed(evt) {
 			break;
 		case KEY_SPACE:
 			key_Space = true;
+			if(wheelShowing){
+				kickWheel();
+			}
+			break;
+		case KEY_M:
+			wheelShowing = !wheelShowing;
 			break;
 
 		default:
