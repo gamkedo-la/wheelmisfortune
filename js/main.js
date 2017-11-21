@@ -101,8 +101,7 @@ function playerMove() {
 
 function moveEverything() {
 	if(wheelShowing){
-		wheelRadians += wheelSpinSpeed;
-		wheelSpinSpeed *= wheelFriction;
+		wheelMove();
 		return; // skipping gamemovement while wheelShowing
 	}
 	playerMove();
