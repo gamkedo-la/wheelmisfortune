@@ -8,13 +8,13 @@ const misfortunes = {
     'meleeOnly': {
         'displayName': 'Melee Only',
         'isActive': false,
-        'description': '',
+        'description': 'No guns, melee attacks only!',
         'updateFunction': null
     },
     'friendlyFire': {
         'displayName': 'Friendly Fire',
         'isActive': false,
-        'description': '',
+        'description': 'Shots hurt other players -- watch out!',
         'updateFunction': null
     },
     'eternalBullet': {
