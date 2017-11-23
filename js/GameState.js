@@ -17,7 +17,7 @@ function GameController() {
         }
     };
     var state_; //default state, changes during runtime
-};
+}
 gameController = new GameController();
 
 //This is how it works!
@@ -51,7 +51,7 @@ var misfortune = {
     "meleeOnly": false,
     "friendlyFire": false,
     "eternalBullet": false,
-} //etc
+}; //etc
 
 //A method of the main menu?
 function spinTheWheel(){
