@@ -1,3 +1,5 @@
+const TWO_PI = Math.PI * 2;
+
 // variables to keep track of player position
 var playerX = 400,
 	playerY = 300;
@@ -108,9 +110,7 @@ function moveEverything() {
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].move();
 	}
-	for (var e = 0; e < enemyList.length; e++) {
-		enemyList[e].move();
-	}
+	moveEnemies();
 	for (var r = shotList.length - 1; r >= 0; r--) {
 		if (shotList[r].removeMe) {
 			shotList.splice(r, 1);
