@@ -145,6 +145,11 @@ function drawEverything() {
 	for (var e = 0; e < enemyList.length; e++) {
 		enemyList[e].draw();
 	}
+
+	if(activeMisfortunes.length > 0) {
+		updateActiveMisfortunes();
+	}
+
 	if(wheelShowing){
 		drawWheel();
 	}
