@@ -1,5 +1,3 @@
-const TWO_PI = Math.PI * 2;
-
 // variables to keep track of player position
 var playerX = 400,
 	playerY = 300;
