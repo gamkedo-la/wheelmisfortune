@@ -16,7 +16,7 @@ function Enemy(startX, startY) {
 	this.heading = 0.523599;
 	this.velocity = 2;
 	this.facing = 0;
-	this.spinSpeed = 3;
+	this.spinSpeed = 0.025;
 	
 	this.life = 100;
 	this.remove = false;
@@ -61,7 +61,26 @@ enemyList.push(new Enemy(100, 100));
 TestEnemy.prototype = new Enemy();
 TestEnemy.prototype.constructor = TestEnemy;
 
-function TestEnemy(){
+function TestEnemy(startX, startY){
+	Enemy.call(this, startX, startY);
+	this.parentMove = this.move;
+	this.targetDirection;
 	
+	this.move = function() {
+		var targetX = playerX - this.x;
+		var targetY = playerY - this.y;
+		this.targetDirection = Math.atan2(targetY, targetX);
+		
+		if(((this.heading - this.targetDirection) + Math.PI) % TWO_PI - Math.PI > 0) {
+			this.heading -= this.spinSpeed;
+		}
+		else {
+			this.heading += this.spinSpeed;
+		}
+		
+		this.parentMove();
+	}
 }
 //TestEnemy end
+
+enemyList.push(new TestEnemy(200, 200));
