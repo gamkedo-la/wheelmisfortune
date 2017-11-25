@@ -25,6 +25,7 @@ function InGameState(){
     this.update = function() {
         moveEverything();
         drawEverything();
+        collideEverything();
         handleInput();
         
         if(gameRunning) {

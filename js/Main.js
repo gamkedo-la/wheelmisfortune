@@ -153,7 +153,33 @@ function drawEverything() {
 	}
 } // end of drawEverything
 
+function collideEverything() {
 
+	for (var i = 0; i < shotList.length; i++) {
+		var currentShot = shotList[i]
+
+		for (var j = 0; j < enemyList.length; j++) {
+			var currentEnemy = enemyList[j];
+
+			//Hacky collision code, replace at some point
+			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10)
+			{
+
+				currentShot.removeMe = true;
+				currentEnemy.life -= 20;
+				if (currentEnemy.life <= 0)
+				{
+					currentEnemy.remove = true;
+					currentEnemy.life = 9999999; //So it won't keep adding more enemies before it's removed.
+					enemyList.push(new TestEnemy(200, 200));
+				}
+			}
+
+		}
+		
+	}
+	
+} //end of collideEverything
 
 
 
