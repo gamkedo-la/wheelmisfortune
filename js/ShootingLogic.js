@@ -1,6 +1,7 @@
 var shotList = [];
+const SHOT_SPEED = 5; 
 
-function shotClass(startX, startY, shotAng, shotSpeed) {
+function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
     this.xv = Math.cos(shotAng) * shotSpeed;
@@ -8,9 +9,13 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
     this.lifeLeft = 100;
 		this.damage = 10;
     this.removeMe = false;
+    this.bulletWidth = 5;
+    this.bulletHeight = 5;
+
     this.move = function() {
         this.x += this.xv;
         this.y += this.yv;
+
         if (this.x < 0 && this.xv < 0) {
             this.xv *= -1;
         }
@@ -30,7 +35,7 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
         }
     };
     this.draw = function() {
-        colorRect(this.x - 2, this.y - 2, 5, 5, "yellow");
+        colorRect(this.x - 2  , this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
     };
 }
 
@@ -39,8 +44,7 @@ function fireShot() {
         new shotClass(
             player.x,
             player.y,
-            Math.atan2(mouseY - player.y, mouseX - player.x),
-            5.0
+            Math.atan2(mouseY - player.y, mouseX - player.x)
         )
     );
 }

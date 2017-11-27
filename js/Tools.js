@@ -19,7 +19,7 @@ function FrameCounter() {
 		this.count++;
 		if(this.count > 60) {
 			this.count = 0;
-			console.log(this.fps);
+			console.log("FPS:" + this.fps);
 		}
 	};
 }

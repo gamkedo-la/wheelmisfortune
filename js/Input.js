@@ -24,7 +24,7 @@ var mouseX = 0;
 var mouseY = 0;
 
 function keyPressed(evt) {
-	console.log(evt.keyCode);
+	// console.log(evt.keyCode);
 	switch (evt.keyCode) {
 
 		case KEY_W:
@@ -58,7 +58,7 @@ function keyPressed(evt) {
 			break;
 
 		default:
-			console.log("Unused KeyCode: " + evt.keyCode);
+			// console.log("Unused KeyCode: " + evt.keyCode);
 			break;
 	}
 }
@@ -97,7 +97,7 @@ function mousePressed(evt) {
 			break;
 
 		default:
-			console.log("Unused MouseCode: " + evt.button);
+			// console.log("Unused MouseCode: " + evt.button);
 			break;
 	}
 }
