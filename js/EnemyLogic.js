@@ -16,7 +16,6 @@ function Enemy(startX, startY) {
 	this.heading = 0.523599;
 	this.velocity = 2;
 	this.facing = 0;
-	this.spinSpeed = 0.025;
 	
 	this.life = 100;
 	this.remove = false;
@@ -53,7 +52,7 @@ function Enemy(startX, startY) {
 }
 
 //Test code, remove this later
-enemyList.push(new Enemy(100, 100));
+//enemyList.push(new Enemy(100, 100));
 
 //Enemy type code goes below here
 
@@ -65,10 +64,11 @@ function TestEnemy(startX, startY){
 	Enemy.call(this, startX, startY);
 	this.parentMove = this.move;
 	this.targetDirection;
+	this.spinSpeed = 0.025;
 	
 	this.move = function() {
-		var targetX = playerX - this.x;
-		var targetY = playerY - this.y;
+		var targetX = player.x - this.x;
+		var targetY = player.y - this.y;
 		this.targetDirection = Math.atan2(targetY, targetX);
 		
 		if(((this.heading - this.targetDirection) + Math.PI) % TWO_PI - Math.PI > 0) {
@@ -82,5 +82,6 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-
-enemyList.push(new TestEnemy(200, 200));
+for(var i = 0; i < 8000; i++) {
+	enemyList.push(new Enemy(i%1000, 200*(i/1000)));
+}
