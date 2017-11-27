@@ -12,6 +12,11 @@ const KEY_D = 68;
 const KEY_SPACE = 32;
 const KEY_M = 77;
 
+const KEY_LEFT = 37;
+const KEY_UP = 38;
+const KEY_RIGHT = 39;
+const KEY_DOWN = 40;
+
 var mouse_Left = false;
 var mouse_Right = false;
 
@@ -19,19 +24,29 @@ var mouseX = 0;
 var mouseY = 0;
 
 function keyPressed(evt) {
+	console.log(evt.keyCode);
 	switch (evt.keyCode) {
+
 		case KEY_W:
+		case KEY_UP:
 			key_Move_Up = true;
 			break;
+
 		case KEY_A:
+		case KEY_LEFT:
 			key_Move_Left = true;
 			break;
+
 		case KEY_S:
+		case KEY_DOWN:
 			key_Move_Down = true;
 			break;
+
 		case KEY_D:
+		case KEY_RIGHT:
 			key_Move_Right = true;
 			break;
+
 		case KEY_SPACE:
 			key_Space = true;
 			if(wheelShowing){
@@ -51,15 +66,19 @@ function keyPressed(evt) {
 function keyReleased(evt) {
 	switch (evt.keyCode) {
 		case KEY_W:
+		case KEY_UP:
 			key_Move_Up = false;
 			break;
 		case KEY_A:
+		case KEY_LEFT:
 			key_Move_Left = false;
 			break;
 		case KEY_S:
+		case KEY_DOWN:
 			key_Move_Down = false;
 			break;
 		case KEY_D:
+		case KEY_RIGHT:
 			key_Move_Right = false;
 			break;
 		case KEY_SPACE:
