@@ -132,9 +132,6 @@ function collideEverything() {
 					enemyList.push(new TestEnemy(200, 200));
 				}
 			}
-
 		}
-		
 	}
-	
 } //end of collideEverything
