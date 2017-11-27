@@ -7,6 +7,7 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
     this.yv = Math.sin(shotAng) * shotSpeed;
     this.lifeLeft = 100;
     this.removeMe = false;
+
     this.move = function() {
         this.x += this.xv;
         this.y += this.yv;
@@ -27,9 +28,28 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
         if (this.lifeLeft < 0) {
             this.removeMe = true;
         }
+
+        this.checkForCollisionWithPlayer(this);
+        this.checkForCollisionWithEnemies(this);
     };
+
     this.draw = function() {
         colorRect(this.x - 2, this.y - 2, 5, 5, "yellow");
+    };
+
+    this.checkForCollisionWithPlayer = function(shot) {
+        var isCollidingWithPlayer = this.x > (playerX - playerWidth) &&
+            this.y > playerY &&
+            this.x < (playerX + playerWidth) &&
+            this.y < (playerY + playerHeight);
+
+        if(isCollidingWithPlayer) {
+            this.removeMe = true;
+        }
+    };
+
+    this.checkForCollisionWithEnemies = function(shot) {
+
     };
 }
 

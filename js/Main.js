@@ -137,6 +137,12 @@ function drawEverything() {
 		gunRotation
 	);
 
+	canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
+	playerWidth = 15;
+	playerHeight = 20;
+
+	canvasContext.fillRect(playerX - 15, playerY - 20, 30, 46);
+
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].draw();
 	}
