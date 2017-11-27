@@ -128,8 +128,7 @@ function collideEverything() {
 			//Hacky collision code, replace at some point
 			distX = currentShot.x - currentEnemy.x;
 			distY = currentShot.y - currentEnemy.y;
-			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10) {
-//			if ((distX*distX + distY*distY) <= 100) {
+			if ((distX*distX + distY*distY) <= 100) {
 				currentShot.removeMe = true;
 				currentEnemy.life -= currentShot.damage;
 				if (currentEnemy.life <= 0) {

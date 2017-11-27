@@ -4,6 +4,7 @@ function moveEnemies() {
 	for (var i = 0; i < enemyList.length; i++) {
 		enemyList[i].move();
 		if(enemyList[i].remove) {
+			enemyList[i] = null;
 			enemyList.splice(i, 1);
 		}
 	}
@@ -52,7 +53,7 @@ function Enemy(startX, startY) {
 }
 
 //Test code, remove this later
-//enemyList.push(new Enemy(100, 100));
+enemyList.push(new Enemy(100, 100));
 
 //Enemy type code goes below here
 
@@ -82,6 +83,4 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-for(var i = 0; i < 8000; i++) {
-	enemyList.push(new Enemy(i%1000, 200*(i/1000)));
-}
+enemyList.push(new TestEnemy(200, 200));
