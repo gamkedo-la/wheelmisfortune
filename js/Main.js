@@ -117,6 +117,8 @@ function drawEverything() {
 } // end of drawEverything
 
 function collideEverything() {
+	var distX;
+	var distY;
 	for (var i = 0; i < shotList.length; i++) {
 		var currentShot = shotList[i]
 
@@ -124,7 +126,10 @@ function collideEverything() {
 			var currentEnemy = enemyList[j];
 
 			//Hacky collision code, replace at some point
+			distX = currentShot.x - currentEnemy.x;
+			distY = currentShot.y - currentEnemy.y;
 			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10) {
+//			if ((distX*distX + distY*distY) <= 100) {
 				currentShot.removeMe = true;
 				currentEnemy.life -= currentShot.damage;
 				if (currentEnemy.life <= 0) {
@@ -139,9 +144,3 @@ function collideEverything() {
 	}
 	
 } //end of collideEverything
-
-
-
-	  
-	  
-    
