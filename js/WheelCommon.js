@@ -22,7 +22,6 @@ function drawWheel(){
 	colorRect(canvas.width/2, canvas.height/2 - wheelMisfortune.height/2 - 8, 4, 15, 'yellow');
 	var wheelNow = Math.floor(wheelWords.length * (wheelRadians/(2.0 * Math.PI)));
 	canvasContext.fillStyle = "black";
-
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText(wheelWords[wheelNow], canvas.width/2, canvas.height/2 + wheelMisfortune.height/2 +15);
 }

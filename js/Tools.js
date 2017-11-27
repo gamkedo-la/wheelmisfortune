@@ -20,7 +20,7 @@ function FrameCounter() {
 		
 		this.count++;
 		if(this.count >= 60) {
-			console.log(this.averageFps/this.count);
+			console.log("FPS:" + this.averageFps/this.count);
 			this.count = 0;
 			this.averageFps = 0;
 		}

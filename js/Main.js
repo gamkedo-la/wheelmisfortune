@@ -17,7 +17,8 @@ function calculateMousePos(evt) {
 window.onload = function() {
 	canvas = document.getElementById("gameCanvas");
 	canvasContext = canvas.getContext("2d");
-
+	canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 	loadImages();
 };
 
@@ -86,15 +87,9 @@ function moveEverything() {
 
 function drawEverything() {
 	// clear the game view by filling it with black
-	//canvasContext.fillStyle = "black";
-	//canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-	drawBitmapCenteredAtLocationWithRotation(
-		backGroundPic,
-		canvas.width / 2,
-		canvas.height / 2,
-		0
-	);
-	
+	canvasContext.fillStyle = "black";
+	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);	
 	player.draw();
 
 
@@ -137,9 +132,6 @@ function collideEverything() {
 					enemyList.push(new TestEnemy(200, 200));
 				}
 			}
-
 		}
-		
 	}
-	
 } //end of collideEverything
