@@ -1,14 +1,9 @@
-// variables to keep track of player position
-var playerX = 400,
-	playerY = 300;
-var playerSpeed = 3;
-
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
 var gameRunning = true;
 var animationFrameNumber;
 
-
+var player = new Player(400, 400);
 
 function calculateMousePos(evt) {
 	var rect = canvas.getBoundingClientRect(),
@@ -71,40 +66,12 @@ function handleInput(){
 	}
 }
 
-function playerMove() {
-	if (key_Move_Left) {
-		playerX -= playerSpeed;
-	}
-	if (key_Move_Right) {
-		playerX += playerSpeed;
-	}
-	if (key_Move_Up) {
-		playerY -= playerSpeed;
-	}
-	if (key_Move_Down) {
-		playerY += playerSpeed;
-	}
-
-	if (playerX < 0) {
-		playerX = 0;
-	}
-	if (playerX > canvas.width) {
-		playerX = canvas.width;
-	}
-	if (playerY < 0) {
-		playerY = 0;
-	}
-	if (playerY > canvas.height) {
-		playerY = canvas.height;
-	}
-} //end of playerMove
-
 function moveEverything() {
 	if(wheelShowing){
 		wheelMove();
 		return; // skipping gamemovement while wheelShowing
 	}
-	playerMove();
+	player.move();
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].move();
 	}
@@ -127,15 +94,9 @@ function drawEverything() {
 		canvas.height / 2,
 		0
 	);
+	
+	player.draw();
 
-	drawBitmapFlipped(playerpic, playerX, playerY, mouseX < playerX);
-	var gunRotation = Math.atan2(mouseY - playerY, mouseX - playerX);
-	drawBitmapCenteredAtLocationWithRotation(
-		playerWeapon,
-		playerX,
-		playerY,
-		gunRotation
-	);
 
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].draw();
@@ -151,10 +112,11 @@ function drawEverything() {
 	if(wheelShowing){
 		drawWheel();
 	}
+	
+	frameCounter.getFps();
 } // end of drawEverything
 
 function collideEverything() {
-
 	for (var i = 0; i < shotList.length; i++) {
 		var currentShot = shotList[i]
 
@@ -162,13 +124,10 @@ function collideEverything() {
 			var currentEnemy = enemyList[j];
 
 			//Hacky collision code, replace at some point
-			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10)
-			{
-
+			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10) {
 				currentShot.removeMe = true;
-				currentEnemy.life -= 20;
-				if (currentEnemy.life <= 0)
-				{
+				currentEnemy.life -= currentShot.damage;
+				if (currentEnemy.life <= 0) {
 					currentEnemy.remove = true;
 					currentEnemy.life = 9999999; //So it won't keep adding more enemies before it's removed.
 					enemyList.push(new TestEnemy(200, 200));

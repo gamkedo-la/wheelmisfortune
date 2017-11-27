@@ -67,8 +67,8 @@ function TestEnemy(startX, startY){
 	this.targetDirection;
 	
 	this.move = function() {
-		var targetX = playerX - this.x;
-		var targetY = playerY - this.y;
+		var targetX = player.x - this.x;
+		var targetY = player.y - this.y;
 		this.targetDirection = Math.atan2(targetY, targetX);
 		
 		if(((this.heading - this.targetDirection) + Math.PI) % TWO_PI - Math.PI > 0) {
@@ -82,5 +82,4 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-
 enemyList.push(new TestEnemy(200, 200));

@@ -6,6 +6,7 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
     this.xv = Math.cos(shotAng) * shotSpeed;
     this.yv = Math.sin(shotAng) * shotSpeed;
     this.lifeLeft = 100;
+		this.damage = 10;
     this.removeMe = false;
     this.move = function() {
         this.x += this.xv;
@@ -36,9 +37,9 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
 function fireShot() {
     shotList.push(
         new shotClass(
-            playerX,
-            playerY,
-            Math.atan2(mouseY - playerY, mouseX - playerX),
+            player.x,
+            player.y,
+            Math.atan2(mouseY - player.y, mouseX - player.x),
             5.0
         )
     );
