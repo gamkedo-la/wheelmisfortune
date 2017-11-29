@@ -1,4 +1,5 @@
 const TWO_PI = Math.PI * 2;
+var showFPS = false;
 
 function FrameCounter() {
 	this.previousTime = 0;
@@ -8,6 +9,9 @@ function FrameCounter() {
 	this.count = 0;
 	
 	this.getFps = function() {
+		if(showFPS == false){
+			return;
+		}
 		if(this.previousTime === 0) {
 			this.previousTime = performance.now();
 			return;

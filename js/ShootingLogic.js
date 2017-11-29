@@ -1,5 +1,5 @@
 var shotList = [];
-const SHOT_SPEED = 5; 
+const SHOT_SPEED = 2; 
 
 function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.x = startX;
@@ -9,8 +9,8 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.lifeLeft = 100;
 		this.damage = 10;
     this.removeMe = false;
-    this.bulletWidth = 5;
-    this.bulletHeight = 5;
+    this.bulletWidth = 2;
+    this.bulletHeight = 2;
 
     this.move = function() {
         this.x += this.xv;
