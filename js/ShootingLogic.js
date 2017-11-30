@@ -35,7 +35,9 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
         }
     };
     this.draw = function() {
-        colorRect(this.x - 2  , this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
+        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y,0);
+
+        //colorRect(this.x - 2  , this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
     };
 }
 
