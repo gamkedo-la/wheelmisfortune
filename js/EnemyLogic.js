@@ -13,9 +13,8 @@ function moveEnemies() {
 function Enemy(startX, startY) {
 	this.x = startX;
 	this.y = startY;
-	this.moveSpeed = 2;
 	this.heading = 0.523599;
-	this.velocity = 2;
+	this.velocity = .7;
 	this.facing = 0;
 	
 	this.life = 100;
@@ -48,7 +47,7 @@ function Enemy(startX, startY) {
 		this.facing += this.spinSpeed;
 	};
 	this.draw = function() {
-		colorRect(this.x, this.y, 10, 10, "red");
+		colorRect(this.x, this.y, 3, 3, "red");
 	};
 }
 

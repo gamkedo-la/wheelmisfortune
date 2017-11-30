@@ -1,7 +1,7 @@
 function Player(positionX, positionY) {
 	this.x = positionX;
 	this.y = positionY;
-	this.speed = 3;
+	this.speed = 1;
 	this.gunRotation = 0;
 	this.playerHeight = 48
 	this.playerWidth = 30
