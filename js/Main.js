@@ -12,12 +12,11 @@ const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
 
 
 function calculateMousePos(evt) {
-	var rect = scaledCanvas.getBoundingClientRect(),
-		root = document.documentElement;
+	var rect = scaledCanvas.getBoundingClientRect();
 
 	// account for the margins, canvas position on page, scroll amount, etc.
-	mouseX = evt.clientX - rect.left - root.scrollLeft;
-	mouseY = evt.clientY - rect.top - root.scrollTop;
+	mouseX = evt.clientX - rect.left;
+	mouseY = evt.clientY - rect.top;
 	var canvasStretch = scaledCanvas.width/ canvas.width;
 	mouseX /= canvasStretch;
 	mouseY /= canvasStretch;
