@@ -11,6 +11,7 @@ const KEY_S = 83;
 const KEY_D = 68;
 const KEY_SPACE = 32;
 const KEY_M = 77;
+const KEY_BACKSLASH = 220;
 
 const KEY_LEFT = 37;
 const KEY_UP = 38;
@@ -55,6 +56,10 @@ function keyPressed(evt) {
 			break;
 		case KEY_M:
 			wheelShowing = !wheelShowing;
+			break;
+			
+		case KEY_BACKSLASH:
+			frameCounter.active = !frameCounter.active;
 			break;
 
 		default:

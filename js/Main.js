@@ -108,7 +108,9 @@ function drawEverything() {
 		drawWheel();
 	}
 	
-	frameCounter.getFps();
+	if(debug) {
+		frameCounter.getFps();
+	}
 } // end of drawEverything
 
 function collideEverything() {
