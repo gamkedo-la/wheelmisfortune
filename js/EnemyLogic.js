@@ -47,7 +47,8 @@ function Enemy(startX, startY) {
 		this.facing += this.spinSpeed;
 	};
 	this.draw = function() {
-		colorRect(this.x, this.y, 3, 3, "red");
+		drawBitmapCenteredAtLocationWithRotation(badguyPic,
+	      this.x, this.y,0);
 	};
 }
 

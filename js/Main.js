@@ -16,8 +16,8 @@ function calculateMousePos(evt) {
 		root = document.documentElement;
 
 	// account for the margins, canvas position on page, scroll amount, etc.
-	mouseX = evt.clientX - rect.left - root.scrollLeft;
-	mouseY = evt.clientY - rect.top - root.scrollTop;
+	mouseX = evt.clientX - rect.left;
+	mouseY = evt.clientY - rect.top;
 	var canvasStretch = scaledCanvas.width/ canvas.width;
 	mouseX /= canvasStretch;
 	mouseY /= canvasStretch;
@@ -74,8 +74,11 @@ function loadingDoneSoStartGame() {
 	
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
+	
+	/* // commenting out until/unless we can unblurry Chrome
 	window.addEventListener("resize", onResize);
-    onResize();
+    onResize();*/
+
 	//Disable right click context menu
 	document.oncontextmenu = function() {
 		return false;
