@@ -3,8 +3,9 @@ function Player(positionX, positionY) {
 	this.y = positionY;
 	this.speed = 1;
 	this.gunRotation = 0;
-	this.playerHeight = 48
-	this.playerWidth = 30
+	this.playerHeight = 48;
+	this.playerWidth = 30;
+	
 	this.move = function playerMove() {
 		if (key_Move_Left) {
 			this.x -= this.speed;

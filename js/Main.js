@@ -5,7 +5,7 @@ var scaledCanvas, scaledContext;
 var gameRunning = true;
 var animationFrameNumber;
 
-var player = new Player(400, 400);
+var player;
 
 const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
 
@@ -83,6 +83,8 @@ function loadingDoneSoStartGame() {
 	document.oncontextmenu = function() {
 		return false;
 	};
+	
+	player = new Player(400, 400);
 } //end of loadingDoneSoStartGame
 
 function windowOnFocus() {
@@ -111,21 +113,13 @@ function onResize() { // changing window dimensions
     }
 }
 
-function handleInput(){
-	if (key_Space || mouse_Left){
-		fireShot();
-	}
-}
-
 function moveEverything() {
 	if(wheelShowing){
 		wheelMove();
 		return; // skipping gamemovement while wheelShowing
 	}
+	shotController.moveShots();
 	player.move();
-	for (var i = 0; i < shotList.length; i++) {
-		shotList[i].move();
-	}
 	moveEnemies();
 	for (var r = shotList.length - 1; r >= 0; r--) {
 		if (shotList[r].removeMe) {
@@ -178,13 +172,13 @@ function collideEverything() {
 			//Hacky collision code, replace at some point
 			distX = currentShot.x - currentEnemy.x;
 			distY = currentShot.y - currentEnemy.y;
-			if ((distX*distX + distY*distY) <= 100) {
+			if ((distX*distX + distY*distY) <= 30) {
 				currentShot.removeMe = true;
 				currentEnemy.life -= currentShot.damage;
 				if (currentEnemy.life <= 0) {
 					currentEnemy.remove = true;
 					currentEnemy.life = 9999999; //So it won't keep adding more enemies before it's removed.
-					enemyList.push(new TestEnemy(200, 200));
+					enemyList.push(new TestEnemy(80, 80));
 				}
 			}
 		}

@@ -53,7 +53,7 @@ function Enemy(startX, startY) {
 }
 
 //Test code, remove this later
-enemyList.push(new Enemy(100, 100));
+enemyList.push(new Enemy(50, 50));
 
 //Enemy type code goes below here
 
@@ -83,4 +83,4 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-enemyList.push(new TestEnemy(200, 200));
+enemyList.push(new TestEnemy(100, 100));

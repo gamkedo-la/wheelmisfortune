@@ -117,3 +117,9 @@ function mouseReleased(evt) {
 			break;
 	}
 }
+
+function handleInput(){
+	if (key_Space || mouse_Left){
+		shotController.fireShot();
+	}
+}

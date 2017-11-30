@@ -7,7 +7,7 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.xv = Math.cos(shotAng) * shotSpeed;
     this.yv = Math.sin(shotAng) * shotSpeed;
     this.lifeLeft = 100;
-		this.damage = 10;
+    this.damage = 10;
     this.removeMe = false;
     this.bulletWidth = 2;
     this.bulletHeight = 2;
@@ -41,12 +41,30 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     };
 }
 
-function fireShot() {
-    shotList.push(
-        new shotClass(
-            player.x,
-            player.y,
-            Math.atan2(mouseY - player.y, mouseX - player.x)
-        )
-    );
-}
+var shotController = (function() {
+    var fireRate = 4;
+    var nextFire = 0;
+    
+    var moveShots = function() {
+        if(nextFire > 0) {
+            nextFire--;
+        }
+        
+        for (var i = 0; i < shotList.length; i++) {
+            shotList[i].move();
+        }
+    };
+    
+    var fireShot = function() {
+        if(nextFire === 0) {
+            nextFire = fireRate;
+            var direction = Math.atan2(mouseY - player.y, mouseX - player.x);
+            shotList.push(new shotClass(player.x, player.y, direction));
+        }
+    };
+    
+    return {
+    	moveShots: moveShots,
+			fireShot: fireShot
+    };
+})();
