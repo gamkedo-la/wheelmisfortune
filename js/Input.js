@@ -120,6 +120,6 @@ function mouseReleased(evt) {
 
 function handleInput(){
 	if (key_Space || mouse_Left){
-		shotController.fireShot();
+		player.shoot();
 	}
 }

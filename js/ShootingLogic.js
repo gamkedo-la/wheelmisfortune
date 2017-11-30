@@ -42,14 +42,8 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
 }
 
 var shotController = (function() {
-    var fireRate = 4;
-    var nextFire = 0;
     
     var moveShots = function() {
-        if(nextFire > 0) {
-            nextFire--;
-        }
-        
         for (var i = shotList.length - 1; i >= 0; i--) {
             shotList[i].move();
             if (shotList[i].removeMe) {
@@ -58,16 +52,7 @@ var shotController = (function() {
         }
     };
     
-    var fireShot = function() {
-        if(nextFire === 0) {
-            nextFire = fireRate;
-            var direction = Math.atan2(mouseY - player.y, mouseX - player.x);
-            shotList.push(new shotClass(player.x, player.y, direction));
-        }
-    };
-    
     return {
-    	moveShots: moveShots,
-			fireShot: fireShot
+    	moveShots: moveShots
     };
 })();
