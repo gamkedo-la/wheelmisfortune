@@ -45,11 +45,11 @@ window.onload = function() {
 	canvasContext.mozImageSmoothingEnabled = false;
 	canvasContext.imageSmoothingEnabled = false;
 	canvasContext.msImageSmoothingEnabled = false;
-	canvasContext.imageSmoothingEnabled = false;
+	canvasContext.webkitImageSmoothingEnabled = false;
 	scaledContext.mozImageSmoothingEnabled = false;
 	scaledContext.imageSmoothingEnabled = false;
 	scaledContext.msImageSmoothingEnabled = false;
-	scaledContext.imageSmoothingEnabled = false;
+	scaledContext.webkitImageSmoothingEnabled = false;
 	
 	loadImages();
 };
