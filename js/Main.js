@@ -98,11 +98,11 @@ function drawEverything() {
 	player.draw();
 
 
-	canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
-	playerWidth = 15;
-	playerHeight = 20;
+	// canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
+	// playerWidth = 15;
+	// playerHeight = 20;
 
-	canvasContext.fillRect(playerX - 15, playerY - 20, 30, 46);
+	// canvasContext.fillRect(player.x - 15, player.y - 20, 30, 46);
 
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].draw();

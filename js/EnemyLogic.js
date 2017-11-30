@@ -82,6 +82,6 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-for(var i = 0; i < 8000; i++) {
-	enemyList.push(new Enemy(i%1000, 200*(i/1000)));
-}
+// for(var i = 0; i < 8000; i++) {
+// 	enemyList.push(new Enemy(i%1000, 200*(i/1000)));
+// }

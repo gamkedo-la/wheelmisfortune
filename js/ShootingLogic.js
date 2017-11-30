@@ -39,14 +39,7 @@ function shotClass(startX, startY, shotAng, shotSpeed) {
     };
 
     this.checkForCollisionWithPlayer = function(shot) {
-        var isCollidingWithPlayer = this.x > (playerX - playerWidth) &&
-            this.y > playerY &&
-            this.x < (playerX + playerWidth) &&
-            this.y < (playerY + playerHeight);
 
-        if(isCollidingWithPlayer) {
-            this.removeMe = true;
-        }
     };
 
     this.checkForCollisionWithEnemies = function(shot) {
