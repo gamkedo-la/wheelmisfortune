@@ -46,9 +46,19 @@ function Enemy(startX, startY) {
 		}
 		this.facing += this.spinSpeed;
 	};
+	
 	this.draw = function() {
 		drawBitmapCenteredAtLocationWithRotation(badguyPic,
 	      this.x, this.y,0);
+	};
+	
+	this.gotHit = function(damage) {
+		this.life -= damage;
+		
+		if (this.life <= 0) {
+			this.remove = true;
+			enemyList.push(new TestEnemy(80, 80));
+		}
 	};
 }
 

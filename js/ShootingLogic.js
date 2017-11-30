@@ -50,8 +50,11 @@ var shotController = (function() {
             nextFire--;
         }
         
-        for (var i = 0; i < shotList.length; i++) {
+        for (var i = shotList.length - 1; i >= 0; i--) {
             shotList[i].move();
+            if (shotList[i].removeMe) {
+                shotList.splice(i, 1);
+            }
         }
     };
     

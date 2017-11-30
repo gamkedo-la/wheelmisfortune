@@ -118,15 +118,9 @@ function moveEverything() {
 		wheelMove();
 		return; // skipping gamemovement while wheelShowing
 	}
-	shotController.moveShots();
 	player.move();
 	moveEnemies();
-	for (var r = shotList.length - 1; r >= 0; r--) {
-		if (shotList[r].removeMe) {
-			shotList.splice(r, 1);
-		}
-	}
-	
+	shotController.moveShots();
 } //end of moveEverything
 
 function drawEverything() {
@@ -163,23 +157,28 @@ function drawEverything() {
 function collideEverything() {
 	var distX;
 	var distY;
+	
 	for (var i = 0; i < shotList.length; i++) {
-		var currentShot = shotList[i]
+		var currentShot = shotList[i];
+		
+		if(currentShot.removeMe) {
+			return;
+		}
 
 		for (var j = 0; j < enemyList.length; j++) {
 			var currentEnemy = enemyList[j];
+			
+			if(currentEnemy.remove){
+				return;
+			}
 
 			//Hacky collision code, replace at some point
 			distX = currentShot.x - currentEnemy.x;
 			distY = currentShot.y - currentEnemy.y;
 			if ((distX*distX + distY*distY) <= 30) {
 				currentShot.removeMe = true;
-				currentEnemy.life -= currentShot.damage;
-				if (currentEnemy.life <= 0) {
-					currentEnemy.remove = true;
-					currentEnemy.life = 9999999; //So it won't keep adding more enemies before it's removed.
-					enemyList.push(new TestEnemy(80, 80));
-				}
+				
+				currentEnemy.gotHit(currentShot.damage);
 			}
 		}
 	}
