@@ -1,6 +1,15 @@
 var shotList = [];
 const SHOT_SPEED = 2; 
 
+function moveShots() {
+    for (var i = shotList.length - 1; i >= 0; i--) {
+        shotList[i].move();
+        if (shotList[i].removeMe) {
+            shotList.splice(i, 1);
+        }
+    }
+}
+
 function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
@@ -40,19 +49,3 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
         //colorRect(this.x - 2  , this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
     };
 }
-
-var shotController = (function() {
-    
-    var moveShots = function() {
-        for (var i = shotList.length - 1; i >= 0; i--) {
-            shotList[i].move();
-            if (shotList[i].removeMe) {
-                shotList.splice(i, 1);
-            }
-        }
-    };
-    
-    return {
-    	moveShots: moveShots
-    };
-})();

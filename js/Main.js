@@ -120,7 +120,7 @@ function moveEverything() {
 	}
 	player.move();
 	moveEnemies();
-	shotController.moveShots();
+	moveShots();
 } //end of moveEverything
 
 function drawEverything() {
