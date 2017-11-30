@@ -12,7 +12,8 @@ const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
 
 
 function calculateMousePos(evt) {
-	var rect = scaledCanvas.getBoundingClientRect();
+	var rect = scaledCanvas.getBoundingClientRect(),
+		root = document.documentElement;
 
 	// account for the margins, canvas position on page, scroll amount, etc.
 	mouseX = evt.clientX - rect.left;
@@ -73,8 +74,11 @@ function loadingDoneSoStartGame() {
 	
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
+	
+	/* // commenting out until/unless we can unblurry Chrome
 	window.addEventListener("resize", onResize);
-    onResize();
+    onResize();*/
+
 	//Disable right click context menu
 	document.oncontextmenu = function() {
 		return false;

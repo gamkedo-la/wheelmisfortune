@@ -34,7 +34,7 @@ function Player(positionX, positionY) {
 	}; //end of playerMove
 	
 	this.draw = function() {
-		drawBitmapFlipped(playerpic, this.x, this.y, mouseX < this.x);
+		drawBitmapFlipped(playerPic, this.x, this.y, mouseX < this.x);
 		
 		this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
 		

@@ -1,4 +1,6 @@
-var playerpic = document.createElement("img");
+var playerPic = document.createElement("img");
+var bulletPic = document.createElement("img");
+var badguyPic = document.createElement("img");
 var backGroundPic = document.createElement("img");
 var playerWeapon = document.createElement("img");
 var wheelMisfortune = document.createElement("img");
@@ -23,10 +25,12 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
 	var imageList = [
 		////
-		{ varName: playerpic, theFile: "player.png" }, ////
+		{ varName: playerPic, theFile: "player.png" }, ////
+		{ varName: bulletPic, theFile: "bullet.png" }, ////
+		{ varName: badguyPic, theFile: "badguy.png" }, ////
 		{ varName: backGroundPic, theFile: "arena00.png" }, ////
 		{ varName: playerWeapon, theFile: "gunTest.png" },
-		{varName: wheelMisfortune, theFile: "wheeloffortune.png"}
+		{varName: wheelMisfortune, theFile: "wheeloffortune.png"},
 	]; ////
 
 	picsToLoad = imageList.length; ////
