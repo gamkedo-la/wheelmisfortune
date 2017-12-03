@@ -5,7 +5,7 @@ var scaledCanvas, scaledContext;
 var gameRunning = true;
 var animationFrameNumber;
 
-var player = new Player(400, 400);
+var player;
 
 const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
 
@@ -45,11 +45,11 @@ window.onload = function() {
 	canvasContext.mozImageSmoothingEnabled = false;
 	canvasContext.imageSmoothingEnabled = false;
 	canvasContext.msImageSmoothingEnabled = false;
-	canvasContext.imageSmoothingEnabled = false;
+	canvasContext.webkitImageSmoothingEnabled = false;
 	scaledContext.mozImageSmoothingEnabled = false;
 	scaledContext.imageSmoothingEnabled = false;
 	scaledContext.msImageSmoothingEnabled = false;
-	scaledContext.imageSmoothingEnabled = false;
+	scaledContext.webkitImageSmoothingEnabled = false;
 	
 	loadImages();
 };
@@ -83,6 +83,8 @@ function loadingDoneSoStartGame() {
 	document.oncontextmenu = function() {
 		return false;
 	};
+	
+	player = new Player(400, 400);
 } //end of loadingDoneSoStartGame
 
 function windowOnFocus() {
@@ -111,28 +113,14 @@ function onResize() { // changing window dimensions
     }
 }
 
-function handleInput(){
-	if (key_Space || mouse_Left){
-		fireShot();
-	}
-}
-
 function moveEverything() {
 	if(wheelShowing){
 		wheelMove();
 		return; // skipping gamemovement while wheelShowing
 	}
 	player.move();
-	for (var i = 0; i < shotList.length; i++) {
-		shotList[i].move();
-	}
 	moveEnemies();
-	for (var r = shotList.length - 1; r >= 0; r--) {
-		if (shotList[r].removeMe) {
-			shotList.splice(r, 1);
-		}
-	}
-	
+	moveShots();
 } //end of moveEverything
 
 function drawEverything() {
@@ -166,29 +154,37 @@ function drawEverything() {
 	
 	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
 		0, 0, scaledCanvas.width, scaledCanvas.height);
-	frameCounter.getFps();
+		
+	if(debug) {
+		frameCounter.getFps();
+	}
 } // end of drawEverything
 
 function collideEverything() {
 	var distX;
 	var distY;
+	
 	for (var i = 0; i < shotList.length; i++) {
-		var currentShot = shotList[i]
+		var currentShot = shotList[i];
+		
+		if(currentShot.removeMe) {
+			return;
+		}
 
 		for (var j = 0; j < enemyList.length; j++) {
 			var currentEnemy = enemyList[j];
+			
+			if(currentEnemy.remove){
+				return;
+			}
 
 			//Hacky collision code, replace at some point
 			distX = currentShot.x - currentEnemy.x;
 			distY = currentShot.y - currentEnemy.y;
-			if ((distX*distX + distY*distY) <= 100) {
+			if ((distX*distX + distY*distY) <= 30) {
 				currentShot.removeMe = true;
-				currentEnemy.life -= currentShot.damage;
-				if (currentEnemy.life <= 0) {
-					currentEnemy.remove = true;
-					currentEnemy.life = 9999999; //So it won't keep adding more enemies before it's removed.
-					enemyList.push(new TestEnemy(200, 200));
-				}
+				
+				currentEnemy.gotHit(currentShot.damage);
 			}
 		}
 	}

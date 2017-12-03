@@ -1,6 +1,15 @@
 var shotList = [];
 const SHOT_SPEED = 2;
 
+function moveShots() {
+    for (var i = shotList.length - 1; i >= 0; i--) {
+        shotList[i].move();
+        if (shotList[i].removeMe) {
+            shotList.splice(i, 1);
+        }
+    }
+}
+
 function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
@@ -39,7 +48,8 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     };
 
     this.draw = function() {
-        colorRect(this.x - 2, this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
+        // colorRect(this.x - 2, this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
+        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y,0);
     };
 
     this.checkForCollisionWithPlayer = function(shot) {
@@ -49,14 +59,4 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.checkForCollisionWithEnemies = function(shot) {
 
     };
-}
-
-function fireShot() {
-    shotList.push(
-        new shotClass(
-            player.x,
-            player.y,
-            Math.atan2(mouseY - player.y, mouseX - player.x)
-        )
-    );
 }

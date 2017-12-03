@@ -46,14 +46,24 @@ function Enemy(startX, startY) {
 		}
 		this.facing += this.spinSpeed;
 	};
+	
 	this.draw = function() {
 		drawBitmapCenteredAtLocationWithRotation(badguyPic,
 	      this.x, this.y,0);
 	};
+	
+	this.gotHit = function(damage) {
+		this.life -= damage;
+		
+		if (this.life <= 0) {
+			this.remove = true;
+			enemyList.push(new TestEnemy(80, 80));
+		}
+	};
 }
 
 //Test code, remove this later
-enemyList.push(new Enemy(100, 100));
+enemyList.push(new Enemy(50, 50));
 
 //Enemy type code goes below here
 
@@ -83,4 +93,4 @@ function TestEnemy(startX, startY){
 	}
 }
 //TestEnemy end
-enemyList.push(new TestEnemy(200, 200));
+enemyList.push(new TestEnemy(100, 100));
