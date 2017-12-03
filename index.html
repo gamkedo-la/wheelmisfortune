@@ -5,16 +5,26 @@
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
 	<style>
-    canvas {
-        position: absolute;
-				left: 0;
-				top: 0;
-    }   
+	canvas {
+                image-rendering: optimizeSpeed; /* Older versions of FF          */
+                image-rendering: -moz-crisp-edges; /* FF 6.0+                       */
+                image-rendering: -webkit-optimize-contrast; /* Safari                        */
+                image-rendering: -o-crisp-edges; /* OS X & Windows Opera (12.02+) */
+                image-rendering: pixelated; /* Awesome future-browsers       */
+                -ms-interpolation-mode: nearest-neighbor; /* IE                            */
+            }
+      html, body {
+	    margin: 0px;
+	  }
+	  canvas {
+	    display: block;
+	  }   
 	</style>
+
 </head>
 
 <body>
-	<canvas id="gameCanvas" width="1280" height="720"></canvas>
+	<canvas id="gameCanvas"></canvas>
 	<script src="js/Tools.js"></script>
 	<script src="js/GraphicsCommon.js"></script>
 	<script src="js/ImageLoading.js"></script>

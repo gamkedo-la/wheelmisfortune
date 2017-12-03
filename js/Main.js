@@ -1,23 +1,56 @@
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
+var scaledCanvas, scaledContext;
+
 var gameRunning = true;
 var animationFrameNumber;
 
 var player = new Player(400, 400);
 
+const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
+
+
+
 function calculateMousePos(evt) {
-	var rect = canvas.getBoundingClientRect(),
+	var rect = scaledCanvas.getBoundingClientRect(),
 		root = document.documentElement;
 
 	// account for the margins, canvas position on page, scroll amount, etc.
 	mouseX = evt.clientX - rect.left;
 	mouseY = evt.clientY - rect.top;
+	var canvasStretch = scaledCanvas.width/ canvas.width;
+	mouseX /= canvasStretch;
+	mouseY /= canvasStretch;
 }
 
 window.onload = function() {
 	canvas = document.getElementById("gameCanvas");
 	canvasContext = canvas.getContext("2d");
 
+		// Get references for gameCanvas
+    scaledCanvas = document.getElementById('gameCanvas');
+    canvas = document.createElement('canvas');
+
+    // Size gameCanvas
+	canvas.width = 960/ PIXEL_SCALE_UP;
+	canvas.height = 540/ PIXEL_SCALE_UP;
+	scaledCanvas.width =960;
+	scaledCanvas.height = 540;
+
+	canvasContext = canvas.getContext('2d');
+	scaledContext = scaledCanvas.getContext('2d');
+	scaledContext.fillStyle = "black";
+
+	// Helps it not blur from the scaling:
+	canvasContext.mozImageSmoothingEnabled = false;
+	canvasContext.imageSmoothingEnabled = false;
+	canvasContext.msImageSmoothingEnabled = false;
+	canvasContext.imageSmoothingEnabled = false;
+	scaledContext.mozImageSmoothingEnabled = false;
+	scaledContext.imageSmoothingEnabled = false;
+	scaledContext.msImageSmoothingEnabled = false;
+	scaledContext.imageSmoothingEnabled = false;
+	
 	loadImages();
 };
 
@@ -27,7 +60,7 @@ function loadingDoneSoStartGame() {
 	
 	animationFrameNumber = requestAnimationFrame(gameController.update);
 	
-	canvas.addEventListener("mousemove", calculateMousePos);
+	scaledCanvas.addEventListener("mousemove", calculateMousePos);
 	
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
@@ -42,6 +75,10 @@ function loadingDoneSoStartGame() {
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
 	
+	/* // commenting out until/unless we can unblurry Chrome
+	window.addEventListener("resize", onResize);
+    onResize();*/
+
 	//Disable right click context menu
 	document.oncontextmenu = function() {
 		return false;
@@ -58,6 +95,20 @@ function windowOnFocus() {
 function windowOnBlur() {
 	gameRunning = false;
 	cancelAnimationFrame(animationFrameNumber);
+}
+
+function onResize() { // changing window dimensions
+    if (!canvas) return;
+    var gameRatio = canvas.height/canvas.width;
+    var widthIfHeightScaled = window.innerHeight / gameRatio;
+    if(widthIfHeightScaled <= window.innerWidth) {
+        scaledCanvas.width = widthIfHeightScaled;
+        scaledCanvas.height = window.innerHeight;
+    } else {
+        var heightIfWidthScaled = window.innerWidth * gameRatio;
+        scaledCanvas.width = window.innerWidth;
+        scaledCanvas.height = heightIfWidthScaled;
+    }
 }
 
 function handleInput(){
@@ -86,15 +137,9 @@ function moveEverything() {
 
 function drawEverything() {
 	// clear the game view by filling it with black
-	//canvasContext.fillStyle = "black";
-	//canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-	drawBitmapCenteredAtLocationWithRotation(
-		backGroundPic,
-		canvas.width / 2,
-		canvas.height / 2,
-		0
-	);
-	
+	canvasContext.fillStyle = "black";
+	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);	
 	player.draw();
 
 
@@ -119,6 +164,8 @@ function drawEverything() {
 		drawWheel();
 	}
 	
+	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
+		0, 0, scaledCanvas.width, scaledCanvas.height);
 	frameCounter.getFps();
 } // end of drawEverything
 
@@ -134,8 +181,7 @@ function collideEverything() {
 			//Hacky collision code, replace at some point
 			distX = currentShot.x - currentEnemy.x;
 			distY = currentShot.y - currentEnemy.y;
-			if (Math.abs(currentShot.x - currentEnemy.x) + Math.abs(currentShot.y - currentEnemy.y) <= 10) {
-//			if ((distX*distX + distY*distY) <= 100) {
+			if ((distX*distX + distY*distY) <= 100) {
 				currentShot.removeMe = true;
 				currentEnemy.life -= currentShot.damage;
 				if (currentEnemy.life <= 0) {
@@ -144,9 +190,6 @@ function collideEverything() {
 					enemyList.push(new TestEnemy(200, 200));
 				}
 			}
-
 		}
-		
 	}
-	
 } //end of collideEverything

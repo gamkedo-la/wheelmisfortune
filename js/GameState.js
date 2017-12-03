@@ -11,7 +11,7 @@ function GameController() {
     };
     this.changeState = function (state) {
         if (typeof state !== "undefined") {
-            console.log("Changed state");
+            // console.log("Changed state");
             state_ = state;
             state_.enter();
         }

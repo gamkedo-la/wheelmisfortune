@@ -1,12 +1,17 @@
 const TWO_PI = Math.PI * 2;
+var showFPS = false;
 
 function FrameCounter() {
 	this.previousTime = 0;
 	this.deltaTime = 0;
 	this.fps = 0;
+	this.averageFps = 0;
 	this.count = 0;
 	
 	this.getFps = function() {
+		if(showFPS == false){
+			return;
+		}
 		if(this.previousTime === 0) {
 			this.previousTime = performance.now();
 			return;
@@ -15,11 +20,13 @@ function FrameCounter() {
 		this.deltaTime = (performance.now() - this.previousTime)/1000;
 		this.previousTime = performance.now();
 		this.fps = 1/this.deltaTime;
+		this.averageFps += this.fps;
 		
 		this.count++;
-		if(this.count > 60) {
+		if(this.count >= 60) {
+			console.log("FPS:" + this.averageFps/this.count);
 			this.count = 0;
-			console.log("FPS:", this.fps);
+			this.averageFps = 0;
 		}
 	};
 }
