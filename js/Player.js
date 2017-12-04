@@ -58,7 +58,7 @@ function Player(positionX, positionY) {
 		if(this.nextFire === 0) {
 			this.nextFire = this.fireRate;
 			var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
-			shotList.push(new shotClass(this.x, this.y, direction));
+			shotList.push(new shotClass(this.x, this.y, direction, false));
 		}
 	};
 }

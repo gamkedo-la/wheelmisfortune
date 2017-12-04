@@ -10,7 +10,7 @@ function moveShots() {
     }
 }
 
-function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
+function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
     this.xv = Math.cos(shotAng) * shotSpeed;
@@ -20,6 +20,7 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
     this.removeMe = false;
     this.bulletWidth = 2;
     this.bulletHeight = 2;
+		this.enemy = enemy;
 
     this.move = function() {
         this.x += this.xv;
