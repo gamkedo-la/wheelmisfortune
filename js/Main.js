@@ -167,15 +167,15 @@ function collideEverything() {
 	for (var i = 0; i < shotList.length; i++) {
 		var currentShot = shotList[i];
 		
-		if(currentShot.removeMe) {
-			return;
+		if(currentShot.removeMe || currentShot.enemy) {
+			continue;
 		}
-
+		
 		for (var j = 0; j < enemyList.length; j++) {
 			var currentEnemy = enemyList[j];
 			
 			if(currentEnemy.remove){
-				return;
+				continue;
 			}
 
 			//Hacky collision code, replace at some point

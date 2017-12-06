@@ -76,6 +76,8 @@ function TestEnemy(startX, startY){
 	this.parentMove = this.move;
 	this.targetDirection;
 	this.spinSpeed = 0.025;
+	this.shotRate = 60;
+	this.nextShot = this.shotRate;
 	
 	this.move = function() {
 		var targetX = player.x - this.x;
@@ -89,7 +91,20 @@ function TestEnemy(startX, startY){
 			this.heading += this.spinSpeed;
 		}
 		
+		if(this.nextShot <= 0) {
+			this.shoot();
+		}
+		this.nextShot--;
+		
 		this.parentMove();
+	}
+	
+	this.shoot = function() {
+		this.nextShot = this.shotRate;
+		var shotDirection = 0.785398; //45 degrees in radians
+		for(var i = 0; i < 8; i++) {
+			shotList.push(new shotClass(this.x, this.y, shotDirection * i, true));
+		}
 	}
 }
 //TestEnemy end
