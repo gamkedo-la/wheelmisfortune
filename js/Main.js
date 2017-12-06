@@ -130,13 +130,6 @@ function drawEverything() {
 	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);	
 	player.draw();
 
-
-	canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
-	playerWidth = 15;
-	playerHeight = 20;
-
-	canvasContext.fillRect(player.x - playerWidth, player.y - playerHeight, 30, 46);
-
 	for (var i = 0; i < shotList.length; i++) {
 		shotList[i].draw();
 	}
@@ -161,31 +154,5 @@ function drawEverything() {
 } // end of drawEverything
 
 function collideEverything() {
-	var distX;
-	var distY;
-	
-	for (var i = 0; i < shotList.length; i++) {
-		var currentShot = shotList[i];
-		
-		if(currentShot.removeMe || currentShot.enemy) {
-			continue;
-		}
-		
-		for (var j = 0; j < enemyList.length; j++) {
-			var currentEnemy = enemyList[j];
-			
-			if(currentEnemy.remove){
-				continue;
-			}
-
-			//Hacky collision code, replace at some point
-			distX = currentShot.x - currentEnemy.x;
-			distY = currentShot.y - currentEnemy.y;
-			if ((distX*distX + distY*distY) <= 30) {
-				currentShot.removeMe = true;
-				
-				currentEnemy.gotHit(currentShot.damage);
-			}
-		}
-	}
+	checkBulletCollisions();
 } //end of collideEverything
