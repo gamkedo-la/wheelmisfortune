@@ -27,7 +27,7 @@ function loadImages() {
 		////
 		{ varName: playerPic, theFile: "player.png" }, ////
 		{ varName: bulletPic, theFile: "bullet.png" }, ////
-		{ varName: badguyPic, theFile: "badguy.png" }, ////
+		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: backGroundPic, theFile: "arena00small.png" }, ////
 		{ varName: playerWeapon, theFile: "gunTest.png" },
 		{varName: wheelMisfortune, theFile: "wheeloffortune.png"},
