@@ -1,16 +1,26 @@
 var shotList = [];
-const SHOT_SPEED = 5; 
+const SHOT_SPEED = 2;
 
-function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
+function moveShots() {
+    for (var i = shotList.length - 1; i >= 0; i--) {
+        shotList[i].move();
+        if (shotList[i].removeMe) {
+            shotList.splice(i, 1);
+        }
+    }
+}
+
+function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
     this.xv = Math.cos(shotAng) * shotSpeed;
     this.yv = Math.sin(shotAng) * shotSpeed;
     this.lifeLeft = 100;
-		this.damage = 10;
+    this.damage = 10;
     this.removeMe = false;
-    this.bulletWidth = 5;
-    this.bulletHeight = 5;
+    this.bulletWidth = 2;
+    this.bulletHeight = 2;
+    this.enemy = enemy;
 
     this.move = function() {
         this.x += this.xv;
@@ -34,17 +44,49 @@ function shotClass(startX, startY, shotAng, shotSpeed = SHOT_SPEED) {
             this.removeMe = true;
         }
     };
+
     this.draw = function() {
-        colorRect(this.x - 2  , this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
+        // colorRect(this.x - 2, this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
+        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, 0);
+    };
+
+    this.checkForCollisionWithPlayer = function() {
+        if (!this.enemy || this.removeMe) return;
+        var isCollidingWithPlayer = this.x > (player.x - player.mask.width/2) &&
+            this.y > (player.y - player.mask.heightOffset) &&
+            this.x < (player.x + player.mask.width) &&
+            this.y < (player.y + player.mask.heightOffset);
+
+        if (isCollidingWithPlayer) {
+            player.takeDamage(this.damage);
+            this.removeMe = true;
+        }
+    };
+
+    this.checkForCollisionWithEnemies = function() {
+        if (this.enemy || this.removeMe) return;
+        var distX = 0;
+        var distY = 0;
+
+        for (var i = 0; i < enemyList.length; i++) {
+            var currentEnemy = enemyList[i];
+
+            if (currentEnemy.remove) continue;
+
+            //Hacky collision code, replace at some point
+            distX = this.x - currentEnemy.x;
+            distY = this.y - currentEnemy.y;
+            if ((distX * distX + distY * distY) <= currentEnemy.size) {
+                this.removeMe = true;
+                currentEnemy.gotHit(this.damage);
+            }
+        }
     };
 }
 
-function fireShot() {
-    shotList.push(
-        new shotClass(
-            player.x,
-            player.y,
-            Math.atan2(mouseY - player.y, mouseX - player.x)
-        )
-    );
+function checkBulletCollisions() {
+    for (var i = 0; i < shotList.length; i++) {
+        shotList[i].checkForCollisionWithPlayer();
+        shotList[i].checkForCollisionWithEnemies();
+    }
 }

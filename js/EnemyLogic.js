@@ -13,10 +13,11 @@ function moveEnemies() {
 function Enemy(startX, startY) {
 	this.x = startX;
 	this.y = startY;
-	this.moveSpeed = 2;
 	this.heading = 0.523599;
-	this.velocity = 2;
+	this.velocity = .7;
 	this.facing = 0;
+	this.sprite = badguyPic;
+	this.size = 80;
 	
 	this.life = 100;
 	this.remove = false;
@@ -47,13 +48,24 @@ function Enemy(startX, startY) {
 		}
 		this.facing += this.spinSpeed;
 	};
+	
 	this.draw = function() {
-		colorRect(this.x, this.y, 10, 10, "red");
+		drawBitmapCenteredAtLocationWithRotation(this.sprite,
+	      this.x, this.y,0);
+	};
+	
+	this.gotHit = function(damage) {
+		this.life -= damage;
+		
+		if (this.life <= 0) {
+			this.remove = true;
+			enemyList.push(new TestEnemy(80, 80));
+		}
 	};
 }
 
 //Test code, remove this later
-enemyList.push(new Enemy(100, 100));
+enemyList.push(new Enemy(50, 50));
 
 //Enemy type code goes below here
 
@@ -66,6 +78,8 @@ function TestEnemy(startX, startY){
 	this.parentMove = this.move;
 	this.targetDirection;
 	this.spinSpeed = 0.025;
+	this.shotRate = 60;
+	this.nextShot = this.shotRate;
 	
 	this.move = function() {
 		var targetX = player.x - this.x;
@@ -79,8 +93,21 @@ function TestEnemy(startX, startY){
 			this.heading += this.spinSpeed;
 		}
 		
+		if(this.nextShot <= 0) {
+			this.shoot();
+		}
+		this.nextShot--;
+		
 		this.parentMove();
+	}
+	
+	this.shoot = function() {
+		this.nextShot = this.shotRate;
+		var shotDirection = 0.785398; //45 degrees in radians
+		for(var i = 0; i < 8; i++) {
+			shotList.push(new shotClass(this.x, this.y, shotDirection * i, true));
+		}
 	}
 }
 //TestEnemy end
-enemyList.push(new TestEnemy(200, 200));
+enemyList.push(new TestEnemy(100, 100));
