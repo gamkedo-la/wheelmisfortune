@@ -16,6 +16,8 @@ function Enemy(startX, startY) {
 	this.heading = 0.523599;
 	this.velocity = .7;
 	this.facing = 0;
+	this.sprite = badguyPic;
+	this.size = 80;
 	
 	this.life = 100;
 	this.remove = false;
@@ -48,7 +50,7 @@ function Enemy(startX, startY) {
 	};
 	
 	this.draw = function() {
-		drawBitmapCenteredAtLocationWithRotation(badguyPic,
+		drawBitmapCenteredAtLocationWithRotation(this.sprite,
 	      this.x, this.y,0);
 	};
 	

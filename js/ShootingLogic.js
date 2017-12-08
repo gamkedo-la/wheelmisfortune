@@ -76,7 +76,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
             //Hacky collision code, replace at some point
             distX = this.x - currentEnemy.x;
             distY = this.y - currentEnemy.y;
-            if ((distX * distX + distY * distY) <= 30) {
+            if ((distX * distX + distY * distY) <= currentEnemy.size) {
                 this.removeMe = true;
                 currentEnemy.gotHit(this.damage);
             }
