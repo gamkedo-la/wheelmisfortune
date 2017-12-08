@@ -5,7 +5,6 @@ function Player(positionX, positionY) {
 	this.gunRotation = 0;
 	this.playerHeight = 48
 	this.playerWidth = 30
-	this.playerHealth = 3;
 	this.move = function playerMove() {
 		if (key_Move_Left) {
 			this.x -= this.speed;
@@ -19,7 +18,7 @@ function Player(positionX, positionY) {
 		if (key_Move_Down) {
 			this.y += this.speed;
 		}
-
+	
 		if (this.x  < this.playerWidth/2) {
 			this.x = this.playerWidth/2;
 		}
@@ -33,12 +32,12 @@ function Player(positionX, positionY) {
 			this.y = canvas.height - this.playerHeight/2;
 		}
 	}; //end of playerMove
-
+	
 	this.draw = function() {
 		drawBitmapFlipped(playerpic, this.x, this.y, mouseX < this.x);
-
+		
 		this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
-
+		
 		drawBitmapCenteredAtLocationWithRotation(
 			playerWeapon,
 			this.x,

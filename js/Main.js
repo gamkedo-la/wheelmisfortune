@@ -1,9 +1,7 @@
 // save the canvas for dimensions, and its 2d context for drawing to it
-const PLAYER_STARTING_HEALTH = 3;
 var canvas, canvasContext;
 var gameRunning = true;
 var animationFrameNumber;
-var playerHealthArray = [];
 
 var player = new Player(400, 400);
 
@@ -27,24 +25,24 @@ window.onload = function() {
 function loadingDoneSoStartGame() {
 	// these next few lines set up our game logic and render to happen many times per second
 	gameController.changeState(defaultState);
-
+	
 	animationFrameNumber = requestAnimationFrame(gameController.update);
-
+	
 	canvas.addEventListener("mousemove", calculateMousePos);
-
+	
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
-
+	
 	document.onmousedown = function() {
 		return false;
 	};
-
+	
 	document.addEventListener("mousedown", mousePressed);
 	document.addEventListener("mouseup", mouseReleased);
-
+	
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
-
+	
 	//Disable right click context menu
 	document.oncontextmenu = function() {
 		return false;
@@ -84,14 +82,14 @@ function moveEverything() {
 			shotList.splice(r, 1);
 		}
 	}
-
+	
 } //end of moveEverything
 
 function drawEverything() {
 	// clear the game view by filling it with black
 	canvasContext.fillStyle = "black";
 	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
+	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);	
 	player.draw();
 
 
@@ -109,18 +107,7 @@ function drawEverything() {
 	if(wheelShowing){
 		drawWheel();
 	}
-
-	playerHealthArray.length = player.playerHealth;
-	for (var i = 0; i < playerHealthArray.length; i++) {
-		playerHealthArray[i] = true;
-	}
-	for (var i = 0; i < playerHealthArray.length; i++) {
-		if (playerHealthArray[i]) {
-			colorRect(i*20,0,19,19,"red");
-		}
-	}
-
-
+	
 	frameCounter.getFps();
 } // end of drawEverything
 
