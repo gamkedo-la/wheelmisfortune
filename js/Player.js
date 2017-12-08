@@ -9,7 +9,7 @@ function Player(positionX, positionY) {
     this.nextFire = 0;
     this.gunRotation = 0;
 
-    this.maxHealth = 100;
+    this.maxHealth = 3;
     this.health = this.maxHealth;
 
     this.drawMask = false;

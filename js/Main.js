@@ -7,6 +7,8 @@ var animationFrameNumber;
 
 var player;
 
+var playerHealthArray = [];
+
 const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
 
 
@@ -50,31 +52,31 @@ window.onload = function() {
 	scaledContext.imageSmoothingEnabled = false;
 	scaledContext.msImageSmoothingEnabled = false;
 	scaledContext.webkitImageSmoothingEnabled = false;
-	
+
 	loadImages();
 };
 
 function loadingDoneSoStartGame() {
 	// these next few lines set up our game logic and render to happen many times per second
 	gameController.changeState(defaultState);
-	
+
 	animationFrameNumber = requestAnimationFrame(gameController.update);
-	
+
 	scaledCanvas.addEventListener("mousemove", calculateMousePos);
-	
+
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
-	
+
 	document.onmousedown = function() {
 		return false;
 	};
-	
+
 	document.addEventListener("mousedown", mousePressed);
 	document.addEventListener("mouseup", mouseReleased);
-	
+
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
-	
+
 	/* // commenting out until/unless we can unblurry Chrome
 	window.addEventListener("resize", onResize);
     onResize();*/
@@ -83,7 +85,7 @@ function loadingDoneSoStartGame() {
 	document.oncontextmenu = function() {
 		return false;
 	};
-	
+
 	player = new Player(400, 400);
 } //end of loadingDoneSoStartGame
 
@@ -127,7 +129,7 @@ function drawEverything() {
 	// clear the game view by filling it with black
 	canvasContext.fillStyle = "black";
 	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);	
+	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
 	player.draw();
 
 	for (var i = 0; i < shotList.length; i++) {
@@ -144,10 +146,19 @@ function drawEverything() {
 	if(wheelShowing){
 		drawWheel();
 	}
-	
+
+	playerHealthArray.length = player.maxHealth;
+	for (var i = 0; i < player.health; i++) {
+		playerHealthArray[i] = true;
+	}
+	for (var i = 0; i < player.health; i++) {
+		if (playerHealthArray[i]) {
+			colorRect(i*20,0,19,19,"red");
+		}
+	}
 	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
 		0, 0, scaledCanvas.width, scaledCanvas.height);
-		
+
 	if(debug) {
 		frameCounter.getFps();
 	}
