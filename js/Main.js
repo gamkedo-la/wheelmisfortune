@@ -149,12 +149,7 @@ function drawEverything() {
 
 	playerHealthArray.length = player.maxHealth;
 	for (var i = 0; i < player.maxHealth; i++) {
-		if (i<player.health) {
-			playerHealthArray[i] = true;
-		}
-		else {
-			playerHealthArray[i] = false;
-		}
+	playerHealthArray[i] = i < player.health;
 	}
 	for (var i = 0; i < player.health; i++) {
 		if (playerHealthArray[i]) {
