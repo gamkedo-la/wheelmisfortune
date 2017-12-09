@@ -130,6 +130,7 @@ function drawEverything() {
 	canvasContext.fillStyle = "black";
 	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
+	
 	player.draw();
 
 	for (var i = 0; i < shotList.length; i++) {
@@ -156,6 +157,8 @@ function drawEverything() {
 			colorRect(i*20,0,19,19,"red");
 		}
 	}
+	
+	//Scale and redraw the game canvas to the screen
 	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
 		0, 0, scaledCanvas.width, scaledCanvas.height);
 
