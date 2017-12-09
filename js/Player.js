@@ -8,6 +8,7 @@ function Player(positionX, positionY) {
     this.fireRate = 4; //In frames
     this.nextFire = 0;
     this.gunRotation = 0;
+    this.muzzleFlashFrames = 0;
 
     this.maxHealth = 3;
     this.health = this.maxHealth;
@@ -58,6 +59,18 @@ function Player(positionX, positionY) {
 
         this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
 
+        // muzzle flashes oriented to gun
+        if (this.muzzleFlashFrames>0)
+        {
+            this.muzzleFlashFrames--;
+            drawBitmapCenteredAtLocationWithRotation(
+            muzzleFlashPic,
+            this.x,
+            this.y,
+            this.gunRotation
+            );
+        }
+
         drawBitmapCenteredAtLocationWithRotation(
             playerWeapon,
             this.x,
@@ -76,6 +89,7 @@ function Player(positionX, positionY) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
             shotList.push(new shotClass(this.x, this.y, direction, false));
+            this.muzzleFlashFrames = 3;
         }
     };
 
