@@ -4,6 +4,7 @@ var badguyPic = document.createElement("img");
 var backGroundPic = document.createElement("img");
 var playerWeapon = document.createElement("img");
 var wheelMisfortune = document.createElement("img");
+var muzzleFlashPic = document.createElement("img");
 
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
@@ -30,7 +31,8 @@ function loadImages() {
 		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: backGroundPic, theFile: "arena00small.png" }, ////
 		{ varName: playerWeapon, theFile: "gunTest.png" },
-		{varName: wheelMisfortune, theFile: "wheeloffortune.png"},
+		{ varName: wheelMisfortune, theFile: "wheeloffortune.png"},
+		{ varName: muzzleFlashPic, theFile: "muzzleFlash.png"},
 	]; ////
 
 	picsToLoad = imageList.length; ////

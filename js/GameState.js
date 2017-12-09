@@ -41,6 +41,9 @@ function InGameState(){
 }
 inGameState = new InGameState();
 inGameState.prototype = new GameController(); //akin to inheritance in JS
+// FIXME: are we creating TWO new GameController()s in this file?
+// to avoid calling class construtor twice above maybe we should do it this way:
+// inGameState.prototype = Object.create(GameController.prototype); 
 defaultState = inGameState; //accessed on startup
 
 
