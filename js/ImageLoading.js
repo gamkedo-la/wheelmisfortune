@@ -5,6 +5,7 @@ var backGroundPic = document.createElement("img");
 var playerWeapon = document.createElement("img");
 var wheelMisfortune = document.createElement("img");
 var muzzleFlashPic = document.createElement("img");
+var specularShinePic = document.createElement("img");
 
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
@@ -33,6 +34,7 @@ function loadImages() {
 		{ varName: playerWeapon, theFile: "gunTest.png" },
 		{ varName: wheelMisfortune, theFile: "wheeloffortune.png"},
 		{ varName: muzzleFlashPic, theFile: "muzzleFlash.png"},
+		{ varName: specularShinePic, theFile: "sphereSpecularShine.png"},
 	]; ////
 
 	picsToLoad = imageList.length; ////

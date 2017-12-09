@@ -19,6 +19,9 @@ function Enemy(startX, startY) {
 	this.sprite = badguyPic;
 	this.size = 80;
 	
+	// reflect player shot dynamic light? only works with circles
+	this.useSpecularShineEffect = true; 
+
 	this.life = 100;
 	this.remove = false;
 	
@@ -50,8 +53,21 @@ function Enemy(startX, startY) {
 	};
 	
 	this.draw = function() {
-		drawBitmapCenteredAtLocationWithRotation(this.sprite,
-	      this.x, this.y,0);
+		
+		// draw enemy sprite
+		drawBitmapCenteredAtLocationWithRotation(this.sprite, this.x, this.y,0);
+		  
+		// maybe draw a little shine
+		if (this.useSpecularShineEffect) // reflect player shot dynamic light?
+		{
+			if (player.muzzleFlashFrames>0) // is player firing?
+			{
+				var shineRotation = Math.atan2(player.y - this.y, player.x - this.x);
+				// rotate shine to face player, with extra 180 to match artwork
+				drawBitmapCenteredAtLocationWithRotation(specularShinePic,this.x, this.y, shineRotation - (225*DEG_TO_RAD) );
+			}
+		}
+
 	};
 	
 	this.gotHit = function(damage) {
