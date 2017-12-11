@@ -1,5 +1,6 @@
 var shotList = [];
 const SHOT_SPEED = 2;
+const ORIENT_SPRITE_FORWARD = false; // rotate bullet sprites to face forward? (good for rockets and laser bolts)
 
 function moveShots() {
     for (var i = shotList.length - 1; i >= 0; i--) {
@@ -21,6 +22,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.bulletWidth = 2;
     this.bulletHeight = 2;
     this.enemy = enemy;
+    this.rotation = 0;
 
     this.move = function() {
         this.x += this.xv;
@@ -46,8 +48,8 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     };
 
     this.draw = function() {
-        // colorRect(this.x - 2, this.y - 2, this.bulletWidth, this.bulletHeight, "yellow");
-        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, 0);
+        if (ORIENT_SPRITE_FORWARD) this.rotation = Math.atan2(this.yv,this.xv);
+        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, this.rotation);
     };
 
     this.checkForCollisionWithPlayer = function() {
