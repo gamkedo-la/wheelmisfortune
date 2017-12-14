@@ -1,4 +1,5 @@
 const TWO_PI = Math.PI * 2;
+const THREE_PI = Math.PI * 3;
 var debug = true;
 
 function FrameCounter() {

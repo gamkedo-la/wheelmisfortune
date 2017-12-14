@@ -62,6 +62,11 @@ function Enemy(startX, startY) {
 			enemyList.push(new TestEnemy(80, 80));
 		}
 	};
+	
+	// Restrict heading to [-PI, PI)
+	this.normalizeHeading = function() {
+		this.heading = ((this.heading + THREE_PI) % TWO_PI) - Math.PI;
+	};
 }
 
 //Test code, remove this later
@@ -77,8 +82,8 @@ function TestEnemy(startX, startY){
 	Enemy.call(this, startX, startY);
 	this.parentMove = this.move;
 	this.targetDirection;
-	this.spinSpeed = 0.025;
-	this.shotRate = 60;
+	this.turnRate = 0.025;
+	this.shotRate = 100;
 	this.nextShot = this.shotRate;
 	
 	this.move = function() {
@@ -86,12 +91,17 @@ function TestEnemy(startX, startY){
 		var targetY = player.y - this.y;
 		this.targetDirection = Math.atan2(targetY, targetX);
 		
-		if(((this.heading - this.targetDirection) + Math.PI) % TWO_PI - Math.PI > 0) {
-			this.heading -= this.spinSpeed;
+		this.normalizeHeading();
+		
+		// If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+		if((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+			this.heading -= this.turnRate;
 		}
 		else {
-			this.heading += this.spinSpeed;
+			this.heading += this.turnRate;
 		}
+		
+		this.normalizeHeading();
 		
 		if(this.nextShot <= 0) {
 			this.shoot();
@@ -99,7 +109,7 @@ function TestEnemy(startX, startY){
 		this.nextShot--;
 		
 		this.parentMove();
-	}
+	};
 	
 	this.shoot = function() {
 		this.nextShot = this.shotRate;
@@ -107,7 +117,7 @@ function TestEnemy(startX, startY){
 		for(var i = 0; i < 8; i++) {
 			shotList.push(new shotClass(this.x, this.y, shotDirection * i, true));
 		}
-	}
+	};
 }
 //TestEnemy end
 enemyList.push(new TestEnemy(100, 100));
