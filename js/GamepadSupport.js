@@ -10,6 +10,9 @@ window.joystick = new GamepadSupport();
 
 function GamepadSupport()
 {
+    const TWIN_STICK_AIMING = true; // fake mouse positions w gamepad?
+    const TWIN_STICK_FIRING = true; // if you aim, you fire: simpler controls no buttons reqd
+
     var gamepad = null;
     var gamepad_left = false;
     var gamepad_right = false;
@@ -68,6 +71,9 @@ function GamepadSupport()
     var SIMULATED_KEY_A_BUTTON = KEY_SPACE;
     var SIMULATED_KEY_X_BUTTON = KEY_SPACE;
     var SIMULATED_KEY_Y_BUTTON = KEY_SPACE;
+
+    // twin stick shooter style aiming mode?
+    var aim_angle = 0; // right thumbstick to look around twin stick shooter style
     
     window.addEventListener("gamepadconnected", function(e) {
     // Gamepad connected
@@ -120,6 +126,34 @@ function GamepadSupport()
             butt = applyDeadzone(gamepad.buttons[3].value, 0.25);
             gamepad_y = (butt>0);
             //console.log("Gamepad buttons: A:" + gamepad.buttons[0].value + " B:" + + gamepad.buttons[1].value + " X:" + + gamepad.buttons[2].value + " Y:" + + gamepad.buttons[3].value);
+
+            if (TWIN_STICK_AIMING)
+            {
+                /*
+                // analog: aim exactly using the right thumbstick
+                aim_angle = Math.atan2(gamepad.axes[3], gamepad.axes[2]);
+                if (aim_angle!=0) console.log("aim_angle="+aim_angle);
+                // "fake" mouse coordinates injected for game engine use in Player.js
+                mouseX = Player.x + Math.cos(aim_angle) * 10;
+                mouseY = Player.y + Math.sin(aim_angle) * 10;
+                */
+
+                // only if being used
+                if (gamepad.axes[2] > 0.1 || gamepad.axes[2] < -0.1 || gamepad.axes[3] > 0.1 || gamepad.axes[3] < -0.1)
+                {
+                    // simpler version of the above
+                    mouseX = player.x + gamepad.axes[2] * 10;
+                    mouseY = player.y + gamepad.axes[3] * 10;
+
+                    //console.log('We are aiming using the right thumbstick: '+mouseX+','+mouseY);
+                    
+                    if (TWIN_STICK_FIRING) // force fire mode if we are aiming w right thumb
+                    {
+                        gamepad_a = true;
+                    }
+                }
+            }
+            
         }
         else
         {
