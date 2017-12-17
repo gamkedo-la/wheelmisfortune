@@ -76,6 +76,10 @@ function Enemy(startX, startY) {
 		if (this.life <= 0) {
 			this.remove = true;
 			enemyList.push(new TestEnemy(80, 80));
+
+			if(misfortunes.vampire.isActive) {
+				misfortunes.vampire.properties.canRestoreHealth = true;
+			}
 		}
 	};
 	
