@@ -92,7 +92,6 @@ function handleVampireMode() {
     );
 
     if(canRestoreHealth) {
-        console.log('Killed an enemy, restore player health');
         player.health += healthToReplenish;
         misfortunes.vampire.properties.canRestoreHealth = false;
     }
