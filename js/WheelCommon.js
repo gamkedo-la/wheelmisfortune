@@ -5,6 +5,8 @@ var wheelFriction = 0.98;
 var wheelKickMin = .02;
 var wheelKickMax = .06;
 var wheelShowing = false;
+var wheelNow = 0;
+
 
 function wheelMove(){
 	wheelRadians += wheelSpinSpeed;
@@ -12,6 +14,8 @@ function wheelMove(){
 	if(wheelRadians >= Math.PI * 2.0){
 		wheelRadians -= Math.PI * 2.0;
 	}
+	wheelNow = Math.floor(misfortuneTypes.length * (wheelRadians/(2.0 * Math.PI)));
+	activateMisfortune(misfortuneTypes[wheelNow]);
 }
 
 function drawWheel(){
@@ -19,7 +23,6 @@ function drawWheel(){
 	canvas.width / 2,canvas.height / 2,
 		wheelRadians);
 	colorRect(canvas.width/2, canvas.height/2 - wheelMisfortune.height/2 - 8, 4, 15, 'yellow');
-	var wheelNow = Math.floor(misfortuneTypes.length * (wheelRadians/(2.0 * Math.PI)));
 	canvasContext.fillStyle = "black";
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText(misfortunes[misfortuneTypes[wheelNow]].displayName, canvas.width/2, canvas.height/2 + wheelMisfortune.height/2 +15);
