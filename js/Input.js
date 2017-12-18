@@ -23,6 +23,7 @@ var mouse_Right = false;
 
 var mouseX = 0;
 var mouseY = 0;
+var clickLock = false;
 
 function keyPressed(evt) {
 	// console.log(evt.keyCode);
@@ -119,7 +120,13 @@ function mouseReleased(evt) {
 }
 
 function handleInput(){
+
 	if (key_Space || mouse_Left){
-		player.shoot();
+		if(clickLock == false){
+			clickLock = true;
+			player.shoot();
+		}
+	} else{
+		clickLock = false;
 	}
 }
