@@ -1,4 +1,4 @@
-var wheelWords = ['vanilla','ricochet','fastMode'];
+var wheelWords = ['vanilla','ricochet','fastMode','vampire'];
 
 var wheelRadians = 0.0;
 var wheelSpinSpeed = 0.0;
