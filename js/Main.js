@@ -9,7 +9,7 @@ var player;
 
 var playerHealthArray = [];
 
-const PIXEL_SCALE_UP = 3; // Number of times to scale up art tiles
+const PIXEL_SCALE_UP = 2; // Number of times to scale up art tiles
 
 
 
@@ -77,9 +77,9 @@ function loadingDoneSoStartGame() {
 	window.addEventListener("focus", windowOnFocus);
 	window.addEventListener("blur", windowOnBlur);
 
-	/* // commenting out until/unless we can unblurry Chrome
+	 // commenting out until/unless we can unblurry Chrome
 	window.addEventListener("resize", onResize);
-    onResize();*/
+    onResize();
 
 	//Disable right click context menu
 	document.oncontextmenu = function() {
