@@ -1,4 +1,3 @@
-var wheelWords = ['vanilla','ricochet','fastMode','vampire'];
 
 var wheelRadians = 0.0;
 var wheelSpinSpeed = 0.0;
@@ -20,10 +19,10 @@ function drawWheel(){
 	canvas.width / 2,canvas.height / 2,
 		wheelRadians);
 	colorRect(canvas.width/2, canvas.height/2 - wheelMisfortune.height/2 - 8, 4, 15, 'yellow');
-	var wheelNow = Math.floor(wheelWords.length * (wheelRadians/(2.0 * Math.PI)));
+	var wheelNow = Math.floor(misfortuneTypes.length * (wheelRadians/(2.0 * Math.PI)));
 	canvasContext.fillStyle = "black";
 	canvasContext.textAlign = 'center';
-	canvasContext.fillText(wheelWords[wheelNow], canvas.width/2, canvas.height/2 + wheelMisfortune.height/2 +15);
+	canvasContext.fillText(misfortunes[misfortuneTypes[wheelNow]].displayName, canvas.width/2, canvas.height/2 + wheelMisfortune.height/2 +15);
 }
 
 function kickWheel(){
