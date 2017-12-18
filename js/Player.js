@@ -4,6 +4,9 @@ function Player(positionX, positionY) {
     this.speed = 1;
     this.playerHeight = 48;
     this.playerWidth = 30;
+	
+	this.gunMuzzleX = 0.0;
+	this.gunMuzzleY = 0.0;
 
     this.fireRate = 4; //In frames
     this.nextFire = 0;
@@ -52,7 +55,11 @@ function Player(positionX, positionY) {
         if (this.nextFire > 0) {
             this.nextFire--;
         }
-    }; //end of playerMove
+    
+		this.gunMuzzleX = this.x + Math.cos(this.gunRotation) * playerWeapon.width/2;
+		this.gunMuzzleY = this.y + Math.sin(this.gunRotation) * playerWeapon.width/2;
+
+	}; //end of playerMove
 
     this.draw = function() {
         drawBitmapFlipped(playerPic, this.x, this.y, mouseX < this.x);
@@ -65,8 +72,8 @@ function Player(positionX, positionY) {
             this.muzzleFlashFrames--;
             drawBitmapCenteredAtLocationWithRotation(
             muzzleFlashPic,
-            this.x,
-            this.y,
+            this.gunMuzzleX,
+            this.gunMuzzleY,
             this.gunRotation
             );
         }
@@ -88,7 +95,7 @@ function Player(positionX, positionY) {
         if (this.nextFire === 0) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
-            shotList.push(new shotClass(this.x, this.y, direction, false));
+            shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction, false));
             this.muzzleFlashFrames = 3;
         }
     };
