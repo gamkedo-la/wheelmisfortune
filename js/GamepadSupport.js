@@ -11,7 +11,7 @@ window.joystick = new GamepadSupport();
 function GamepadSupport()
 {
     const TWIN_STICK_AIMING = true; // fake mouse positions w gamepad?
-    const TWIN_STICK_FIRING = true; // if you aim, you fire: simpler controls no buttons reqd
+    const TWIN_STICK_FIRING = false; // if you aim, you presse the fire button for free: no buttons reqd (messes up some bullet timings?)
 
     var gamepad = null;
     var gamepad_left = false;
@@ -126,6 +126,17 @@ function GamepadSupport()
             butt = applyDeadzone(gamepad.buttons[3].value, 0.25);
             gamepad_y = (butt>0);
             //console.log("Gamepad buttons: A:" + gamepad.buttons[0].value + " B:" + + gamepad.buttons[1].value + " X:" + + gamepad.buttons[2].value + " Y:" + + gamepad.buttons[3].value);
+
+            // WHELLMISFORTUNE SPECIFIC:
+            // L1/L2/R1/R2 = 4,5,6,7
+            //  can be used for firing too - so you don't have to take your thumb off joystick2
+            var L1 = applyDeadzone(gamepad.buttons[4].value, 0.1);
+            var L2 = applyDeadzone(gamepad.buttons[5].value, 0.1);
+            var R1 = applyDeadzone(gamepad.buttons[6].value, 0.1);
+            var R2 = applyDeadzone(gamepad.buttons[7].value, 0.1);
+            
+            gamepad_a = gamepad_a || L1 || L2 || R1 || R2; // ANY of these acts as a button A
+
 
             if (TWIN_STICK_AIMING)
             {
