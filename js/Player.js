@@ -78,11 +78,14 @@ function Player(positionX, positionY) {
             );
         }
 
+        // mirror image the gun sprite if it is pointing left
+        var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
         drawBitmapCenteredAtLocationWithRotation(
             playerWeapon,
             this.x,
             this.y,
-            this.gunRotation
+            flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
+            flipGunSprite
         );
 
         if (this.drawMask) {
