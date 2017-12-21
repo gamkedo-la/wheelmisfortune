@@ -22,7 +22,7 @@ function Enemy(startX, startY) {
 	// reflect player shot dynamic light? only works with circles
 	this.useSpecularShineEffect = true; 
 
-	this.life = 100;
+	this.life = 5;
 	this.remove = false;
 	
 	this.move = function() {
