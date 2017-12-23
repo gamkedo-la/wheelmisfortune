@@ -118,10 +118,7 @@ function onResize() { // changing window dimensions
 function moveEverything() {
 	if(wheelShowing){
 		wheelMove();
-		return; // skipping gamemovement while wheelShowing
-	}
-	if(activeMisfortunes.length > 0) {
-		updateActiveMisfortunes();
+		return; // skipping game movement while wheelShowing
 	}
 
 	player.move();

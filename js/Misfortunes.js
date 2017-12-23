@@ -39,6 +39,7 @@ const misfortuneTypes = Object.keys(misfortunes);
 var activeMisfortunes = [];
 
 function updateActiveMisfortunes() {
+    if (wheelShowing){return;}
     for (var i = 0; i < activeMisfortunes.length; i++) {
         if (activeMisfortunes[i].updateFunction) {
             activeMisfortunes[i]['updateFunction']();
