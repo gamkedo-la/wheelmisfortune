@@ -100,6 +100,7 @@ function Player(positionX, positionY) {
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
             shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction, false));
             this.muzzleFlashFrames = 3;
+            sounds.bullet.play();
         }
     };
 

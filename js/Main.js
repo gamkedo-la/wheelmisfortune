@@ -54,6 +54,7 @@ window.onload = function() {
 	scaledContext.webkitImageSmoothingEnabled = false;
 
 	loadImages();
+	loadSounds();
 };
 
 function loadingDoneSoStartGame() {
