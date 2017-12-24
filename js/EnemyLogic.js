@@ -18,6 +18,7 @@ function Enemy(startX, startY) {
 	this.facing = 0;
 	this.sprite = badguyPic;
 	this.size = 80;
+	this.flipToFaceLeft = false;
 	
 	// reflect player shot dynamic light? only works with circles
 	this.useSpecularShineEffect = true; 
@@ -50,12 +51,15 @@ function Enemy(startX, startY) {
 			this.heading = (TWO_PI - this.heading) % TWO_PI;
 		}
 		this.facing += this.spinSpeed;
+		console.log("Heading: ", this.heading, "Facing: ", this.facing);
 	};
-	
+	this.checkIfFacingLeft = function(){
+		if (Math.abs(this.heading) > Math.PI/2){ return true;}
+	}
 	this.draw = function() {
 		
 		// draw enemy sprite
-		drawBitmapCenteredAtLocationWithRotation(this.sprite, this.x, this.y,0);
+		drawBitmapCenteredAtLocationWithRotation(this.sprite, this.x, this.y,0 , this.checkIfFacingLeft());
 		  
 		// maybe draw a little shine
 		if (this.useSpecularShineEffect) // reflect player shot dynamic light?
@@ -140,4 +144,35 @@ function TestEnemy(startX, startY){
 	};
 }
 //TestEnemy end
+
+//Slug enemy start
+function Slug(startX,startY){
+	Enemy.call(this, startX, startY);
+	this.parentMove = this.move;
+	this.targetDirection;
+	this.turnRate = 0.025;
+	this.shotRate = 100;
+	//this.sprite = slugShieldPic;
+	this.shieldBroken = false;
+	
+	this.move = function() {
+		var targetX = player.x - this.x;
+		var targetY = player.y - this.y;
+		this.targetDirection = Math.atan2(targetY, targetX);
+		
+		this.normalizeHeading();
+		
+		// If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+		if((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+			this.heading -= this.turnRate;
+		}
+		else {
+			this.heading += this.turnRate;
+		}
+		
+		this.normalizeHeading();
+		
+		this.parentMove();
+	};
+}// Slug enemy end
 enemyList.push(new TestEnemy(100, 100));
