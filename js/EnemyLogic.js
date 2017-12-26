@@ -18,7 +18,7 @@ function Enemy(startX, startY) {
 	this.facing = 0;
 	this.sprite = badguyPic;
 	this.size = 80;
-	this.flipToFaceLeft = false;
+	this.faceLeft = false;
 	
 	// reflect player shot dynamic light? only works with circles
 	this.useSpecularShineEffect = true; 
@@ -51,10 +51,12 @@ function Enemy(startX, startY) {
 			this.heading = (TWO_PI - this.heading) % TWO_PI;
 		}
 		this.facing += this.spinSpeed;
-		console.log("Heading: ", this.heading, "Facing: ", this.facing);
 	};
 	this.checkIfFacingLeft = function(){
-		if (Math.abs(this.heading) > Math.PI/2){ return true;}
+		if (Math.abs(this.heading) > Math.PI/2){
+			this.faceLeft = true;	
+			return true;
+		}
 	}
 	this.draw = function() {
 		
@@ -74,7 +76,8 @@ function Enemy(startX, startY) {
 
 	};
 	
-	this.gotHit = function(damage) {
+	this.gotHit = function(damage, back) {
+		var backHit = back || false; //defaults to false
 		this.life -= damage;
 		
 		if (this.life <= 0) {
@@ -153,6 +156,8 @@ function Slug(startX,startY){
 	this.turnRate = 0.025;
 	this.shotRate = 100;
 	//this.sprite = slugShieldPic;
+
+	this.life = 20;
 	this.shieldBroken = false;
 	
 	this.move = function() {
@@ -175,4 +180,4 @@ function Slug(startX,startY){
 		this.parentMove();
 	};
 }// Slug enemy end
-enemyList.push(new TestEnemy(100, 100));
+enemyList.push(new Slug(100, 100));

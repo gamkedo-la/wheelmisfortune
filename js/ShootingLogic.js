@@ -105,8 +105,16 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
             distX = this.x - currentEnemy.x;
             distY = this.y - currentEnemy.y;
             if ((distX * distX + distY * distY) <= currentEnemy.size) {
+
+                //check for back hits
+                var back;
+                if ((this.xv < 0 && currentEnemy.faceLeft) ||
+                    this.xv > 0 && !currentEnemy.faceLeft){
+                back = true;
+                }
+                else back = false;
                 this.removeMe = true;
-                currentEnemy.gotHit(this.damage);
+                currentEnemy.gotHit(this.damage, back);
             }
         }
     };
