@@ -87,6 +87,7 @@ function loadingDoneSoStartGame() {
 		return false;
 	};
 
+	setUpMisfortuneTimer();
 	player = new Player(400, 400);
 } //end of loadingDoneSoStartGame
 
@@ -149,14 +150,14 @@ function drawEverything() {
 
 	playerHealthArray.length = player.maxHealth;
 	for (var i = 0; i < player.maxHealth; i++) {
-	playerHealthArray[i] = i < player.health;
+		playerHealthArray[i] = i < player.health;
 	}
 	for (var i = 0; i < player.health; i++) {
 		if (playerHealthArray[i]) {
 			colorRect(i*20,0,19,19,"red");
 		}
 	}
-	
+	displayMisfortuneTimer();
 	//Scale and redraw the game canvas to the screen
 	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
 		0, 0, scaledCanvas.width, scaledCanvas.height);

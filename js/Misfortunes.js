@@ -34,9 +34,20 @@ const misfortunes = {
         }
     }
 };
+var secondsOnThisMisfortune = 0;
 
 const misfortuneTypes = Object.keys(misfortunes);
 var activeMisfortunes = [];
+
+function countMisfortuneSecond(){
+	if(wheelShowing == false){
+		secondsOnThisMisfortune++;
+	}
+}
+
+function setUpMisfortuneTimer(){
+	setInterval(countMisfortuneSecond, 1000);
+}
 
 function updateActiveMisfortunes() {
     if (wheelShowing){return;}
@@ -47,13 +58,19 @@ function updateActiveMisfortunes() {
     }
 }
 
+function displayMisfortuneTimer(){
+	canvasContext.fillStyle = "black";
+	canvasContext.textAlign = 'center';
+	canvasContext.fillText(secondsOnThisMisfortune, canvas.width/2, canvas.height - 15);
+}
+
 function activateMisfortune(misfortuneType) {
     // deactivate all types
     activeMisfortunes = [];
     for (type in misfortunes) {
         misfortunes[type].isActive = false;
     }
-
+	secondsOnThisMisfortune = 0;
     // activate the passed misfortune
     misfortunes[misfortuneType].isActive = true;
     activeMisfortunes.push(misfortunes[misfortuneType]);
