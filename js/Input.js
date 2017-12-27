@@ -89,6 +89,7 @@ function keyReleased(evt) {
 			break;
 		case KEY_SPACE:
 			key_Space = false;
+			console.log(wheelSpinSpeed);
 			break;
 	}
 }
