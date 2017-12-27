@@ -51,9 +51,6 @@ function keyPressed(evt) {
 
 		case KEY_SPACE:
 			key_Space = true;
-			if(wheelShowing){
-				kickWheel();
-			}
 			break;
 		case KEY_M:
 			wheelShowing = !wheelShowing;
@@ -119,7 +116,7 @@ function mouseReleased(evt) {
 			break;
 	}
 }
-
+/*
 function handleInput(){
 
 	if (key_Space || mouse_Left){
@@ -130,4 +127,4 @@ function handleInput(){
 	} else{
 		clickLock = false;
 	}
-}
+}*/

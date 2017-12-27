@@ -1,5 +1,5 @@
 
-/////////////////         State machine that handles all the neat background stuff     ///////////////
+/////////////////         State machine that handles all the background stuff     ///////////////
 
 function GameController() {
     
@@ -23,17 +23,30 @@ gameController = new GameController();
 //This is how it works!
 function InGameState(){
     this.update = function() {
+        if(activeMisfortunes.length > 0) {
+            updateActiveMisfortunes();
+        }
         moveEverything();
         drawEverything();
         collideEverything();
-        handleInput();
+        this.handleInput();
         
         if(gameRunning) {
             animationFrameNumber = requestAnimationFrame(gameController.update);
         }
     };
     this.handleInput = function(){
-
+        if (key_Space || mouse_Left){
+            if(clickLock == false){
+                clickLock = true;
+                player.shoot();
+            }
+        } else{
+            clickLock = false;
+        }
+        if(key_Space && wheelShowing){
+            kickWheel();
+        }
     };
     this.enter = function(){
 
@@ -45,22 +58,6 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 // to avoid calling class construtor twice above maybe we should do it this way:
 // inGameState.prototype = Object.create(GameController.prototype); 
 defaultState = inGameState; //accessed on startup
-
-
-
-
-////////////            We can have something like this (not yet implemented)              //////////////
-var misfortune = {
-    "vanilla": false,
-    "meleeOnly": false,
-    "friendlyFire": false,
-    "eternalBullet": false,
-}; //etc
-
-//A method of the main menu?
-function spinTheWheel(){
-    var random = Math.random();
-}
 
 
 
