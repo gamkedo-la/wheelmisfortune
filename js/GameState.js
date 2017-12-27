@@ -26,6 +26,7 @@ function InGameState(){
         if(activeMisfortunes.length > 0) {
             updateActiveMisfortunes();
         }
+        updateAnims();
         moveEverything();
         drawEverything();
         collideEverything();
@@ -58,6 +59,14 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 // to avoid calling class construtor twice above maybe we should do it this way:
 // inGameState.prototype = Object.create(GameController.prototype); 
 defaultState = inGameState; //accessed on startup
+
+//Could be easily modified to update player as well
+function updateAnims(){
+    enemyList.forEach(function (enemy) {
+        if (typeof enemy.sprite != "undefined")
+        enemy.sprite.update();
+    });
+}
 
 
 

@@ -16,7 +16,7 @@ function Enemy(startX, startY) {
 	this.heading = 0.523599;
 	this.velocity = .7;
 	this.facing = 0;
-	this.sprite = badguyPic;
+	//this.sprite = badguyPic;
 	this.size = 80;
 	this.faceLeft = false;
 	
@@ -25,6 +25,11 @@ function Enemy(startX, startY) {
 
 	this.life = 5;
 	this.remove = false;
+
+	this.sprite = new spriteClass();
+	this.sprite.setSprite(this.spriteSheet,
+		this.spriteWidth, this.spriteHeight,
+		this.spriteFrames, this.spriteSpeed, true);
 	
 	this.move = function() {
 		if(this.life <= 0) {
@@ -61,7 +66,8 @@ function Enemy(startX, startY) {
 	this.draw = function() {
 		
 		// draw enemy sprite
-		drawBitmapCenteredAtLocationWithRotation(this.sprite, this.x, this.y,0 , this.checkIfFacingLeft());
+		this.sprite.draw(this.x, this.y, this.checkIfFacingLeft());
+		//drawBitmapCenteredAtLocationWithRotation(this.sprite, this.x, this.y,0 , this.checkIfFacingLeft());
 		  
 		// maybe draw a little shine
 		if (this.useSpecularShineEffect) // reflect player shot dynamic light?
@@ -97,7 +103,7 @@ function Enemy(startX, startY) {
 }
 
 //Test code, remove this later
-enemyList.push(new Enemy(50, 50));
+//enemyList.push(new Enemy(50, 50));
 
 //Enemy type code goes below here
 
@@ -106,6 +112,13 @@ TestEnemy.prototype = new Enemy();
 TestEnemy.prototype.constructor = TestEnemy;
 
 function TestEnemy(startX, startY){
+
+	this.spriteSheet = badguyPic;	//bit hacky to rely on ordering like this, but works for now
+	this.spriteWidth = 16;
+	this.spriteHeight = 16;
+	this.spriteFrames = 1;
+	this.spriteSpeed = 1;
+
 	Enemy.call(this, startX, startY);
 	this.parentMove = this.move;
 	this.targetDirection;
@@ -149,13 +162,23 @@ function TestEnemy(startX, startY){
 //TestEnemy end
 
 //Slug enemy start
+
+Slug.prototype = new Enemy();
+Slug.prototype.constructor = Slug;
 function Slug(startX,startY){
+
+	this.spriteSheet = slugShieldPic;	//bit hacky to rely on ordering like this, but works for now
+	this.spriteWidth = 32;
+	this.spriteHeight = 32;
+	this.spriteFrames = 2;
+	this.spriteSpeed = 1;
+
 	Enemy.call(this, startX, startY);
 	this.parentMove = this.move;
 	this.targetDirection;
 	this.turnRate = 0.025;
 	this.shotRate = 100;
-	//this.sprite = slugShieldPic;
+	//this.useSpecularShineEffect = false;
 
 	this.life = 20;
 	this.shieldBroken = false;
@@ -180,4 +203,5 @@ function Slug(startX,startY){
 		this.parentMove();
 	};
 }// Slug enemy end
+enemyList.push(new TestEnemy(50,50));
 enemyList.push(new Slug(100, 100));

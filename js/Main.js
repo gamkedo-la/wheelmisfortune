@@ -4,6 +4,7 @@ var scaledCanvas, scaledContext;
 
 var gameRunning = true;
 var animationFrameNumber;
+const TIME_PER_TICK = 1/30; //30 is the FPS
 
 var player;
 
