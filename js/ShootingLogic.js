@@ -113,6 +113,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
                 back = true;
                 }
                 else back = false;
+                
                 this.removeMe = true;
                 currentEnemy.gotHit(this.damage, back);
             }

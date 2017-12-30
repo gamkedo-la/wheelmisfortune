@@ -59,10 +59,11 @@ function Enemy(startX, startY) {
 	};
 	this.checkIfFacingLeft = function(){
 		if (Math.abs(this.heading) > Math.PI/2){
-			this.faceLeft = true;	
-			return true;
+			this.faceLeft = true;
 		}
-	}
+		else {this.faceLeft = false;}
+		return this.faceLeft;
+	};
 	this.draw = function() {
 		
 		// draw enemy sprite
@@ -82,8 +83,8 @@ function Enemy(startX, startY) {
 
 	};
 	
-	this.gotHit = function(damage, back) {
-		var backHit = back || false; //defaults to false
+	this.gotHit = function(damage) {
+
 		this.life -= damage;
 		
 		if (this.life <= 0) {
@@ -202,6 +203,15 @@ function Slug(startX,startY){
 		
 		this.parentMove();
 	};
+	this.gotHit = function(damage, back){
+		var backHit = back || false; //defaults to false
+		
+		if (backHit){
+			var damage = damage + 10;
+			console.log("Back hit! Damage: ", damage);
+		}
+		Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
+	}
 }// Slug enemy end
 enemyList.push(new TestEnemy(50,50));
 enemyList.push(new Slug(100, 100));

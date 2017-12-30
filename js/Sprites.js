@@ -100,6 +100,7 @@ function spriteClass() {
 				return;
 			} else {
 				if (toFlip){
+					//we need to play around with the canvas if we wanna flip
 					canvasContext.save();
 					canvasContext.translate(leftEdge + frameWidth, topEdge);
 					canvasContext.scale(-1.0, 1.0);
