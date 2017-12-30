@@ -181,7 +181,8 @@ function Slug(startX,startY){
 	this.shotRate = 100;
 	//this.useSpecularShineEffect = false;
 
-	this.life = 20;
+	this.life = 3; //low because it only reduces for back hits or when shield is broken
+	this.shieldHP = 10;
 	this.shieldBroken = false;
 	
 	this.move = function() {
@@ -207,9 +208,23 @@ function Slug(startX,startY){
 		var backHit = back || false; //defaults to false
 		
 		if (backHit){
-			var damage = damage + 10;
 			console.log("Back hit! Damage: ", damage);
 		}
+		else if (!this.shieldBroken){
+			this.shieldHP--;
+			if (this.shieldHP<=0){
+				console.log("Shield just broke");
+				this.shieldBroken = true;
+				this.sprite.setSprite(slugNoShieldPic,
+					this.spriteWidth, this.spriteHeight,
+					this.spriteFrames, this.spriteSpeed, true);
+			}
+			return; //we don't deal actual damage until the shield is broken
+		}
+		else {
+			console.log("Hit in the face");
+		}
+
 		Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
 	}
 }// Slug enemy end
