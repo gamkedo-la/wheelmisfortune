@@ -35,3 +35,7 @@ function FrameCounter() {
 }
 
 var frameCounter = new FrameCounter();
+
+function mod(n, m) {
+	return ((n % m) + m) % m;
+}

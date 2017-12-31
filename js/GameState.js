@@ -2,7 +2,6 @@
 /////////////////         State machine that handles all the background stuff     ///////////////
 
 function GameController() {
-
     this.handleInput = function () {
         state_.handleInput(); //Delegate the input to the state object
     };
@@ -55,126 +54,104 @@ function InGameState(){
 }
 
 function MainMenuState(){
-
-  //This can be out of the update() function, since you only need to define it one time
-  var mainMenuOptions = {
-    'startGame' : {
-      'displayName' : "Start Game",
-      'IsSelected' : false,
-      'x': 0,
-      'y': 0
-    },
-    'exampleOption' : {
-      'displayName' : "Example Option",
-      'IsSelected' : false,
-      'x': 0,
-      'y': 0
-    }
-  }
-  var mainMenuOptionsArray = Object.keys(mainMenuOptions);
-  var arrow = 0;
-
-  var defaultSelect = 0; //the first selected thing
-  mainMenuOptions[mainMenuOptionsArray[defaultSelect]].IsSelected = true;
-
-  var chosenDelayTime = 5; //number of frames to wait between selection
-  var delayTimer = 0; //this gets increased by 1 every frame
-
-  this.update = function(){
-
-    this.handleInput();
-    this.clearScreen();
-    this.drawEverything();
-
-    if(gameRunning) {
-        animationFrameNumber = requestAnimationFrame(gameController.update);
-    }
-  }
-
-  this.handleInput = function(){
-
-    //This is the timer that delays the selections
-    if (delayTimer < chosenDelayTime){
-      delayTimer++; //increment and leave for now
-      //console.log("Timer: ", delayTimer);
-      return;
-    }
-    //we can act now
-    else {
-      delayTimer = chosenDelayTime; //just setting the value so we don't have a huge number that always increases
-    }
-
-    if (key_Space && mainMenuOptions[mainMenuOptionsArray[0]].IsSelected) {
-      gameController.changeState(inGameState);
-      return;
-    }
-
-    var initial = arrow; //to compare at the end
-    if (key_Move_Down) {
-      arrow++;
-    }
-
-    if (key_Move_Up) {
-      arrow --;
-    }
-
-    if (arrow >= mainMenuOptionsArray.length) {
-      arrow = 0;
-    }
-    if (arrow < 0) {
-      arrow = mainMenuOptionsArray.length - 1; //-1 because the array starts at 0 and has length 2
-    }
-
-    for(var i = 0; i < mainMenuOptionsArray.length; i++){
-      if (i != arrow ) {
-        mainMenuOptions[mainMenuOptionsArray[i]].IsSelected = false;
-      }
-      else {
-        mainMenuOptions[mainMenuOptionsArray[i]].IsSelected = true;
-      }
-    }
-
-
-    //if we made a change, reset timer!
-    if (initial != arrow){
-      delayTimer = 0;
-      console.log("Reset timer. Arrow value: ", arrow);
-    }
-  }
-
-  this.drawEverything = function(){
-
-    for (var i = 0; i < mainMenuOptionsArray.length; i++) {
-      //console.log(mainMenuOptions[mainMenuOptionsArray[i]].displayName);
-      if (i == 0) {
-        mainMenuOptions[mainMenuOptionsArray[i]].x = 100;
-        mainMenuOptions[mainMenuOptionsArray[i]].y = 100;
-      }
-      else {
-        mainMenuOptions[mainMenuOptionsArray[i]].x = mainMenuOptions[mainMenuOptionsArray[i-1]].x;
-        mainMenuOptions[mainMenuOptionsArray[i]].y = mainMenuOptions[mainMenuOptionsArray[i-1]].y+10;
-      }
-      //console.log(mainMenuOptions[mainMenuOptionsArray[i]].x);
-      //console.log(mainMenuOptions[mainMenuOptionsArray[i]].IsSelected);
-      canvasContext.fillStyle = "white";
-      canvasContext.fillText(mainMenuOptions[mainMenuOptionsArray[i]].displayName, mainMenuOptions[mainMenuOptionsArray[i]].x, mainMenuOptions[mainMenuOptionsArray[i]].y);
-
-      if (mainMenuOptions[mainMenuOptionsArray[i]].IsSelected) {
-          colorRect(mainMenuOptions[mainMenuOptionsArray[i]].x -10, mainMenuOptions[mainMenuOptionsArray[i]].y-5, 5, 5, 'white');
-          //console.log(arrow);
-      }
-    }
-    scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
-  }
-  this.clearScreen = function(){
-    canvasContext.fillStyle = "black";
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-  }
-
-  this.enter = function(){
-
-  }
+    //This can be out of the update() function, since you only need to define it one time
+    var mainMenuOptions = [
+        {
+            'displayName' : "Start Game",
+            'IsSelected' : false,
+            'x': 20,
+            'y': 20,
+            'width': 100,
+            'height': 20,
+            'action': function() {gameController.changeState(inGameState);console.log("Start Game Button");}
+        },
+        {
+            'displayName' : "Example Option",
+            'IsSelected' : false,
+            'x': 20,
+            'y': 50,
+            'width': 100,
+            'height': 20,
+            'action': function(){console.log("Example Button");}
+        }
+    ];
+    
+    var selected = 0;
+    
+    var chosenDelayTime = 12; //number of frames to wait between selection
+    var delayTimer = 0; //this gets increased by 1 every frame
+    
+    this.update = function(){
+        this.handleInput();
+        this.clearScreen();
+        this.drawEverything();
+        
+        if(gameRunning) {
+            animationFrameNumber = requestAnimationFrame(gameController.update);
+        }
+    };
+    
+    this.handleInput = function(){
+        if(mouse_Left) {
+            this.checkButtons();
+        }
+        
+        if (key_Menu_Select) {
+            mainMenuOptions[selected].action();
+        }
+        
+        //This is the timer that delays the keyboard selections
+        if (delayTimer > 0){
+            delayTimer--;
+            return;
+        }
+        
+        if (key_Move_Down) {
+            selected = mod(selected + 1, mainMenuOptions.length);
+            delayTimer = chosenDelayTime;
+        }
+        if (key_Move_Up) {
+            selected = mod(selected - 1, mainMenuOptions.length);
+            delayTimer = chosenDelayTime;
+        }
+    };
+    
+    this.drawEverything = function(){
+        for (var i = 0; i < mainMenuOptions.length; i++) {
+            canvasContext.fillStyle = "white";
+            
+            colorRect(mainMenuOptions[i].x, mainMenuOptions[i].y, mainMenuOptions[i].width, mainMenuOptions[i].height, 'green');
+            
+            canvasContext.fillStyle = "white";
+            canvasContext.fillText(mainMenuOptions[i].displayName, mainMenuOptions[i].x, mainMenuOptions[i].y + 15);
+            
+            if (i === selected) {
+                colorRect(mainMenuOptions[i].x -10, mainMenuOptions[i].y + 10, 5, 5, 'white');
+            }
+        }
+        scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
+    };
+    
+    this.clearScreen = function(){
+        canvasContext.fillStyle = "black";
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+    };
+    
+    this.enter = function(){
+        
+    };
+    
+    this.checkButtons = function(){
+        for(var i = 0; i < mainMenuOptions.length; i++){
+            var opt = mainMenuOptions[i];
+            console.log(opt.x, opt.y, opt.width, opt.height, mouseX, mouseY);
+            if(mouseInside(opt.x, opt.y, opt.width, opt.height)) {
+                opt.action();
+            }
+        }
+    };
 }
+
 inGameState = new InGameState();
 inGameState.prototype = new GameController(); //akin to inheritance in JS
 MainMenuState = new MainMenuState();

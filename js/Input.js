@@ -4,12 +4,15 @@ var key_Move_Left = false;
 var key_Move_Right = false;
 var key_Move_Down = false;
 var key_Space = false;
+var key_Menu_Select = false;
+
 //key cases
 const KEY_W = 87;
 const KEY_A = 65;
 const KEY_S = 83;
 const KEY_D = 68;
 const KEY_SPACE = 32;
+const KEY_ENTER = 13;
 const KEY_M = 77;
 const KEY_BACKSLASH = 220;
 
@@ -51,7 +54,10 @@ function keyPressed(evt) {
 
 		case KEY_SPACE:
 			key_Space = true;
+		case KEY_ENTER:
+			key_Menu_Select = true;
 			break;
+			
 		case KEY_M:
 			wheelShowing = !wheelShowing;
 			break;
@@ -87,6 +93,8 @@ function keyReleased(evt) {
 		case KEY_SPACE:
 			key_Space = false;
 			console.log(wheelSpinSpeed);
+		case KEY_ENTER:
+			key_Menu_Select = false;
 			break;
 	}
 }
@@ -115,6 +123,10 @@ function mouseReleased(evt) {
 			mouse_Right = false;
 			break;
 	}
+}
+
+function mouseInside(x, y, width, height) {
+	return mouseX > x && mouseX < x + width && mouseY > y	&& mouseY < y + height;
 }
 /*
 function handleInput(){

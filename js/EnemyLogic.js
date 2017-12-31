@@ -103,9 +103,6 @@ function Enemy(startX, startY) {
 	};
 }
 
-//Test code, remove this later
-//enemyList.push(new Enemy(50, 50));
-
 //Enemy type code goes below here
 
 //TestEnemy begin
