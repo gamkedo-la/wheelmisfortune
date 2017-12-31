@@ -5,7 +5,6 @@ function MainMenuState(){
     var mainMenuOptions = [
         {
             'displayName' : "Start Game",
-            'IsSelected' : false,
             'x': 20,
             'y': 20,
             'width': 100,
@@ -14,7 +13,6 @@ function MainMenuState(){
         },
         {
             'displayName' : "Example Option",
-            'IsSelected' : false,
             'x': 20,
             'y': 50,
             'width': 100,
@@ -27,8 +25,8 @@ function MainMenuState(){
     
     var chosenDelayTime = 12; //number of frames to wait between selection
     var delayTimer = 0; //this gets increased by 1 every frame
-		
-		this.enter = function(){};
+    
+    this.enter = function(){};
     
     this.update = function(){
         this.handleInput();

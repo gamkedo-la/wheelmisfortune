@@ -3,8 +3,8 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 
 //This is how it works!
 function InGameState(){
-		this.enter = function(){};
-		
+    this.enter = function(){};
+    
     this.update = function() {
         if(activeMisfortunes.length > 0) {
             updateActiveMisfortunes();
@@ -14,7 +14,7 @@ function InGameState(){
         this.drawEverything();
         this.collideEverything();
         this.handleInput();
-
+        
         if(gameRunning) {
             animationFrameNumber = requestAnimationFrame(gameController.update);
         }

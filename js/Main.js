@@ -97,11 +97,13 @@ function windowOnFocus() {
 		gameRunning = true;
 		animationFrameNumber = requestAnimationFrame(gameController.update);
 	}
+	adjustGameVolume(globalVolume);
 }
 
 function windowOnBlur() {
 	gameRunning = false;
 	cancelAnimationFrame(animationFrameNumber);
+	adjustGameVolume(0);
 }
 
 function onResize() { // changing window dimensions

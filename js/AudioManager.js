@@ -1,9 +1,17 @@
 var soundsLoaded = false;
 var audioFormat;
+var globalVolume = 1;
 
 var sounds = {
     'bullet': {
         'src': './audio/bulletShoot',
+        'volumeRange': {
+            'min': 0.6,
+            'max': 1
+        }
+    },
+    'theme': {
+        'src': './audio/endTheme',
         'volumeRange': {
             'min': 0.6,
             'max': 1
@@ -28,9 +36,15 @@ function Sound(sound) {
     this.properties = sound;
     this.play = function() {
         if (this.properties.volumeRange) {
-            audio.volume = getRandomVolume(this.properties.volumeRange.min, this.properties.volumeRange.max);
+            audio.volume = getRandomVolume(this.properties.volumeRange.min, this.properties.volumeRange.max) * globalVolume;
+        } else {
+            audio.volume = globalVolume;
         }
         audio.play();
+    };
+    
+    this.changeVolume = function(volumeIn) {
+        audio.volume = volumeIn;
     };
 }
 
@@ -54,4 +68,10 @@ function getRandomVolume(minVolume, maxVolume) {
     }
     var randomVolume = Math.random() * (max - min) + min;
     return randomVolume.toFixed(2);
+}
+
+function adjustGameVolume(volume) {
+    Object.keys(sounds).forEach(function(key) {
+        sounds[key].changeVolume(volume);
+    });
 }
