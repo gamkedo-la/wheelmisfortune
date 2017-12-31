@@ -60,7 +60,7 @@ window.onload = function() {
 
 function loadingDoneSoStartGame() {
 	// these next few lines set up our game logic and render to happen many times per second
-	gameController.changeState(defaultState);
+	gameController.changeState(MainMenuState); //Put initial game state here
 
 	animationFrameNumber = requestAnimationFrame(gameController.update);
 
@@ -117,57 +117,3 @@ function onResize() { // changing window dimensions
         scaledCanvas.height = heightIfWidthScaled;
     }
 }
-
-function moveEverything() {
-	if(wheelShowing){
-		wheelMove();
-		return; // skipping game movement while wheelShowing
-	}
-
-	player.move();
-	moveEnemies();
-	moveShots();
-} //end of moveEverything
-
-function drawEverything() {
-	// clear the game view by filling it with black
-	canvasContext.fillStyle = "black";
-	canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-	canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
-	
-	player.draw();
-
-	for (var i = 0; i < shotList.length; i++) {
-		shotList[i].draw();
-	}
-	for (var e = 0; e < enemyList.length; e++) {
-		enemyList[e].draw();
-	}
-
-
-	if(wheelShowing){
-		drawWheel();
-	}
-
-	playerHealthArray.length = player.maxHealth;
-	for (var i = 0; i < player.maxHealth; i++) {
-		playerHealthArray[i] = i < player.health;
-	}
-	for (var i = 0; i < player.health; i++) {
-		if (playerHealthArray[i]) {
-			colorRect(i*20,0,19,19,"red");
-		}
-	}
-	displayMisfortuneTimer();
-	//Scale and redraw the game canvas to the screen
-	scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height,
-		0, 0, scaledCanvas.width, scaledCanvas.height);
-
-	if(debug) {
-		frameCounter.getFps();
-	}
-} // end of drawEverything
-
-function collideEverything() {
-	checkBulletCollisions();
-} //end of collideEverything
