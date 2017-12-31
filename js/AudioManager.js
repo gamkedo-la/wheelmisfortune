@@ -1,8 +1,9 @@
 var soundsLoaded = false;
+var audioFormat;
 
 var sounds = {
     'bullet': {
-        'src': './audio/bulletShoot.wav',
+        'src': './audio/bulletShoot',
         'volumeRange': {
             'min': 0.6,
             'max': 1
@@ -12,6 +13,7 @@ var sounds = {
 
 function loadSounds() {
     if (soundsLoaded) return;
+    setAudioFormat();
     Object.keys(sounds).forEach(function(key) {
         var newSound = new Sound(sounds[key]);
         sounds[key] = newSound;
@@ -20,7 +22,8 @@ function loadSounds() {
 }
 
 function Sound(sound) {
-    var audio = new Audio(sound.src);
+    var pathToSound = sound.src + audioFormat;
+    var audio = new Audio(pathToSound);
 
     this.properties = sound;
     this.play = function() {
@@ -29,6 +32,16 @@ function Sound(sound) {
         }
         audio.play();
     };
+}
+
+function setAudioFormat() {
+    if (audioFormat && audioFormat.length > 0) return;
+
+    var audio = new Audio();
+    audioFormat = ".ogg";
+    if (audio.canPlayType("audio/mp3")) {
+        audioFormat = ".mp3";
+    }
 }
 
 function getRandomVolume(minVolume, maxVolume) {
