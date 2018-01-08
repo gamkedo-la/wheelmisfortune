@@ -15,6 +15,7 @@ const KEY_SPACE = 32;
 const KEY_ENTER = 13;
 const KEY_M = 77;
 const KEY_BACKSLASH = 220;
+const KEY_E = 69;
 
 const KEY_LEFT = 37;
 const KEY_UP = 38;
@@ -64,6 +65,10 @@ function keyPressed(evt) {
 			
 		case KEY_BACKSLASH:
 			frameCounter.active = !frameCounter.active;
+			break;
+
+		case KEY_E:
+			swapWeaponThisFrame = true;
 			break;
 
 		default:

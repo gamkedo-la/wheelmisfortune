@@ -51,6 +51,11 @@ function InGameState(){
         player.move();
         moveEnemies();
         moveShots();
+        
+        if (swapWeaponThisFrame) {
+            swapWeapon();
+            swapWeaponThisFrame = false;
+        }
     };
     
     this.drawEverything = function() {

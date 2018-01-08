@@ -80,13 +80,15 @@ function Player(positionX, positionY) {
 
         // mirror image the gun sprite if it is pointing left
         var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
-        drawBitmapCenteredAtLocationWithRotation(
-            playerWeapon,
-            this.x,
-            this.y,
-            flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
-            flipGunSprite
-        );
+        if (currentWeapon === 'Gun') {
+            drawBitmapCenteredAtLocationWithRotation(
+                playerWeapon,
+                this.x,
+                this.y,
+                flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
+                flipGunSprite
+            );
+        }
 
         if (this.drawMask) {
             canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
@@ -95,6 +97,9 @@ function Player(positionX, positionY) {
     };
 
     this.shoot = function() {
+        if (currentWeapon !== 'Gun') {
+            return;
+        }
         if (this.nextFire === 0) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
