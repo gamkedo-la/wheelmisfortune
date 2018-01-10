@@ -35,7 +35,7 @@ function loadImages() {
 		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: slugShieldPic, theFile: "slugMoveShield.png" },
 		{ varName: slugNoShieldPic, theFile: "slugMoveBreak.png" }, 
-		{ varName: backGroundPic, theFile: "arena00.png" }, ////
+		{ varName: backGroundPic, theFile: "arena01.png" }, ////
 		{ varName: playerWeapon, theFile: "gunRotateTest.png" },
 		{ varName: wheelMisfortune, theFile: "wheeloffortune.png"},
 		{ varName: muzzleFlashPic, theFile: "muzzleFlash.png"},
