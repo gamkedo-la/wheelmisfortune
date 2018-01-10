@@ -20,6 +20,9 @@ function Enemy(startX, startY) {
 	this.size = 80;
 	this.faceLeft = false;
 	
+	// set to zero for no kickback / knockback effect
+	this.hitKnockback = -3.0; // how far back it gets pushed when it gets hit
+	
 	// reflect player shot dynamic light? only works with circles
 	this.useSpecularShineEffect = true; 
 
@@ -87,6 +90,13 @@ function Enemy(startX, startY) {
 
 		this.life -= damage;
 		
+		if (this.hitKnockback) // enemy gets nudged a few pixels back when hit
+		{
+			var dir = Math.atan2(player.y - this.y, player.x - this.x);
+			this.x += Math.cos(dir) * this.hitKnockback;
+			this.y += Math.sin(dir) * this.hitKnockback;
+		}
+
 		if (this.life <= 0) {
 			this.remove = true;
 			enemyList.push(new TestEnemy(80, 80));
@@ -118,6 +128,7 @@ function TestEnemy(startX, startY){
 	this.spriteSpeed = 1;
 
 	Enemy.call(this, startX, startY);
+	
 	this.parentMove = this.move;
 	this.targetDirection;
 	this.turnRate = 0.025;
@@ -182,6 +193,9 @@ function Slug(startX,startY){
 	this.shieldHP = 10;
 	this.shieldBroken = false;
 	
+	// reflect player shot dynamic light? NO: the effect only works with circles
+	this.useSpecularShineEffect = false; 
+
 	this.move = function() {
 		var targetX = player.x - this.x;
 		var targetY = player.y - this.y;
