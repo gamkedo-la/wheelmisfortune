@@ -89,6 +89,9 @@ function Player(positionX, positionY) {
                 flipGunSprite
             );
         }
+        else if (currentWeapon === 'Sword') {
+            drawSword();
+        }
 
         if (this.drawMask) {
             canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';

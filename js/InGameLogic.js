@@ -56,6 +56,7 @@ function InGameState(){
             swapWeapon();
             swapWeaponThisFrame = false;
         }
+        moveWeapons();
     };
     
     this.drawEverything = function() {
