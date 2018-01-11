@@ -1,7 +1,7 @@
-var enemyList = [];
+var enemyList = []; //list of enemies
 
 function moveEnemies() {
-	for (var i = 0; i < enemyList.length; i++) {
+	for (var i = enemyList.length - 1; i >= 0; i--) {  //backwards since we are splicing out
 		enemyList[i].move();
 		if(enemyList[i].remove) {
 			enemyList[i] = null;
@@ -30,13 +30,14 @@ function Enemy(startX, startY) {
 	this.remove = false;
 
 	this.sprite = new spriteClass();
-	this.sprite.setSprite(this.spriteSheet,
+	this.sprite.setSprite(this.spriteSheet, //note these values must be defined from the deriving class
 		this.spriteWidth, this.spriteHeight,
 		this.spriteFrames, this.spriteSpeed, true);
 	
 	this.move = function() {
 		if(this.life <= 0) {
-			this.remove = true;
+			this.remove = true; 
+			return;
 		}
 		
 		this.x += Math.cos(this.heading) * this.velocity;
@@ -86,7 +87,7 @@ function Enemy(startX, startY) {
 
 	};
 	
-	this.gotHit = function(damage) {
+	this.gotHit = function(damage, shotInBack) {
 
 		this.life -= damage;
 		
@@ -99,7 +100,7 @@ function Enemy(startX, startY) {
 
 		if (this.life <= 0) {
 			this.remove = true;
-			enemyList.push(new TestEnemy(80, 80));
+			//enemyList.push(new DeathSphere(80, 80)); //spawned new enemy each time one dies for testing
 
 			if(misfortunes.vampire.isActive) {
 				misfortunes.vampire.properties.canRestoreHealth = true;
@@ -112,14 +113,15 @@ function Enemy(startX, startY) {
 		this.heading = ((this.heading + THREE_PI) % TWO_PI) - Math.PI;
 	};
 }
+//end base enemy class
 
 //Enemy type code goes below here
 
-//TestEnemy begin
-TestEnemy.prototype = new Enemy();
-TestEnemy.prototype.constructor = TestEnemy;
+//DeathSphere begin
+DeathSphere.prototype = new Enemy();
+DeathSphere.prototype.constructor = DeathSphere;
 
-function TestEnemy(startX, startY){
+function DeathSphere(startX, startY){
 
 	this.spriteSheet = badguyPic;	//bit hacky to rely on ordering like this, but works for now
 	this.spriteWidth = 16;
@@ -127,7 +129,7 @@ function TestEnemy(startX, startY){
 	this.spriteFrames = 1;
 	this.spriteSpeed = 1;
 
-	Enemy.call(this, startX, startY);
+	Enemy.call(this, startX, startY); //calls base class constructor
 	
 	this.parentMove = this.move;
 	this.targetDirection;
@@ -168,9 +170,11 @@ function TestEnemy(startX, startY){
 		}
 	};
 }
-//TestEnemy end
+//DeathSphere end
 
 //Slug enemy start
+
+const 	SLUG_THINK_DELAY = 300;
 
 Slug.prototype = new Enemy();
 Slug.prototype.constructor = Slug;
@@ -185,6 +189,7 @@ function Slug(startX,startY){
 	Enemy.call(this, startX, startY);
 	this.parentMove = this.move;
 	this.targetDirection;
+	this.framesUntilDirectionUpdate = 0;
 	this.turnRate = 0.025;
 	this.shotRate = 100;
 	//this.useSpecularShineEffect = false;
@@ -197,12 +202,15 @@ function Slug(startX,startY){
 	this.useSpecularShineEffect = false; 
 
 	this.move = function() {
-		var targetX = player.x - this.x;
-		var targetY = player.y - this.y;
-		this.targetDirection = Math.atan2(targetY, targetX);
-		
-		this.normalizeHeading();
-		
+		this.framesUntilDirectionUpdate--;
+		if(this.framesUntilDirectionUpdate <= 0){
+			this.framesUntilDirectionUpdate = SLUG_THINK_DELAY;
+			var targetX = player.x - this.x;
+			var targetY = player.y - this.y;
+			this.targetDirection = Math.atan2(targetY, targetX);
+			
+			this.normalizeHeading();
+		}
 		// If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
 		if((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
 			this.heading -= this.turnRate;
@@ -239,5 +247,5 @@ function Slug(startX,startY){
 		Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
 	}
 }// Slug enemy end
-enemyList.push(new TestEnemy(50,50));
+enemyList.push(new DeathSphere(50,50));
 enemyList.push(new Slug(100, 100));

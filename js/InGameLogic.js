@@ -21,7 +21,7 @@ function InGameState(){
     };
     
     this.handleInput = function(){
-        if (key_Space || mouse_Left){
+        if (mouse_Left){
             if(clickLock == false){
                 clickLock = true;
                 player.shoot();

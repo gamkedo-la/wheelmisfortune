@@ -55,6 +55,7 @@ function keyPressed(evt) {
 
 		case KEY_SPACE:
 			key_Space = true;
+			//no break, following through
 		case KEY_ENTER:
 			key_Menu_Select = true;
 			break;
@@ -133,15 +134,4 @@ function mouseReleased(evt) {
 function mouseInside(x, y, width, height) {
 	return mouseX > x && mouseX < x + width && mouseY > y	&& mouseY < y + height;
 }
-/*
-function handleInput(){
 
-	if (key_Space || mouse_Left){
-		if(clickLock == false){
-			clickLock = true;
-			player.shoot();
-		}
-	} else{
-		clickLock = false;
-	}
-}*/
