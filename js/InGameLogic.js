@@ -99,5 +99,6 @@ function InGameState(){
     
     this.collideEverything = function() {
         checkBulletCollisions();
+        checkSwordCollisions();
     };
 }

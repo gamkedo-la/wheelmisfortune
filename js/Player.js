@@ -116,6 +116,9 @@ function Player(positionX, positionY) {
     };
 
     this.shoot = function() {
+        if (currentWeapon === 'Sword') {
+            swingSword();
+        }
         if (currentWeapon !== 'Gun') {
             return;
         }
