@@ -90,6 +90,9 @@ function loadingDoneSoStartGame() {
 
 	setUpMisfortuneTimer();
 	player = new Player(400, 400);
+	
+	spawnInitialEnemies();
+	
 } //end of loadingDoneSoStartGame
 
 function windowOnFocus() {

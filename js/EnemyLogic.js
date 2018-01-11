@@ -1,4 +1,18 @@
 var enemyList = []; //list of enemies
+const MIN_SPAWN_DIST_TO_PLAYER = 250;
+
+function spawnInitialEnemies(){
+	var deathSphereCount = 1 + Math.floor(Math.random() * 2);
+	var slugCount = 2 + Math.floor(Math.random() * 3);
+	for(var i = 0; i < deathSphereCount; i++){
+		var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+		enemyList.push(new DeathSphere(nextPt.x,nextPt.y));
+	}
+	for(var i = 0; i < deathSphereCount; i++){
+		var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+		enemyList.push(new Slug(nextPt.x,nextPt.y));
+	}
+}
 
 function moveEnemies() {
 	for (var i = enemyList.length - 1; i >= 0; i--) {  //backwards since we are splicing out
@@ -247,5 +261,3 @@ function Slug(startX,startY){
 		Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
 	}
 }// Slug enemy end
-enemyList.push(new DeathSphere(50,50));
-enemyList.push(new Slug(100, 100));

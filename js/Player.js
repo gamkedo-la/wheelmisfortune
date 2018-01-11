@@ -1,3 +1,19 @@
+function pointNotTooCloseToPlayer(minDist){
+	var testX, testY;
+	var safetyLimit = 300; //if it takes more than 300 checks something is wrong, BAIL
+	do {
+		testX = Math.random() * canvas.width;
+		testY = Math.random() * canvas.height;
+		safetyLimit--;
+		if(safetyLimit < 0){
+			console.log("pointNotTooCloseToPlayer exhausted attempts, was min dist too high? "+minDist);
+			return {x: 5, y: 5};
+		}
+	} while(dist(testX,testY, player.x,player.y) < minDist);
+			
+	return {x: testX, y: testY};
+}
+
 function Player(positionX, positionY) {
     this.x = positionX;
     this.y = positionY;
