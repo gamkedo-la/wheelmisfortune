@@ -12,6 +12,14 @@ function spawnInitialEnemies(){
 		var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
 		enemyList.push(new Slug(nextPt.x,nextPt.y));
 	}
+	for(var i = 0; i < 3; i++){
+		var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+		enemyList.push(new LilBox(nextPt.x,nextPt.y));
+	}
+	for(var i = 0; i < 2; i++){
+		var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+		enemyList.push(new BigBox(nextPt.x,nextPt.y));
+	}
 }
 
 function moveEnemies() {
@@ -261,3 +269,51 @@ function Slug(startX,startY){
 		Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
 	}
 }// Slug enemy end
+
+LilBox.prototype = new Enemy();
+LilBox.prototype.constructor = LilBox;
+
+function LilBox(startX, startY){
+
+	this.spriteSheet = crateShortPic;	//bit hacky to rely on ordering like this, but works for now
+	this.spriteWidth = 16;
+	this.spriteHeight = 16;
+	this.spriteFrames = 1;
+	this.spriteSpeed = 1;
+
+	Enemy.call(this, startX, startY); //calls base class constructor
+	
+	this.hitKnockback = -13.0; // lightweight box
+
+	this.parentMove = this.move;
+	
+	this.move = function() {
+		this.velocity = 0; // it's a box
+		this.parentMove();
+	};
+}
+//LilBox end
+
+BigBox.prototype = new Enemy();
+BigBox.prototype.constructor = BigBox;
+
+function BigBox(startX, startY){
+
+	this.spriteSheet = crateTallPic;	//bit hacky to rely on ordering like this, but works for now
+	this.spriteWidth = 16;
+	this.spriteHeight = 32;
+	this.spriteFrames = 1;
+	this.spriteSpeed = 1;
+
+	Enemy.call(this, startX, startY); //calls base class constructor
+	
+	this.hitKnockback = -1.0; // heavy box
+
+	this.parentMove = this.move;
+	
+	this.move = function() {
+		this.velocity = 0; // it's a box, too
+		this.parentMove();
+	};
+}
+//LilBox end
