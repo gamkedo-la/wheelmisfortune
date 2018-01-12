@@ -10,6 +10,9 @@ var muzzleFlashPic = document.createElement("img");
 var specularShinePic = document.createElement("img");
 var smokeTrailPic = document.createElement("img");
 
+var crateShortPic = document.createElement("img");
+var crateTallPic = document.createElement("img");
+
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
 function countLoadedImageAndLaunchIfReady() {
@@ -41,6 +44,8 @@ function loadImages() {
 		{ varName: muzzleFlashPic, theFile: "muzzleFlash.png"},
 		{ varName: specularShinePic, theFile: "sphereSpecularShine.png"},
 		{ varName: smokeTrailPic, theFile: "smokeTrail.png"},
+		{ varName: crateShortPic, theFile: "Crate.png"},
+		{ varName: crateTallPic, theFile: "CrateLarge.png"}
 	]; ////
 
 	picsToLoad = imageList.length; ////
