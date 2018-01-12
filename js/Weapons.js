@@ -24,9 +24,10 @@ var swordSwingTimer = 0;
 var swordDamage = 2;
 
 function moveWeapons() {
-	// TODO: this should be kept next to the player
-    swordHitboxMidX = mouseX;
-    swordHitboxMidY = mouseY;
+	var angle = Math.atan2(mouseY - player.y, mouseX - player.x);
+    swordHitboxMidX = player.x + 20 * Math.cos(angle);
+    swordHitboxMidY = player.y + 20 * Math.sin(angle);
+
     if (swordSwingTimer > 0) {
     	swordSwingTimer--;
     }
