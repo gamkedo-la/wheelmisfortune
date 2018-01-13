@@ -1,4 +1,6 @@
 var playerPic = document.createElement("img");
+var ninjaPic = document.createElement("img");
+var cowboyPic = document.createElement("img");
 var bulletPic = document.createElement("img");
 var badguyPic = document.createElement("img");
 var slugShieldPic = document.createElement("img");
@@ -34,6 +36,8 @@ function loadImages() {
 	var imageList = [
 		////
 		{ varName: playerPic, theFile: "player.png" }, ////
+		{ varName: ninjaPic, theFile: "ninjaPlayer.png"}, ////
+		{ varName: cowboyPic, theFile: "cowboyPlayer.png"}, ////
 		{ varName: bulletPic, theFile: "bullet.png" }, ////
 		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: slugShieldPic, theFile: "slugMoveShield.png" },
