@@ -1,6 +1,9 @@
-var playerPic = document.createElement("img");
 var ninjaPic = document.createElement("img");
 var cowboyPic = document.createElement("img");
+var knightPic = document.createElement("img");
+var playerSpritePics = [ninjaPic,cowboyPic,knightPic];
+var playerKind = 0; // will randomize/set at top of Player.js
+
 var bulletPic = document.createElement("img");
 var badguyPic = document.createElement("img");
 var slugShieldPic = document.createElement("img");
@@ -35,9 +38,9 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
 	var imageList = [
 		////
-		{ varName: playerPic, theFile: "player.png" }, ////
 		{ varName: ninjaPic, theFile: "ninjaPlayer.png"}, ////
 		{ varName: cowboyPic, theFile: "cowboyPlayer.png"}, ////
+		{ varName: knightPic, theFile: "knightPlayer.png"}, ////
 		{ varName: bulletPic, theFile: "bullet.png" }, ////
 		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: slugShieldPic, theFile: "slugMoveShield.png" },

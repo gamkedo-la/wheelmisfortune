@@ -37,3 +37,27 @@ function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 	canvasContext.drawImage(graphic, -graphic.width / 2, -graphic.height / 2);
 	canvasContext.restore();
 }
+
+function drawFacingLeftOption(image,atX,atY,flipToFaceLeft, frameNum) {
+  var frameDim = 32; // hard coded at the moment
+  var offX, offY;
+  if(flipToFaceLeft) {
+    canvasContext.save();
+    canvasContext.translate(atX, atY);
+    canvasContext.scale(-1, 1);
+    offX = offY = 0;
+  } else {
+	offX = atX;
+	offY = atY;
+  }
+
+  canvasContext.drawImage(image,
+        frameNum * frameDim, 0, // top-left corner of tile art
+        frameDim, image.height, // get full tile size from source
+        offX-frameDim/2,offY-image.height/2, // x,y top-left corner for image destination
+        frameDim, image.height);
+
+  if(flipToFaceLeft) {
+    canvasContext.restore();
+  }
+}

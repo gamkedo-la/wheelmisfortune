@@ -12,8 +12,6 @@ var playerHealthArray = [];
 
 const PIXEL_SCALE_UP = 2; // Number of times to scale up art tiles
 
-
-
 function calculateMousePos(evt) {
 	var rect = scaledCanvas.getBoundingClientRect(),
 		root = document.documentElement;
@@ -90,6 +88,7 @@ function loadingDoneSoStartGame() {
 
 	setUpMisfortuneTimer();
 	player = new Player(400, 400);
+	randomPlayerArt(); // until we have selector
 	
 	spawnInitialEnemies();
 	

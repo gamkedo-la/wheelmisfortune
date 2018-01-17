@@ -1,3 +1,7 @@
+function randomPlayerArt() {
+    playerKind = Math.floor(Math.random()*playerSpritePics.length);
+}
+
 function pointNotTooCloseToPlayer(minDist){
 	var testX, testY;
 	var safetyLimit = 300; //if it takes more than 300 checks something is wrong, BAIL
@@ -28,6 +32,8 @@ function Player(positionX, positionY) {
     this.nextFire = 0;
     this.gunRotation = 0;
     this.muzzleFlashFrames = 0;
+    this.isWalking = false; // for animation
+    this.animCycleCounter = 0; // lazy frame rate controller
 
     this.maxHealth = 3;
     this.health = this.maxHealth;
@@ -42,17 +48,24 @@ function Player(positionX, positionY) {
     this.mask.heightOffset = Math.floor(this.mask.height / 2) - this.mask.height % 2;
 
     this.move = function playerMove() {
+        this.animCycleCounter++;
+
+        this.isWalking = false; // unless key held...
         if (key_Move_Left) {
             this.x -= this.speed;
+            this.isWalking = true;
         }
         if (key_Move_Right) {
             this.x += this.speed;
+            this.isWalking = true;
         }
         if (key_Move_Up) {
             this.y -= this.speed;
+            this.isWalking = true;
         }
         if (key_Move_Down) {
             this.y += this.speed;
+            this.isWalking = true;
         }
 
         if (this.x < this.playerWidth / 2) {
@@ -78,8 +91,15 @@ function Player(positionX, positionY) {
 	}; //end of playerMove
 
     this.draw = function() {
-        drawBitmapFlipped(playerPic, this.x, this.y, mouseX < this.x);
-
+        var frameNow;
+        if(this.isWalking) {
+            frameNow = Math.floor(this.animCycleCounter/6)%3;
+        } else {
+            frameNow = 0; // stand
+        }
+        drawFacingLeftOption(playerSpritePics[playerKind],
+                this.x, this.y, mouseX < this.x,
+                frameNow);
         this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
 
         // muzzle flashes oriented to gun
