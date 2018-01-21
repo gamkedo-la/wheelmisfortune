@@ -16,15 +16,18 @@ function swapWeapon() {
     }
 }
 
+var swordAngle = 0;
 var swordHitboxMidX = 0;
 var swordHitboxMidY = 0;
 var swordHitboxWidth = 20;
 var swordHitboxHeight = 20;
 var swordSwingTimer = 0;
+var swordSwingMaxTimer = 10;
 var swordDamage = 2;
 
 function moveWeapons() {
     var angle = Math.atan2(mouseY - player.y, mouseX - player.x);
+    swordAngle = angle;
     swordHitboxMidX = player.x + 20 * Math.cos(angle);
     swordHitboxMidY = player.y + 20 * Math.sin(angle);
 
@@ -36,7 +39,7 @@ function moveWeapons() {
 function swingSword() {
     // Don't swing if already swinging
     if (swordSwingTimer === 0) {
-        swordSwingTimer = 10;
+        swordSwingTimer = swordSwingMaxTimer;
     }
 }
 
@@ -71,6 +74,9 @@ function checkSwordCollisions() {
 }
 
 function drawSword() {
+
+    // Fox debugging
+
     var topLeftX = swordHitboxMidX - swordHitboxWidth / 2;
     var topLeftY = swordHitboxMidY - swordHitboxHeight / 2;
     var boxWidth = swordHitboxWidth;
@@ -87,11 +93,22 @@ function drawSword() {
     }
     canvasContext.restore();
 
+    // Sword sprite draw / swing animation
+
+    var flipSwordSprite = (swordAngle > Math.PI/2 || swordAngle < -Math.PI/2);
+    var swordSwingProgress = (swordSwingMaxTimer - swordSwingTimer) / swordSwingMaxTimer;
+    if (swordSwingTimer === 0) {
+        swordSwingProgress = swordSwingMaxTimer;
+    }
+
+    var startSwingAngle = -Math.PI / 2;
+    var endSwingAngle = flipSwordSprite ? -3 * Math.PI / 2 : Math.PI / 2;
+    var currentSwingAngle = startSwingAngle + swordSwingProgress * (endSwingAngle - startSwingAngle);
     drawBitmapCenteredAtLocationWithRotation(
         swordPic,
         swordHitboxMidX,
         swordHitboxMidY,
-        0, // if sprite is flipped we need to face "backwards"
-        false
+        currentSwingAngle,
+        false,
     );
 }
