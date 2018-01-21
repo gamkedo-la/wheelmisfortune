@@ -18,6 +18,8 @@ var smokeTrailPic = document.createElement("img");
 var crateShortPic = document.createElement("img");
 var crateTallPic = document.createElement("img");
 
+var swordPic = document.createElement("img");
+
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
 function countLoadedImageAndLaunchIfReady() {
@@ -52,7 +54,8 @@ function loadImages() {
 		{ varName: specularShinePic, theFile: "sphereSpecularShine.png"},
 		{ varName: smokeTrailPic, theFile: "smokeTrail.png"},
 		{ varName: crateShortPic, theFile: "Crate.png"},
-		{ varName: crateTallPic, theFile: "CrateLarge.png"}
+		{ varName: crateTallPic, theFile: "CrateLarge.png"},
+		{ varName: swordPic, theFile: "swordRotateTest.png"}
 	]; ////
 
 	picsToLoad = imageList.length; ////

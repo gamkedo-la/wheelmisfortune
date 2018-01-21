@@ -86,4 +86,12 @@ function drawSword() {
         colorRect(topLeftX, topLeftY, boxWidth, boxHeight, 'blue');
     }
     canvasContext.restore();
+
+    drawBitmapCenteredAtLocationWithRotation(
+        swordPic,
+        swordHitboxMidX,
+        swordHitboxMidY,
+        0, // if sprite is flipped we need to face "backwards"
+        false
+    );
 }
