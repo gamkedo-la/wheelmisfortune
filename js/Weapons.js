@@ -89,23 +89,25 @@ function checkSwordCollisions() {
 
 function drawSword() {
 
-    // Fox debugging
-
-    var topLeftX = swordHitboxMidX - swordHitboxWidth / 2;
-    var topLeftY = swordHitboxMidY - swordHitboxHeight / 2;
-    var boxWidth = swordHitboxWidth;
-    var boxHeight = swordHitboxHeight;
-    var fillColor = 'blue';
-    canvasContext.save();
-    if (swordSwingTimer > 0) {
-        canvasContext.globalAlpha = 0.5;
-        colorRect(topLeftX, topLeftY, boxWidth, boxHeight, 'red');
-    }
-    else {
-        canvasContext.globalAlpha = 0.1;
-        colorRect(topLeftX, topLeftY, boxWidth, boxHeight, 'blue');
-    }
-    canvasContext.restore();
+    // For debugging
+    var showSwordHitbox = false;
+    if (showSwordHitbox) {
+        var topLeftX = swordHitboxMidX - swordHitboxWidth / 2;
+        var topLeftY = swordHitboxMidY - swordHitboxHeight / 2;
+        var boxWidth = swordHitboxWidth;
+        var boxHeight = swordHitboxHeight;
+        var fillColor = 'blue';
+        canvasContext.save();
+        if (swordSwingTimer > 0) {
+            canvasContext.globalAlpha = 0.5;
+            colorRect(topLeftX, topLeftY, boxWidth, boxHeight, 'red');
+        }
+        else {
+            canvasContext.globalAlpha = 0.1;
+            colorRect(topLeftX, topLeftY, boxWidth, boxHeight, 'blue');
+        }
+        canvasContext.restore();
+    } 
 
     // Sword sprite draw / swing animation
 
