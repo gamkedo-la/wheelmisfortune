@@ -1,5 +1,8 @@
 function randomPlayerArt() {
     playerKind = Math.floor(Math.random()*playerSpritePics.length);
+    if (playerKind === playerSpritePics.indexOf(knightPic)) {
+        selectSpecificWeapon('Sword');
+    }
 }
 
 function pointNotTooCloseToPlayer(minDist){

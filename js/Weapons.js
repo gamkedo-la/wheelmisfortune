@@ -16,6 +16,10 @@ function swapWeapon() {
     }
 }
 
+function selectSpecificWeapon(weapon) {
+    currentWeapon = weapon;
+}
+
 var swordAngle = 0;
 var swordHitboxMidX = 0;
 var swordHitboxMidY = 0;
