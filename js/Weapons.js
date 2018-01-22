@@ -60,10 +60,20 @@ function checkSwordCollisions() {
 
         if (currentEnemy.remove) continue;
 
-        //Hacky collision code, replace at some point
-        distX = swordHitboxMidX - currentEnemy.x;
-        distY = swordHitboxMidY - currentEnemy.y;
-        if ((distX * distX + distY * distY) <= currentEnemy.size) {
+        var enenmyLeftX = currentEnemy.x - currentEnemy.spriteWidth / 2;
+        var enemyRightX = currentEnemy.x + currentEnemy.spriteWidth / 2;
+        var enemyTopY = currentEnemy.y - currentEnemy.spriteHeight / 2;
+        var enemyBottomY = currentEnemy.y - currentEnemy.spriteHeight / 2;
+
+        var swordLeftX = swordHitboxMidX - swordHitboxWidth / 2;
+        var swordRightX = swordHitboxMidX + swordHitboxWidth / 2;
+        var swordTopY = swordHitboxMidY - swordHitboxHeight / 2;
+        var swordBottomY = swordHitboxMidY + swordHitboxHeight / 2;
+
+        if (enenmyLeftX < swordRightX
+            && enemyRightX > swordLeftX
+            && enemyTopY < swordBottomY
+            && enemyBottomY > swordTopY) {
 
             //check for back hits
             var back;
