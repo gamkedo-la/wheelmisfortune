@@ -1,5 +1,5 @@
 
-//NOTE: This script was originally in Mage Hook (because it's pretty damn good).
+//NOTE: This script was originally in Mage Hook (because it's pretty good).
 //Remy
 
 // class for animations

@@ -27,7 +27,7 @@ function drawWheel(){
 	canvas.width / 2,canvas.height / 2,
 		wheelRadians);
 	colorRect(canvas.width/2, canvas.height/2 - wheelMisfortune.height/2 - 8, 4, 15, 'yellow');
-	canvasContext.fillStyle = "black";
+	canvasContext.fillStyle = "White";
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText(misfortunes[misfortuneTypes[wheelNow]].displayName, canvas.width/2, canvas.height/2 + wheelMisfortune.height/2 + 15);
 }

@@ -59,7 +59,7 @@ function updateActiveMisfortunes() {
 }
 
 function displayMisfortuneTimer(){
-	canvasContext.fillStyle = "black";
+	canvasContext.fillStyle = "white";
 	canvasContext.textAlign = 'center';
 	canvasContext.fillText(secondsOnThisMisfortune, canvas.width/2, canvas.height - 15);
 }

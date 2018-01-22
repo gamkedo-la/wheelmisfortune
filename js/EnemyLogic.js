@@ -35,7 +35,8 @@ function spawnEnemiesIfTooFew(){
 		}
 	}
 	if(dangerousEnemyCount < TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE){
-		spawnDangerousEnemies();	
+		spawnDangerousEnemies();
+		wheelShowing = true;
 	}
 }
 
