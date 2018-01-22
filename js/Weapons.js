@@ -102,13 +102,20 @@ function drawSword() {
     }
 
     var startSwingAngle = -Math.PI / 2;
-    var endSwingAngle = flipSwordSprite ? -3 * Math.PI / 2 : Math.PI / 2;
+    var endSwingAngle = Math.PI / 2;
     var currentSwingAngle = startSwingAngle + swordSwingProgress * (endSwingAngle - startSwingAngle);
+
+    canvasContext.save();
+    canvasContext.translate(swordHitboxMidX, swordHitboxMidY);
+    if (flipSwordSprite) { 
+        canvasContext.scale(-1.0, 1.0);
+    }
     drawBitmapCenteredAtLocationWithRotation(
         swordPic,
-        swordHitboxMidX,
-        swordHitboxMidY,
+        0,
+        0,
         currentSwingAngle,
         false,
     );
+    canvasContext.restore();
 }
