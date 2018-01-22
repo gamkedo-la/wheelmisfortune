@@ -1,25 +1,42 @@
 var enemyList = []; //list of enemies
-const MIN_SPAWN_DIST_TO_PLAYER = 250;
+const MIN_SPAWN_DIST_TO_PLAYER = 200;
+const TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE = 3;
 
-function spawnInitialEnemies() {
-    var deathSphereCount = 1 + Math.floor(Math.random() * 2);
-    var slugCount = 2 + Math.floor(Math.random() * 3);
+function spawnDangerousEnemies(){
+	var deathSphereCount = 2 + Math.floor(Math.random() * 2);
+    var slugCount = 1 + Math.floor(Math.random() * 2);
     for (var i = 0; i < deathSphereCount; i++) {
         var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
         enemyList.push(new DeathSphere(nextPt.x, nextPt.y));
     }
-    for (var i = 0; i < deathSphereCount; i++) {
+    for (var i = 0; i < slugCount; i++) {
         var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
         enemyList.push(new Slug(nextPt.x, nextPt.y));
     }
-    for (var i = 0; i < 3; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+}
+
+function spawnInitialEnemies() {
+    spawnDangerousEnemies();
+    for (var i = 0; i < 15; i++) {
+        var nextPt = pointNotTooCloseToPlayer(50);
         enemyList.push(new LilBox(nextPt.x, nextPt.y));
     }
-    for (var i = 0; i < 2; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+    for (var i = 0; i < 8; i++) {
+        var nextPt = pointNotTooCloseToPlayer(50);
         enemyList.push(new BigBox(nextPt.x, nextPt.y));
     }
+}
+
+function spawnEnemiesIfTooFew(){
+	var dangerousEnemyCount = 0;
+	for(var i = 0; i < enemyList.length; i++){
+		if(enemyList[i].isDangerous){
+			dangerousEnemyCount++;
+		}
+	}
+	if(dangerousEnemyCount < TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE){
+		spawnDangerousEnemies();	
+	}
 }
 
 function moveEnemies() {
@@ -30,11 +47,13 @@ function moveEnemies() {
             enemyList.splice(i, 1);
         }
     }
+	spawnEnemiesIfTooFew();
 }
 
 function Enemy(startX, startY) {
     this.x = startX;
     this.y = startY;
+	this.isDangerous = true;
     this.heading = 0.523599;
     this.velocity = .7;
     this.facing = 0;
@@ -297,7 +316,7 @@ function LilBox(startX, startY) {
     this.spriteSpeed = 1;
 
     Enemy.call(this, startX, startY); //calls base class constructor
-
+	this.isDangerous = false;
     this.hitKnockback = -13.0; // lightweight box
 
     this.parentMove = this.move;
@@ -321,7 +340,7 @@ function BigBox(startX, startY) {
     this.spriteSpeed = 1;
 
     Enemy.call(this, startX, startY); //calls base class constructor
-
+	this.isDangerous = false;
     this.hitKnockback = -1.0; // heavy box
 
     this.parentMove = this.move;

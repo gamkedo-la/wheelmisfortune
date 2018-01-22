@@ -40,7 +40,6 @@ function kickWheel(){
 
 //Clear misfortune wheel from screen once a misfortune is activated.
 function hideMisfortuneWheel(){
-	console.log(misfortunes[misfortuneTypes[wheelNow]].displayName);
 	wheelShowing = false;
 	wheelSpinning = false;
 	wheelSpinSpeed = 0;
