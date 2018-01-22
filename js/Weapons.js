@@ -19,8 +19,10 @@ function swapWeapon() {
 var swordAngle = 0;
 var swordHitboxMidX = 0;
 var swordHitboxMidY = 0;
-var swordHitboxWidth = 20;
-var swordHitboxHeight = 20;
+var swordHitboxWidth = 30;
+var swordHitboxHeight = 30;
+var swordHandleX = 0;
+var swordHandleY = 0;
 var swordSwingTimer = 0;
 var swordSwingMaxTimer = 10;
 var swordDamage = 2;
@@ -30,6 +32,8 @@ function moveWeapons() {
     swordAngle = angle;
     swordHitboxMidX = player.x + 20 * Math.cos(angle);
     swordHitboxMidY = player.y + 20 * Math.sin(angle);
+    swordHandleX = player.x + 8 * Math.cos(angle);
+    swordHandleY = player.y + 8 * Math.sin(angle);
 
     if (swordSwingTimer > 0) {
         swordSwingTimer--;
@@ -106,7 +110,7 @@ function drawSword() {
     var currentSwingAngle = startSwingAngle + swordSwingProgress * (endSwingAngle - startSwingAngle);
 
     canvasContext.save();
-    canvasContext.translate(swordHitboxMidX, swordHitboxMidY);
+    canvasContext.translate(swordHandleX, swordHandleY);
     if (flipSwordSprite) { 
         canvasContext.scale(-1.0, 1.0);
     }
