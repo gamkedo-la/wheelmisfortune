@@ -18,6 +18,7 @@ var wheelMisfortune = document.createElement("img");
 var muzzleFlashPic = document.createElement("img");
 var specularShinePic = document.createElement("img");
 var smokeTrailPic = document.createElement("img");
+var ninjaStarPic = document.createElement("img");
 
 var crateShortPic = document.createElement("img");
 var crateTallPic = document.createElement("img");
@@ -59,7 +60,8 @@ function loadImages() {
 		{ varName: smokeTrailPic, theFile: "smokeTrail.png"},
 		{ varName: crateShortPic, theFile: "Crate.png"},
 		{ varName: crateTallPic, theFile: "CrateLarge.png"},
-		{ varName: swordPic, theFile: "swordRotateTest.png"}
+		{ varName: swordPic, theFile: "swordRotateTest.png"},
+		{ varName: ninjaStarPic, theFile: "ninjastar.png"}
 	]; ////
 
 	picsToLoad = imageList.length; ////

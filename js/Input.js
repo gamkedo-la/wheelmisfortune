@@ -68,9 +68,10 @@ function keyPressed(evt) {
 			frameCounter.active = !frameCounter.active;
 			break;
 
-		case KEY_E:
+		/*case KEY_E:
 			swapWeaponThisFrame = true;
 			break;
+		*/
 
 		default:
 			// console.log("Unused KeyCode: " + evt.keyCode);

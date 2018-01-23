@@ -115,21 +115,22 @@ function Player(positionX, positionY) {
             this.gunRotation
             );
         }
-
+		if(playerKind != PLAYER_KIND_NINJA){
         // mirror image the gun sprite if it is pointing left
-        var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
-        if (currentWeapon === 'Gun') {
-            drawBitmapCenteredAtLocationWithRotation(
-                playerWeapon,
-                this.x,
-                this.y,
-                flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
-                flipGunSprite
-            );
-        }
-        else if (currentWeapon === 'Sword') {
-            drawSword();
-        }
+			var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
+			if (currentWeapon === 'Gun') {
+				drawBitmapCenteredAtLocationWithRotation(
+					playerWeapon,
+					this.x,
+					this.y,
+					flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
+					flipGunSprite
+				);
+			}
+			else if (currentWeapon === 'Sword') {
+				drawSword();
+			}
+		}
 
         if (this.drawMask) {
             canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
@@ -148,8 +149,12 @@ function Player(positionX, positionY) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
             shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction, false));
-            this.muzzleFlashFrames = 3;
-            sounds.bullet.play();
+			if(playerKind != PLAYER_KIND_NINJA){
+				this.muzzleFlashFrames = 3;
+				sounds.bullet.play();
+			}
+
+
         }
     };
 
