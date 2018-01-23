@@ -11,10 +11,10 @@ const misfortunes = {
         'description': 'Fast Movement!',
         'updateFunction': null
     },
-    'friendlyFire': {
-        'displayName': 'Friendly Fire',
+    'doubleEnemy': {
+        'displayName': 'Double enemies',
         'isActive': false,
-        'description': 'Shots hurt other players -- watch out!',
+        'description': 'more enemies!',
         'updateFunction': null
     },
     'eternalBullet': {

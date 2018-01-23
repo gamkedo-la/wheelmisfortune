@@ -19,7 +19,11 @@ function wheelMove(){
 	activateMisfortune(misfortuneTypes[wheelNow]);
 	if(wheelSpinning == true && wheelSpinSpeed <= wheelSpeedCountAsStopped){
 		hideMisfortuneWheel();
+		if(misfortunes.doubleEnemy.isActive){
+			spawnDangerousEnemies();
+		}
 	}
+	
 }
 
 function drawWheel(){
