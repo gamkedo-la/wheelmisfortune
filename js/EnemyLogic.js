@@ -6,15 +6,39 @@ function spawnDangerousEnemies(){
 	var deathSphereCount = 2 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
     for (var i = 0; i < deathSphereCount; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+        var nextPt = centerOfRandomEdge();
         enemyList.push(new DeathSphere(nextPt.x, nextPt.y));
     }
     for (var i = 0; i < slugCount; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+        var nextPt = centerOfRandomEdge();
         enemyList.push(new Slug(nextPt.x, nextPt.y));
     }
 }
-
+function centerOfRandomEdge(){
+	var returnX, returnY;
+	if(Math.random() < 0.5){ //top or bottom edge
+		returnX = canvas.width/2;
+		if(Math.random() < 0.5){ //top
+			returnY = 0;
+		}
+		else{ //bottom
+			returnY = canvas.height;
+		}
+	}
+	else{ //left or right edge
+		returnY = canvas.height/2;
+		if(Math.random() < 0.5){ //left
+			returnX = 0;
+		}
+		else{ //right
+			returnX = canvas.width;
+		}
+	}
+	return {
+		x: returnX,
+		y: returnY
+	}
+}
 function spawnInitialEnemies() {
     spawnDangerousEnemies();
     for (var i = 0; i < 15; i++) {

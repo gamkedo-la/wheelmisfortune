@@ -2,6 +2,10 @@ var ninjaPic = document.createElement("img");
 var cowboyPic = document.createElement("img");
 var knightPic = document.createElement("img");
 var playerSpritePics = [ninjaPic,cowboyPic,knightPic];
+const PLAYER_KIND_NINJA = 0;
+const PLAYER_KIND_COWBOY = 1;
+const PLAYER_KIND_KNIGHT = 2;
+
 var playerKind = 0; // will randomize/set at top of Player.js
 
 var bulletPic = document.createElement("img");

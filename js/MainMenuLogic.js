@@ -4,15 +4,31 @@ MainMenuState.prototype = new GameController();
 function MainMenuState(){
     var mainMenuOptions = [
         {
-            'displayName' : "Start Game",
+            'displayName' : "Play as Ninja",
             'x': 20,
             'y': 20,
             'width': 100,
             'height': 20,
-            'action': function() {gameController.changeState(inGameState);}
+            'action': function() {playerKind = PLAYER_KIND_NINJA; gameController.changeState(inGameState);}
+        },
+		{
+            'displayName' : "Play as Cowboy",
+            'x': 140,
+            'y': 20,
+            'width': 100,
+            'height': 20,
+            'action': function() {playerKind = PLAYER_KIND_COWBOY; gameController.changeState(inGameState);}
+        },
+		        {
+            'displayName' : "Play as Knight",
+            'x': 260,
+            'y': 20,
+            'width': 100,
+            'height': 20,
+            'action': function() {playerKind = PLAYER_KIND_KNIGHT; gameController.changeState(inGameState);}
         },
         {
-            'displayName' : "Example Option",
+            'displayName' : "Credits (tbd)",
             'x': 20,
             'y': 50,
             'width': 100,

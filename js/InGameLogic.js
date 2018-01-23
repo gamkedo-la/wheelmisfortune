@@ -3,7 +3,9 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 
 //This is how it works!
 function InGameState(){
-    this.enter = function(){};
+    this.enter = function(){
+	applyPlayerKind();
+	};
     
     this.update = function() {
         if(activeMisfortunes.length > 0) {

@@ -88,7 +88,7 @@ function loadingDoneSoStartGame() {
 
 	setUpMisfortuneTimer();
 	player = new Player(400, 400);
-	randomPlayerArt(); // until we have selector
+	applyPlayerKind();
 	
 	spawnInitialEnemies();
 	

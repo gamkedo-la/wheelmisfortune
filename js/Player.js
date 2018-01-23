@@ -1,5 +1,4 @@
-function randomPlayerArt() {
-    playerKind = Math.floor(Math.random()*playerSpritePics.length);
+function applyPlayerKind() {
     if (playerKind === playerSpritePics.indexOf(knightPic)) {
         selectSpecificWeapon('Sword');
     }
