@@ -51,22 +51,28 @@ function Player(positionX, positionY) {
 
     this.move = function playerMove() {
         this.animCycleCounter++;
-
+		var speedNow;
+		if(misfortunes.fastMode.isActive){
+			speedNow = 2.5 * this.speed;
+		}
+		else{
+			speedNow = this.speed;
+		}
         this.isWalking = false; // unless key held...
         if (key_Move_Left) {
-            this.x -= this.speed;
+            this.x -= speedNow;
             this.isWalking = true;
         }
         if (key_Move_Right) {
-            this.x += this.speed;
+            this.x += speedNow;
             this.isWalking = true;
         }
         if (key_Move_Up) {
-            this.y -= this.speed;
+            this.y -= speedNow;
             this.isWalking = true;
         }
         if (key_Move_Down) {
-            this.y += this.speed;
+            this.y += speedNow;
             this.isWalking = true;
         }
 

@@ -5,10 +5,10 @@ const misfortunes = {
         'description': 'Normal gameplay',
         'updateFunction': null
     },
-    'meleeOnly': {
-        'displayName': 'Melee Only',
+    'fastMode': {
+        'displayName': 'Caffeine Mode',
         'isActive': false,
-        'description': 'No guns, melee attacks only!',
+        'description': 'Fast Movement!',
         'updateFunction': null
     },
     'friendlyFire': {
