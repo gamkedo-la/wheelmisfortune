@@ -42,6 +42,10 @@ function InGameState(){
             if (typeof enemy.sprite != "undefined")
                 enemy.sprite.update();
         });
+        shotList.forEach(function (enemy) {
+            if (typeof enemy.sprite != "undefined")
+                enemy.sprite.update();
+        });
     };
     
     this.moveEverything = function() {
