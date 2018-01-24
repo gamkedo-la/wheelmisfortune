@@ -86,7 +86,8 @@ function InGameState(){
         }
         for (var i = 0; i < player.health; i++) {
             if (playerHealthArray[i]) {
-                colorRect(i*20,0,19,19,"red");
+                //colorRect(i*20,0,19,19,"red");
+                canvasContext.drawImage(heartPic,4+i*12,4,8,8);
             }
         }
         displayMisfortuneTimer();

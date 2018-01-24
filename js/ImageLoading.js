@@ -24,6 +24,7 @@ var crateShortPic = document.createElement("img");
 var crateTallPic = document.createElement("img");
 
 var swordPic = document.createElement("img");
+var heartPic = document.createElement("img");
 
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
@@ -61,7 +62,8 @@ function loadImages() {
 		{ varName: crateShortPic, theFile: "Crate.png"},
 		{ varName: crateTallPic, theFile: "CrateLarge.png"},
 		{ varName: swordPic, theFile: "swordRotateTest.png"},
-		{ varName: ninjaStarPic, theFile: "ninjastar.png"}
+		{ varName: ninjaStarPic, theFile: "ninjastar.png"},
+		{ varName: heartPic, theFile: "playerHeart.png"}
 	]; ////
 
 	picsToLoad = imageList.length; ////
