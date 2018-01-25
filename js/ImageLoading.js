@@ -2,23 +2,35 @@ var ninjaPic = document.createElement("img");
 var cowboyPic = document.createElement("img");
 var knightPic = document.createElement("img");
 var playerSpritePics = [ninjaPic,cowboyPic,knightPic];
+const PLAYER_KIND_NINJA = 0;
+const PLAYER_KIND_COWBOY = 1;
+const PLAYER_KIND_KNIGHT = 2;
+
 var playerKind = 0; // will randomize/set at top of Player.js
 
 var bulletPic = document.createElement("img");
+var firebulletPic = document.createElement("img");
 var badguyPic = document.createElement("img");
 var slugShieldPic = document.createElement("img");
 var slugNoShieldPic = document.createElement("img");
+var darkmageSheet = document.createElement("img");
+var darkmageWarmupSheet = document.createElement("img");
+var darkmageTurnDownSheet = document.createElement("img");
+var fireblastSheet = document.createElement("img");
+
 var backGroundPic = document.createElement("img");
 var playerWeapon = document.createElement("img");
 var wheelMisfortune = document.createElement("img");
 var muzzleFlashPic = document.createElement("img");
 var specularShinePic = document.createElement("img");
 var smokeTrailPic = document.createElement("img");
+var ninjaStarPic = document.createElement("img");
 
 var crateShortPic = document.createElement("img");
 var crateTallPic = document.createElement("img");
 
 var swordPic = document.createElement("img");
+var heartPic = document.createElement("img");
 
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
@@ -44,6 +56,7 @@ function loadImages() {
 		{ varName: cowboyPic, theFile: "cowboyPlayer.png"}, ////
 		{ varName: knightPic, theFile: "knightPlayer.png"}, ////
 		{ varName: bulletPic, theFile: "bullet.png" }, ////
+		{ varName: firebulletPic, theFile: "firebit.png" }, ////
 		{ varName: badguyPic, theFile: "testEnemy00.png" }, ////
 		{ varName: slugShieldPic, theFile: "slugMoveShield.png" },
 		{ varName: slugNoShieldPic, theFile: "slugMoveBreak.png" }, 
@@ -55,7 +68,15 @@ function loadImages() {
 		{ varName: smokeTrailPic, theFile: "smokeTrail.png"},
 		{ varName: crateShortPic, theFile: "Crate.png"},
 		{ varName: crateTallPic, theFile: "CrateLarge.png"},
-		{ varName: swordPic, theFile: "swordRotateTest.png"}
+		{ varName: swordPic, theFile: "swordRotateTest.png"},
+		{ varName: ninjaStarPic, theFile: "ninjastar.png"},
+		{ varName: heartPic, theFile: "playerHeart.png"},
+		{ varName: darkmageSheet, theFile: "darkmage.png"},
+		{ varName: darkmageWarmupSheet, theFile: "darkmage_Animation 3.png"},
+		{ varName: darkmageTurnDownSheet, theFile: "darkmage_Animation 4.png"},
+		{ varName: fireblastSheet, theFile: "fireblast.png"}
+		
+		
 	]; ////
 
 	picsToLoad = imageList.length; ////

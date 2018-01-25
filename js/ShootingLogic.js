@@ -75,7 +75,12 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
         }
 
         if (ORIENT_SPRITE_FORWARD) this.rotation = Math.atan2(this.yv,this.xv);
-        drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, this.rotation);
+		if(this.enemy == false && playerKind == PLAYER_KIND_NINJA){
+			drawBitmapCenteredAtLocationWithRotation(ninjaStarPic, this.x, this.y, this.rotation);
+			this.rotation += 0.15;
+		} else{
+			drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, this.rotation);
+		}
     };
 
     this.checkForCollisionWithPlayer = function() {

@@ -1,5 +1,4 @@
-function randomPlayerArt() {
-    playerKind = Math.floor(Math.random()*playerSpritePics.length);
+function applyPlayerKind() {
     if (playerKind === playerSpritePics.indexOf(knightPic)) {
         selectSpecificWeapon('Sword');
     }
@@ -52,22 +51,28 @@ function Player(positionX, positionY) {
 
     this.move = function playerMove() {
         this.animCycleCounter++;
-
+		var speedNow;
+		if(misfortunes.fastMode.isActive){
+			speedNow = 2.5 * this.speed;
+		}
+		else{
+			speedNow = this.speed;
+		}
         this.isWalking = false; // unless key held...
         if (key_Move_Left) {
-            this.x -= this.speed;
+            this.x -= speedNow;
             this.isWalking = true;
         }
         if (key_Move_Right) {
-            this.x += this.speed;
+            this.x += speedNow;
             this.isWalking = true;
         }
         if (key_Move_Up) {
-            this.y -= this.speed;
+            this.y -= speedNow;
             this.isWalking = true;
         }
         if (key_Move_Down) {
-            this.y += this.speed;
+            this.y += speedNow;
             this.isWalking = true;
         }
 
@@ -116,21 +121,22 @@ function Player(positionX, positionY) {
             this.gunRotation
             );
         }
-
+		if(playerKind != PLAYER_KIND_NINJA){
         // mirror image the gun sprite if it is pointing left
-        var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
-        if (currentWeapon === 'Gun') {
-            drawBitmapCenteredAtLocationWithRotation(
-                playerWeapon,
-                this.x,
-                this.y,
-                flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
-                flipGunSprite
-            );
-        }
-        else if (currentWeapon === 'Sword') {
-            drawSword();
-        }
+			var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
+			if (currentWeapon === 'Gun') {
+				drawBitmapCenteredAtLocationWithRotation(
+					playerWeapon,
+					this.x,
+					this.y,
+					flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
+					flipGunSprite
+				);
+			}
+			else if (currentWeapon === 'Sword') {
+				drawSword();
+			}
+		}
 
         if (this.drawMask) {
             canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';
@@ -149,8 +155,12 @@ function Player(positionX, positionY) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
             shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction, false));
-            this.muzzleFlashFrames = 3;
-            sounds.bullet.play();
+			if(playerKind != PLAYER_KIND_NINJA){
+				this.muzzleFlashFrames = 3;
+				sounds.bullet.play();
+			}
+
+
         }
     };
 

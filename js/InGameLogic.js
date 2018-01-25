@@ -3,7 +3,9 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 
 //This is how it works!
 function InGameState(){
-    this.enter = function(){};
+    this.enter = function(){
+	applyPlayerKind();
+	};
     
     this.update = function() {
         if(activeMisfortunes.length > 0) {
@@ -37,6 +39,10 @@ function InGameState(){
     //Could be easily modified to update player as well
     this.updateAnims = function(){
         enemyList.forEach(function (enemy) {
+            if (typeof enemy.sprite != "undefined")
+                enemy.sprite.update();
+        });
+        shotList.forEach(function (enemy) {
             if (typeof enemy.sprite != "undefined")
                 enemy.sprite.update();
         });
@@ -84,7 +90,8 @@ function InGameState(){
         }
         for (var i = 0; i < player.health; i++) {
             if (playerHealthArray[i]) {
-                colorRect(i*20,0,19,19,"red");
+                //colorRect(i*20,0,19,19,"red");
+                canvasContext.drawImage(heartPic,4+i*12,4,8,8);
             }
         }
         displayMisfortuneTimer();

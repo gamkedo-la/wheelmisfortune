@@ -5,16 +5,16 @@ const misfortunes = {
         'description': 'Normal gameplay',
         'updateFunction': null
     },
-    'meleeOnly': {
-        'displayName': 'Melee Only',
+    'fastMode': {
+        'displayName': 'Caffeine Mode',
         'isActive': false,
-        'description': 'No guns, melee attacks only!',
+        'description': 'Fast Movement!',
         'updateFunction': null
     },
-    'friendlyFire': {
-        'displayName': 'Friendly Fire',
+    'doubleEnemy': {
+        'displayName': 'Double enemies',
         'isActive': false,
-        'description': 'Shots hurt other players -- watch out!',
+        'description': 'more enemies!',
         'updateFunction': null
     },
     'eternalBullet': {

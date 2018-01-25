@@ -5,16 +5,50 @@ const TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE = 3;
 function spawnDangerousEnemies(){
 	var deathSphereCount = 2 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
+    var darkmageCount = 0;
+    if(Math.floor(Math.random() * 100) < 15){
+        darkmageCount = 1;
+    }
+    var slugCount = 1 + Math.floor(Math.random() * 1);
     for (var i = 0; i < deathSphereCount; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+        var nextPt = centerOfRandomEdge();
         enemyList.push(new DeathSphere(nextPt.x, nextPt.y));
     }
     for (var i = 0; i < slugCount; i++) {
-        var nextPt = pointNotTooCloseToPlayer(MIN_SPAWN_DIST_TO_PLAYER);
+        var nextPt = centerOfRandomEdge();
         enemyList.push(new Slug(nextPt.x, nextPt.y));
     }
-}
+    for (var i = 0; i < darkmageCount; i++) {
+        var nextPt = centerOfRandomEdge();
+        enemyList.push(new darkmage(nextPt.x, nextPt.y));
+    }
 
+}
+function centerOfRandomEdge(){
+	var returnX, returnY;
+	if(Math.random() < 0.5){ //top or bottom edge
+		returnX = canvas.width/2;
+		if(Math.random() < 0.5){ //top
+			returnY = 0;
+		}
+		else{ //bottom
+			returnY = canvas.height;
+		}
+	}
+	else{ //left or right edge
+		returnY = canvas.height/2;
+		if(Math.random() < 0.5){ //left
+			returnX = 0;
+		}
+		else{ //right
+			returnX = canvas.width;
+		}
+	}
+	return {
+		x: returnX,
+		y: returnY
+	}
+}
 function spawnInitialEnemies() {
     spawnDangerousEnemies();
     for (var i = 0; i < 15; i++) {
@@ -70,6 +104,7 @@ function Enemy(startX, startY) {
 
     this.life = 5;
     this.remove = false;
+    this.state = "normal"
 
     this.sprite = new spriteClass();
     this.sprite.setSprite(this.spriteSheet, //note these values must be defined from the deriving class
@@ -81,27 +116,28 @@ function Enemy(startX, startY) {
             this.remove = true;
             return;
         }
+        if(this.state == "normal"){
+            this.x += Math.cos(this.heading) * this.velocity;
+            this.y += Math.sin(this.heading) * this.velocity;
 
-        this.x += Math.cos(this.heading) * this.velocity;
-        this.y += Math.sin(this.heading) * this.velocity;
-
-        if (this.x < 0) {
-            this.x = 0;
-            this.heading = (Math.PI - this.heading) % TWO_PI;
+            if (this.x < 0) {
+                this.x = 0;
+                this.heading = (Math.PI - this.heading) % TWO_PI;
+            }
+            if (this.x > canvas.width) {
+                this.x = canvas.width;
+                this.heading = (Math.PI - this.heading) % TWO_PI;
+            }
+            if (this.y < 0) {
+                this.y = 0;
+                this.heading = (TWO_PI - this.heading) % TWO_PI;
+            }
+            if (this.y > canvas.height) {
+                this.y = canvas.height;
+                this.heading = (TWO_PI - this.heading) % TWO_PI;
+            }
+            this.facing += this.spinSpeed;
         }
-        if (this.x > canvas.width) {
-            this.x = canvas.width;
-            this.heading = (Math.PI - this.heading) % TWO_PI;
-        }
-        if (this.y < 0) {
-            this.y = 0;
-            this.heading = (TWO_PI - this.heading) % TWO_PI;
-        }
-        if (this.y > canvas.height) {
-            this.y = canvas.height;
-            this.heading = (TWO_PI - this.heading) % TWO_PI;
-        }
-        this.facing += this.spinSpeed;
     };
     this.checkIfFacingLeft = function() {
         if (Math.abs(this.heading) > Math.PI / 2) {
@@ -158,17 +194,17 @@ function Enemy(startX, startY) {
 
 //Enemy type code goes below here
 
-//DeathSphere begin
-DeathSphere.prototype = new Enemy();
-DeathSphere.prototype.constructor = DeathSphere;
+//darkmage begin
+darkmage.prototype = new Enemy();
+darkmage.prototype.constructor = darkmage;
 
-function DeathSphere(startX, startY) {
+function darkmage(startX, startY) {
 
-    this.spriteSheet = badguyPic; //bit hacky to rely on ordering like this, but works for now
-    this.spriteWidth = 16;
-    this.spriteHeight = 16;
-    this.spriteFrames = 1;
-    this.spriteSpeed = 1;
+    this.spriteSheet = darkmageSheet; //bit hacky to rely on ordering like this, but works for now
+    this.spriteWidth = 32;
+    this.spriteHeight = 41;
+    this.spriteFrames = 4;
+    this.spriteSpeed = 3;
 
     Enemy.call(this, startX, startY); //calls base class constructor
 
@@ -180,23 +216,46 @@ function DeathSphere(startX, startY) {
     this.nextShot = this.shotRate;
 
     this.move = function() {
-        var targetX = player.x - this.x;
-        var targetY = player.y - this.y;
-        this.targetDirection = Math.atan2(targetY, targetX);
+        if(this.state == "normal"){
+            var targetX = player.x - this.x;
+            var targetY = player.y - this.y;
+            this.targetDirection = Math.atan2(targetY, targetX);
 
-        this.normalizeHeading();
+            this.normalizeHeading();
 
         // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
-        if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
-            this.heading -= this.turnRate;
-        } else {
-            this.heading += this.turnRate;
+        
+            if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+                this.heading -= this.turnRate;
+            } else {
+                this.heading += this.turnRate;
+            }
         }
 
         this.normalizeHeading();
 
-        if (this.nextShot <= 0) {
+        if (this.nextShot <= 0 && this.state == "normal") {
             this.shoot();
+            this.nextShot = 40;
+            this.state = "warmup"
+            this.sprite.setSprite(darkmageWarmupSheet, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+        }
+
+        if (this.nextShot <= 0 && this.state == "warmup") {
+            this.nextShot = 200;
+            this.state = "turnDown"
+            this.sprite.setSprite(darkmageTurnDownSheet, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, 8, true);
+        }
+        if (this.nextShot <= 0 && this.state == "turnDown") {
+            this.nextShot = 250;
+            this.state = "normal"
+            this.sprite.setSprite(this.spriteSheet, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
         }
         this.nextShot--;
 
@@ -223,9 +282,9 @@ function DeathSphere(startX, startY) {
 
     this.shoot = function() {
         this.nextShot = this.shotRate;
-        var shotDirection = 0.785398; //45 degrees in radians
-        for (var i = 0; i < 8; i++) {
-            shotList.push(new shotClass(this.x, this.y, shotDirection * i, true));
+        var shotDirection = 1.5708; //90 degrees in radians
+        for (var i = 0; i < 4; i++) {
+            shotList.push(new fireBlastClass(this.x, this.y, shotDirection * i, true));
         }
     };
 }
@@ -304,6 +363,80 @@ function Slug(startX, startY) {
         Slug.prototype.gotHit.call(this, damage); //redirects to the normal parent function
     }
 } // Slug enemy end
+
+
+//DeathSphere begin
+DeathSphere.prototype = new Enemy();
+DeathSphere.prototype.constructor = DeathSphere;
+
+function DeathSphere(startX, startY) {
+
+    this.spriteSheet = badguyPic; //bit hacky to rely on ordering like this, but works for now
+    this.spriteWidth = 16;
+    this.spriteHeight = 16;
+    this.spriteFrames = 1;
+    this.spriteSpeed = 1;
+
+    Enemy.call(this, startX, startY); //calls base class constructor
+
+    this.parentMove = this.move;
+    this.parentDraw = this.draw;
+    this.targetDirection;
+    this.turnRate = 0.025;
+    this.shotRate = 100;
+    this.nextShot = this.shotRate;
+
+    this.move = function() {
+        var targetX = player.x - this.x;
+        var targetY = player.y - this.y;
+        this.targetDirection = Math.atan2(targetY, targetX);
+
+        this.normalizeHeading();
+
+        // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+        if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+            this.heading -= this.turnRate;
+        } else {
+            this.heading += this.turnRate;
+        }
+
+        this.normalizeHeading();
+
+        if (this.nextShot <= 0) {
+            this.shoot();
+        }
+        this.nextShot--;
+
+        this.parentMove();
+    };
+
+    // Draw an oval shadow beneath
+    this.draw = function() {
+        var shadowX = this.x;
+        var shadowY = this.y + 12;
+        var radiusX = 3;
+        var radiusY = 5;
+        var rotation = 90 * Math.PI / 180;
+        var startAngle = 0;
+        var endAngle = 2 * Math.PI;
+
+        canvasContext.beginPath();
+        canvasContext.fillStyle = 'rgba(0,0,0,0.75)';
+        canvasContext.ellipse(shadowX, shadowY, radiusX, radiusY, rotation, startAngle, endAngle);
+        canvasContext.fill();
+
+        this.parentDraw();
+    }
+
+    this.shoot = function() {
+        this.nextShot = this.shotRate;
+        var shotDirection = 0.785398; //45 degrees in radians
+        for (var i = 0; i < 8; i++) {
+            shotList.push(new shotClass(this.x, this.y, shotDirection * i, true));
+        }
+    };
+}
+//darkmage end
 
 LilBox.prototype = new Enemy();
 LilBox.prototype.constructor = LilBox;
