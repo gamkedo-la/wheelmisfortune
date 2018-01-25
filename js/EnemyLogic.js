@@ -5,6 +5,8 @@ const TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE = 3;
 function spawnDangerousEnemies(){
 	var deathSphereCount = 1 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
+    var slimeCount = 1 + Math.floor(Math.random() * 2);
+
     var darkmageCount = 0;
     if(Math.floor(Math.random() * 100) < 15){
         darkmageCount = 1;
@@ -18,6 +20,11 @@ function spawnDangerousEnemies(){
         var nextPt = centerOfRandomEdge();
         enemyList.push(new Slug(nextPt.x, nextPt.y));
     }
+    for (var i = 0; i < slimeCount; i++) {
+        var nextPt = centerOfRandomEdge();
+        enemyList.push(new Slime(nextPt.x, nextPt.y));
+    }
+
     for (var i = 0; i < darkmageCount; i++) {
         var nextPt = centerOfRandomEdge();
         enemyList.push(new darkmage(nextPt.x, nextPt.y));

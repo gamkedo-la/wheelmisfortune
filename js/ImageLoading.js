@@ -31,6 +31,9 @@ var crateTallPic = document.createElement("img");
 
 var swordPic = document.createElement("img");
 var heartPic = document.createElement("img");
+var slimeMainSheet = document.createElement("img");
+var slimeBabySheet = document.createElement("img");
+var slimeMultiSheet = document.createElement("img");
 
 var picsToLoad = 0; //// one less thing to manually keep in sync
 
@@ -74,6 +77,9 @@ function loadImages() {
 		{ varName: darkmageSheet, theFile: "darkmage.png"},
 		{ varName: darkmageWarmupSheet, theFile: "darkmage_Animation 3.png"},
 		{ varName: darkmageTurnDownSheet, theFile: "darkmage_Animation 4.png"},
+		{ varName: slimeMainSheet, theFile: "slime_Animation 1.png"},
+		{ varName: slimeBabySheet, theFile: "slime_Animation 2.png"},
+		{ varName: slimeMultiSheet, theFile: "slime_Animation 3.png"},
 		{ varName: fireblastSheet, theFile: "fireblast.png"}
 		
 		
