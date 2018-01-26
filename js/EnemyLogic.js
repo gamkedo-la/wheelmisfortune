@@ -3,7 +3,7 @@ const MIN_SPAWN_DIST_TO_PLAYER = 200;
 const TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE = 3;
 
 function spawnDangerousEnemies(){
-	var deathSphereCount = 2 + Math.floor(Math.random() * 2);
+	var deathSphereCount = 1 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
     var darkmageCount = 0;
     if(Math.floor(Math.random() * 100) < 15){
@@ -288,7 +288,7 @@ function darkmage(startX, startY) {
         }
     };
 }
-//DeathSphere end
+//shadowmage end
 
 //Slug enemy start
 
