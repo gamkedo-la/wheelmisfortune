@@ -13,6 +13,39 @@ function moveShots() {
     }
 }
 
+function ParticleCanvasManager(){
+    this.canvasIndex = 0;
+    this.canvasList = [];
+    this.canvasContextList = [];
+    
+    for(var i = 0; i < TRAIL_MAX_SIZE; i++){
+        this.canvasList.push(document.createElement("canvas"));
+        this.canvasContextList.push(this.canvasList[i].getContext("2d"));
+        this.canvasList[i].width = canvas.width;
+        this.canvasList[i].height = canvas.height;
+    }
+    
+		// TODO consider moving some of this code outside of ShootingLogic.js
+    this.drawToCanvas = function(graphic, atX, atY, withAngle){
+        var context = this.canvasContextList[this.canvasIndex];
+				
+        context.save();
+        context.translate(atX, atY);
+        context.rotate(withAngle);
+        context.drawImage(graphic, -graphic.width / 2, -graphic.height / 2);
+        context.restore();
+    }
+    
+    this.draw = function(){
+				this.canvasIndex = (++this.canvasIndex) % TRAIL_MAX_SIZE;
+        this.canvasContextList[this.canvasIndex].clearRect(0, 0, this.canvasList[this.canvasIndex].width, this.canvasList[this.canvasIndex].height);
+				
+        for(var i = 0; i < TRAIL_MAX_SIZE; i++) {
+            canvasContext.drawImage(this.canvasList[i], 0, 0);
+        }
+    }
+}
+
 function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.x = startX;
     this.y = startY;
@@ -25,13 +58,6 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.bulletHeight = 2;
     this.enemy = enemy;
     this.rotation = 0;
-
-    if (TRAILS_ON)
-    {
-        this.trailIndex = 0;
-        this.trailx = [];
-        this.traily = [];
-    }
 
     this.move = function() {
         this.x += this.xv;
@@ -50,14 +76,6 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
             this.yv *= -1;
         }
 
-        if (TRAILS_ON) // remember prev positions
-        {   // a circular buffer of fixed size
-            this.trailIndex++;
-            if (this.trailIndex > TRAIL_MAX_SIZE) this.trailIndex = 0;
-            this.trailx[this.trailIndex] = this.x;
-            this.traily[this.trailIndex] = this.y;
-        }
-        
         this.lifeLeft--;
         if (this.lifeLeft < 0) {
             this.removeMe = true;
@@ -68,10 +86,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
         
         if (TRAILS_ON)
         {
-            for (var i=0; i<TRAIL_MAX_SIZE; i++)
-            {
-                drawBitmapCenteredAtLocationWithRotation(smokeTrailPic, this.trailx[i], this.traily[i], Math.PI*2*this.trailx[i]*this.traily[i]);
-            }
+            particleCanvasManager.drawToCanvas(smokeTrailPic, this.x, this.y, Math.PI*2*this.x*this.y);
         }
 
         if (ORIENT_SPRITE_FORWARD) this.rotation = Math.atan2(this.yv,this.xv);

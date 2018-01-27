@@ -76,6 +76,7 @@ function InGameState(){
         for (var i = 0; i < shotList.length; i++) {
             shotList[i].draw();
         }
+				particleCanvasManager.draw();
         for (var e = 0; e < enemyList.length; e++) {
             enemyList[e].draw();
         }

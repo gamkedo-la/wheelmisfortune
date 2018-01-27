@@ -1,6 +1,7 @@
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
 var scaledCanvas, scaledContext;
+var particleCanvasManager;
 
 var gameRunning = true;
 var animationFrameNumber;
@@ -52,6 +53,8 @@ window.onload = function() {
 	scaledContext.msImageSmoothingEnabled = false;
 	scaledContext.webkitImageSmoothingEnabled = false;
 
+	particleCanvasManager = new ParticleCanvasManager();
+	
 	loadImages();
 	loadSounds();
 };
