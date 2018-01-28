@@ -1,11 +1,14 @@
 inGameState = new InGameState();
 inGameState.prototype = new GameController(); //akin to inheritance in JS
 
+// Make this global for now
+var inGamePaused = false;
+
 //This is how it works!
 function InGameState(){
     this.enter = function(){
 	applyPlayerKind();
-    this.paused = false;
+    inGamePaused = false;
     // Don't pause if you hold down enter when the game starts
     this.canChangePauseState = !key_Menu_Select;
     sounds.mainTheme.play();
@@ -15,10 +18,10 @@ function InGameState(){
         if(activeMisfortunes.length > 0) {
             updateActiveMisfortunes();
         }
-        if (!this.paused) this.updateAnims();
-        if (!this.paused) this.moveEverything();
+        if (!inGamePaused) this.updateAnims();
+        if (!inGamePaused) this.moveEverything();
         this.drawEverything();
-        if (!this.paused) this.collideEverything();
+        if (!inGamePaused) this.collideEverything();
         this.handleInput();
         
         if(gameRunning) {
@@ -30,7 +33,7 @@ function InGameState(){
         if (mouse_Left){
             if(clickLock == false){
                 clickLock = true;
-                player.shoot();
+                if (!inGamePaused) player.shoot();
             }
         } else{
             clickLock = false;
@@ -41,13 +44,13 @@ function InGameState(){
         if (key_Menu_Select) {
             // This is so the game doesn't rapidly pause and unpause when you hold down the enter key.
             if (this.canChangePauseState === true) {
-                if (this.paused === true) {
-                    this.paused = false;
+                if (inGamePaused === true) {
+                    inGamePaused = false;
                     sounds.mainTheme.play();
                     sounds.pauseTheme.pause();
                 }
                 else {
-                    this.paused = true;
+                    inGamePaused = true;
                     sounds.mainTheme.pause();
                     sounds.pauseTheme.play();
                 }
