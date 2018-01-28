@@ -71,14 +71,12 @@ function InGameState(){
         canvasContext.fillRect(0, 0, canvas.width, canvas.height);
         canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
         
-        player.draw();
-    
-        for (var i = 0; i < shotList.length; i++) {
-            shotList[i].draw();
-        }
-				particleCanvasManager.draw();
-        for (var e = 0; e < enemyList.length; e++) {
-            enemyList[e].draw();
+        var allObjectsToDrawDepthSorted = enemyList.concat([player],shotList);
+        allObjectsToDrawDepthSorted.sort(function(a, b) {
+            return a.y - b.y; // technically we want to sort on their feet, using center as approximation to start
+        });
+        for (var i=0;i<allObjectsToDrawDepthSorted.length; i++) {
+            allObjectsToDrawDepthSorted[i].draw();
         }
         
         if(wheelShowing){
