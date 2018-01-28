@@ -8,6 +8,7 @@ function InGameState(){
     this.paused = false;
     // Don't pause if you hold down enter when the game starts
     this.canChangePauseState = !key_Menu_Select;
+    sounds.mainTheme.play();
 	};
     
     this.update = function() {
@@ -42,9 +43,13 @@ function InGameState(){
             if (this.canChangePauseState === true) {
                 if (this.paused === true) {
                     this.paused = false;
+                    sounds.mainTheme.play();
+                    sounds.pauseTheme.pause();
                 }
                 else {
                     this.paused = true;
+                    sounds.mainTheme.pause();
+                    sounds.pauseTheme.play();
                 }
                 this.canChangePauseState = false;
             }    

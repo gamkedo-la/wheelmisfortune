@@ -16,6 +16,14 @@ var sounds = {
             'min': 0.6,
             'max': 1
         }
+    },
+    'mainTheme': {
+        'src': './audio/mainTheme',
+        'loop': true
+    },
+    'pauseTheme': {
+        'src': './audio/pauseOrmenu',
+        'loop': true
     }
 };
 
@@ -32,6 +40,9 @@ function loadSounds() {
 function Sound(sound) {
     var pathToSound = sound.src + audioFormat;
     var audio = new Audio(pathToSound);
+    if (sound.loop) {
+        audio.loop = sound.loop;
+    }
 
     this.properties = sound;
     this.play = function() {
@@ -42,6 +53,9 @@ function Sound(sound) {
         }
         audio.play();
     };
+    this.pause = function() {
+        audio.pause();
+    }
     
     this.changeVolume = function(volumeIn) {
         audio.volume = volumeIn;
