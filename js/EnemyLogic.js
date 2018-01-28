@@ -2,12 +2,16 @@ var enemyList = []; //list of enemies
 const MIN_SPAWN_DIST_TO_PLAYER = 200;
 const TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE = 3;
 
+var isBossFight = false;
+
 function spawnDangerousEnemies(){
 	var deathSphereCount = 1 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
     var slimeCount = 1 + Math.floor(Math.random() * 2);
-
     var darkmageCount = 0;
+
+    isBossFight = false;
+
     if(Math.floor(Math.random() * 100) < 15){
         darkmageCount = 1;
     }
@@ -29,8 +33,14 @@ function spawnDangerousEnemies(){
         var nextPt = centerOfRandomEdge();
         enemyList.push(new darkmage(nextPt.x, nextPt.y));
     }
-
 }
+
+function startBossFight() {
+    enemyList = [];
+    isBossFight = true;
+    enemyList.push(new BossSlime(canvas.width/2,canvas.height/2));
+}
+
 function centerOfRandomEdge(){
 	var returnX, returnY;
 	if(Math.random() < 0.5){ //top or bottom edge
@@ -69,6 +79,12 @@ function spawnInitialEnemies() {
 }
 
 function spawnEnemiesIfTooFew(){
+    if(isBossFight) {
+        if(enemyList.length == 0) {
+            console.log("TBD: Boss is dead! Win screen");
+        }
+        return;
+    }
 	var dangerousEnemyCount = 0;
 	for(var i = 0; i < enemyList.length; i++){
 		if(enemyList[i].isDangerous){
@@ -491,4 +507,4 @@ function BigBox(startX, startY) {
         this.parentMove();
     };
 }
-//LilBox end
+//BigBox end
