@@ -5,16 +5,19 @@ inGameState.prototype = new GameController(); //akin to inheritance in JS
 function InGameState(){
     this.enter = function(){
 	applyPlayerKind();
+    this.paused = false;
+    // Don't pause if you hold down enter when the game starts
+    this.canChangePauseState = !key_Menu_Select;
 	};
     
     this.update = function() {
         if(activeMisfortunes.length > 0) {
             updateActiveMisfortunes();
         }
-        this.updateAnims();
-        this.moveEverything();
+        if (!this.paused) this.updateAnims();
+        if (!this.paused) this.moveEverything();
         this.drawEverything();
-        this.collideEverything();
+        if (!this.paused) this.collideEverything();
         this.handleInput();
         
         if(gameRunning) {
@@ -33,6 +36,21 @@ function InGameState(){
         }
         if(key_Space && wheelShowing){
             kickWheel();
+        }
+        if (key_Menu_Select) {
+            // This is so the game doesn't rapidly pause and unpause when you hold down the enter key.
+            if (this.canChangePauseState === true) {
+                if (this.paused === true) {
+                    this.paused = false;
+                }
+                else {
+                    this.paused = true;
+                }
+                this.canChangePauseState = false;
+            }    
+        }
+        else {
+            this.canChangePauseState = true;
         }
     };
     
