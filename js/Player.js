@@ -92,6 +92,8 @@ function Player(positionX, positionY) {
         if (this.nextFire > 0) {
             this.nextFire--;
         }
+
+        this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
     
 		this.gunMuzzleX = this.x + Math.cos(this.gunRotation) * playerWeapon.width/2;
 		this.gunMuzzleY = this.y + Math.sin(this.gunRotation) * playerWeapon.width/2;
@@ -106,9 +108,8 @@ function Player(positionX, positionY) {
             frameNow = 0; // stand
         }
         drawFacingLeftOption(playerSpritePics[playerKind],
-                this.x, this.y, mouseX < this.x,
+                this.x, this.y, this.gunMuzzleX < this.x,
                 frameNow);
-        this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
 
         // muzzle flashes oriented to gun
         if (this.muzzleFlashFrames>0)

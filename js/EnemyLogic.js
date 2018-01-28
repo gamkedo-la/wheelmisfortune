@@ -85,6 +85,7 @@ function spawnEnemiesIfTooFew(){
         }
         return;
     }
+
 	var dangerousEnemyCount = 0;
 	for(var i = 0; i < enemyList.length; i++){
 		if(enemyList[i].isDangerous){
@@ -94,6 +95,7 @@ function spawnEnemiesIfTooFew(){
 	if(dangerousEnemyCount < TOO_FEW_BAD_GUYS_WILL_SPAWN_MORE){
 		spawnDangerousEnemies();
 		wheelShowing = true;
+        kickWheel();
 	}
 }
 
