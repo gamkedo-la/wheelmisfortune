@@ -1,20 +1,27 @@
 inGameState = new InGameState();
 inGameState.prototype = new GameController(); //akin to inheritance in JS
 
+// Make this global for now
+var inGamePaused = false;
+
 //This is how it works!
 function InGameState(){
     this.enter = function(){
 	applyPlayerKind();
+    inGamePaused = false;
+    // Don't pause if you hold down enter when the game starts
+    this.canChangePauseState = !key_Menu_Select;
+    sounds.mainTheme.play();
 	};
     
     this.update = function() {
         if(activeMisfortunes.length > 0) {
             updateActiveMisfortunes();
         }
-        this.updateAnims();
-        this.moveEverything();
+        if (!inGamePaused) this.updateAnims();
+        if (!inGamePaused) this.moveEverything();
         this.drawEverything();
-        this.collideEverything();
+        if (!inGamePaused) this.collideEverything();
         this.handleInput();
         
         if(gameRunning) {
@@ -26,13 +33,32 @@ function InGameState(){
         if (mouse_Left){
             if(clickLock == false){
                 clickLock = true;
-                player.shoot();
+                if (!inGamePaused) player.shoot();
             }
         } else{
             clickLock = false;
         }
         if(key_Space && wheelShowing){
             kickWheel();
+        }
+        if (key_Menu_Select) {
+            // This is so the game doesn't rapidly pause and unpause when you hold down the enter key.
+            if (this.canChangePauseState === true) {
+                if (inGamePaused === true) {
+                    inGamePaused = false;
+                    sounds.mainTheme.play();
+                    sounds.pauseTheme.pause();
+                }
+                else {
+                    inGamePaused = true;
+                    sounds.mainTheme.pause();
+                    sounds.pauseTheme.play();
+                }
+                this.canChangePauseState = false;
+            }    
+        }
+        else {
+            this.canChangePauseState = true;
         }
     };
     
@@ -71,14 +97,12 @@ function InGameState(){
         canvasContext.fillRect(0, 0, canvas.width, canvas.height);
         canvasContext.drawImage(backGroundPic,0,0,canvas.width,canvas.height);
         
-        player.draw();
-    
-        for (var i = 0; i < shotList.length; i++) {
-            shotList[i].draw();
-        }
-				particleCanvasManager.draw();
-        for (var e = 0; e < enemyList.length; e++) {
-            enemyList[e].draw();
+        var allObjectsToDrawDepthSorted = enemyList.concat([player],shotList);
+        allObjectsToDrawDepthSorted.sort(function(a, b) {
+            return a.y - b.y; // technically we want to sort on their feet, using center as approximation to start
+        });
+        for (var i=0;i<allObjectsToDrawDepthSorted.length; i++) {
+            allObjectsToDrawDepthSorted[i].draw();
         }
         
         if(wheelShowing){

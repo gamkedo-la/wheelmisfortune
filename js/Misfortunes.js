@@ -40,7 +40,7 @@ const misfortuneTypes = Object.keys(misfortunes);
 var activeMisfortunes = [];
 
 function countMisfortuneSecond(){
-	if(wheelShowing == false){
+	if(wheelShowing == false && inGamePaused == false){
 		secondsOnThisMisfortune++;
 	}
 }

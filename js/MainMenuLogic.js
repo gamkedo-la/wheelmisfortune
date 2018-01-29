@@ -1,36 +1,39 @@
 MainMenuState = new MainMenuState();
 MainMenuState.prototype = new GameController();
 
+var menubuttonY = 20;
+var buttonYJump = 30;
+
 function MainMenuState(){
     var mainMenuOptions = [
         {
             'displayName' : "Play as Ninja",
-            'x': 20,
-            'y': 20,
+            'x': 180,
+            'y': 150,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_NINJA; gameController.changeState(inGameState);}
         },
 		{
             'displayName' : "Play as Cowboy",
-            'x': 140,
-            'y': 20,
+            'x': 180,
+            'y': 180,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_COWBOY; gameController.changeState(inGameState);}
         },
 		        {
             'displayName' : "Play as Knight",
-            'x': 260,
-            'y': 20,
+            'x': 180,
+            'y': 210,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_KNIGHT; gameController.changeState(inGameState);}
         },
         {
             'displayName' : "Credits (tbd)",
-            'x': 20,
-            'y': 50,
+            'x': 180,
+            'y': 240,
             'width': 100,
             'height': 20,
             'action': function(){console.log("Example Button");}
@@ -80,13 +83,21 @@ function MainMenuState(){
     };
     
     this.drawEverything = function(){
+        canvasContext.font = "20px Verdana";
+
+        canvasContext.fillStyle = "yellow";
+        canvasContext.fillText("Wheel of Misfortune", 140+1, 60+1);
+        canvasContext.fillStyle = "red";
+        canvasContext.fillText("Wheel of Misfortune", 140, 60);
+
+        canvasContext.font = "10px Verdana";
         for (var i = 0; i < mainMenuOptions.length; i++) {
             canvasContext.fillStyle = "white";
             
             colorRect(mainMenuOptions[i].x, mainMenuOptions[i].y, mainMenuOptions[i].width, mainMenuOptions[i].height, 'green');
             
             canvasContext.fillStyle = "white";
-            canvasContext.fillText(mainMenuOptions[i].displayName, mainMenuOptions[i].x, mainMenuOptions[i].y + 15);
+            canvasContext.fillText(" "+mainMenuOptions[i].displayName, mainMenuOptions[i].x, mainMenuOptions[i].y + 15);
             
             if (i === selected) {
                 colorRect(mainMenuOptions[i].x -10, mainMenuOptions[i].y + 10, 5, 5, 'white');

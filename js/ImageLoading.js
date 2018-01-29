@@ -18,6 +18,11 @@ var darkmageWarmupSheet = document.createElement("img");
 var darkmageTurnDownSheet = document.createElement("img");
 var fireblastSheet = document.createElement("img");
 
+var slimeBossSheet1 = document.createElement("img");
+var slimeBossSheet2 = document.createElement("img");
+var slimeBossSheet3 = document.createElement("img");
+var slimeBossSheet4 = document.createElement("img");
+
 var backGroundPic = document.createElement("img");
 var playerWeapon = document.createElement("img");
 var wheelMisfortune = document.createElement("img");
@@ -80,9 +85,11 @@ function loadImages() {
 		{ varName: slimeMainSheet, theFile: "slime_Animation 1.png"},
 		{ varName: slimeBabySheet, theFile: "slime_Animation 2.png"},
 		{ varName: slimeMultiSheet, theFile: "slime_Animation 3.png"},
-		{ varName: fireblastSheet, theFile: "fireblast.png"}
-		
-		
+		{ varName: fireblastSheet, theFile: "fireblast.png"},
+		{ varName: slimeBossSheet1, theFile: "slimeboss_anim_1.png"},
+		{ varName: slimeBossSheet2, theFile: "slimeboss_anim_2.png"},
+		{ varName: slimeBossSheet3, theFile: "slimeboss_anim_3.png"},
+		{ varName: slimeBossSheet4, theFile: "slimeboss_anim_4.png"}		
 	]; ////
 
 	picsToLoad = imageList.length; ////
