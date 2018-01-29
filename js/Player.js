@@ -88,7 +88,7 @@ function Player(positionX, positionY) {
 			if(distToBadGuy < PLAYER_BUMP_RADIUS + enemyList[i].size){
 				//console.log("Too close to bad guy");
 				var angToBadGuy = Math.atan2(this.y - enemyList[i].y, this.x - enemyList[i].x);
-				var newDistFromCenter = PLAYER_BUMP_RADIUS + enemyList[i].size + 7;
+				var newDistFromCenter = PLAYER_BUMP_RADIUS + enemyList[i].size;
 				this.x = enemyList[i].x + Math.cos(angToBadGuy) * newDistFromCenter;
 				this.y = enemyList[i].y + Math.sin(angToBadGuy) * newDistFromCenter;
 				
