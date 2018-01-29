@@ -1,4 +1,3 @@
-
 var wheelRadians = 0.0;
 var wheelSpinSpeed = 0.0;
 var wheelFriction = 0.98;
@@ -7,7 +6,7 @@ var wheelKickMax = .06;
 var wheelShowing = false;
 var wheelNow = 0;
 var wheelSpinning = false;
-const wheelSpeedCountAsStopped = .0011; //Make number smaller to make wheel show longer before it finishes.
+const WHEEL_SPEED_COUNT_AS_STOPPED = .0011; //Make number smaller to make wheel show longer before it finishes.
 
 function wheelMove(){
 	wheelRadians += wheelSpinSpeed;
@@ -17,7 +16,7 @@ function wheelMove(){
 	}
 	wheelNow = Math.floor(misfortuneTypes.length * (wheelRadians/(2.0 * Math.PI)));
 	activateMisfortune(misfortuneTypes[wheelNow]);
-	if(wheelSpinning == true && wheelSpinSpeed <= wheelSpeedCountAsStopped){
+	if(wheelSpinning == true && wheelSpinSpeed <= WHEEL_SPEED_COUNT_AS_STOPPED){
 		hideMisfortuneWheel();
 		if(misfortunes.doubleEnemy.isActive){
 			spawnDangerousEnemies();
