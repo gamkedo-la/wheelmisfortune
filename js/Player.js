@@ -1,4 +1,5 @@
 const PLAYER_BUMP_RADIUS = 6;
+const FRAMES_BETWEEN_PLAYER_DAMAGE = 60;
 
 function applyPlayerKind() {
     if (playerKind === playerSpritePics.indexOf(knightPic)) {
@@ -41,7 +42,8 @@ function Player(positionX, positionY) {
 
     this.maxHealth = 3;
     this.health = this.maxHealth;
-
+	this.invulFrames = 0;
+	
     this.drawMask = false;
 
     // temporary mask for collision made to work the current sprite
@@ -54,6 +56,9 @@ function Player(positionX, positionY) {
     this.move = function playerMove() {
         this.animCycleCounter++;
 		var speedNow;
+		if(this.invulFrames > 0){
+			this.invulFrames--;
+		}
 		if(misfortunes.fastMode.isActive){
 			speedNow = 2.5 * this.speed;
 		}
@@ -118,6 +123,9 @@ function Player(positionX, positionY) {
 	}; //end of playerMove
 
     this.draw = function() {
+		if(this.invulFrames > 0 && this.invulFrames%4 < 2){
+			return;//skip drawing so player flashes when hurt
+		}
         var frameNow;
         if(this.isWalking) {
             frameNow = Math.floor(this.animCycleCounter/6)%3;
@@ -183,7 +191,11 @@ function Player(positionX, positionY) {
     };
 
     this.takeDamage = function(damage) {
+		if(this.invulFrames > 0){
+			return;
+		}
         this.health -= damage;
+		this.invulFrames = FRAMES_BETWEEN_PLAYER_DAMAGE;
         console.log("Current player health", this.health);
         if (this.health == 0) {
             console.log("You died, but what the heck -- keep going!")
