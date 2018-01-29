@@ -1,3 +1,5 @@
+const PLAYER_BUMP_RADIUS = 15;
+
 function applyPlayerKind() {
     if (playerKind === playerSpritePics.indexOf(knightPic)) {
         selectSpecificWeapon('Sword');
@@ -75,7 +77,21 @@ function Player(positionX, positionY) {
             this.y += speedNow;
             this.isWalking = true;
         }
-
+		
+		for(var i = 0; i < enemyList.length; i++){
+			var distToBadGuy = dist(enemyList[i].x, enemyList[i].y, this.x, this.y);
+			if(distToBadGuy < PLAYER_BUMP_RADIUS){
+				//console.log("Too close to bad guy");
+				var angToBadGuy = Math.atan2(this.y - enemyList[i].y, this.x - enemyList[i].x);
+				this.x = enemyList[i].x + Math.cos(angToBadGuy) * (PLAYER_BUMP_RADIUS + 5);
+				this.y = enemyList[i].y + Math.sin(angToBadGuy) * (PLAYER_BUMP_RADIUS + 5);
+				
+				if(enemyList[i].isDangerous){
+					this.takeDamage(1);
+				}//bumped bad guy
+			}//seeing if too close to bad guy or crate
+		}//checking every bad guy and crate
+		
         if (this.x < this.playerWidth / 2) {
             this.x = this.playerWidth / 2;
         }

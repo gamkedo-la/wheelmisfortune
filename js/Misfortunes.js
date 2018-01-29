@@ -72,8 +72,12 @@ function activateMisfortune(misfortuneType) {
     }
 	secondsOnThisMisfortune = 0;
     // activate the passed misfortune
-    misfortunes[misfortuneType].isActive = true;
-    activeMisfortunes.push(misfortunes[misfortuneType]);
+	if(misfortunes[misfortuneType] != undefined){
+		misfortunes[misfortuneType].isActive = true;
+		activeMisfortunes.push(misfortunes[misfortuneType]);
+	}else{
+		console.log("undefined misfortune: " + misfortuneType);
+	}
 }
 
 function deactivateMisfortune(misfortuneType) {
