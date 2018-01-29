@@ -118,7 +118,7 @@ function Enemy(startX, startY) {
     this.velocity = .7;
     this.facing = 0;
     //this.sprite = badguyPic;
-    this.size = 80;
+    this.size = 9;
     this.faceLeft = false;
 
     // set to zero for no kickback / knockback effect

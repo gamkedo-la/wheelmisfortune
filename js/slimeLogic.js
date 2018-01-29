@@ -155,7 +155,8 @@ function BossSlime(startX, startY) {
     this.spriteSpeed = 4;
 
     Enemy.call(this, startX, startY);
-
+	
+	this.size = 60;
     this.velocity = .6;
     this.parentMove = this.move;
     this.targetDirection;

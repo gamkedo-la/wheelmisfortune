@@ -1,4 +1,4 @@
-const PLAYER_BUMP_RADIUS = 15;
+const PLAYER_BUMP_RADIUS = 6;
 
 function applyPlayerKind() {
     if (playerKind === playerSpritePics.indexOf(knightPic)) {
@@ -80,11 +80,12 @@ function Player(positionX, positionY) {
 		
 		for(var i = 0; i < enemyList.length; i++){
 			var distToBadGuy = dist(enemyList[i].x, enemyList[i].y, this.x, this.y);
-			if(distToBadGuy < PLAYER_BUMP_RADIUS){
+			if(distToBadGuy < PLAYER_BUMP_RADIUS + enemyList[i].size){
 				//console.log("Too close to bad guy");
 				var angToBadGuy = Math.atan2(this.y - enemyList[i].y, this.x - enemyList[i].x);
-				this.x = enemyList[i].x + Math.cos(angToBadGuy) * (PLAYER_BUMP_RADIUS + 5);
-				this.y = enemyList[i].y + Math.sin(angToBadGuy) * (PLAYER_BUMP_RADIUS + 5);
+				var newDistFromCenter = PLAYER_BUMP_RADIUS + enemyList[i].size + 7;
+				this.x = enemyList[i].x + Math.cos(angToBadGuy) * newDistFromCenter;
+				this.y = enemyList[i].y + Math.sin(angToBadGuy) * newDistFromCenter;
 				
 				if(enemyList[i].isDangerous){
 					this.takeDamage(1);
