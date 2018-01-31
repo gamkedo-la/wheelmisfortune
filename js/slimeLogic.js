@@ -148,7 +148,7 @@ function LilSlime(startX, startY) {
 
 function BossSlime(startX, startY) {
 
-    this.spriteSheet = slimeBossSheet1; //bit hacky to rely on ordering like this, but works for now
+    this.spriteSheet = slimeBossSheet2; //bit hacky to rely on ordering like this, but works for now
     this.spriteWidth = 150;
     this.spriteHeight = 150;
     this.spriteFrames = 4;
@@ -162,9 +162,10 @@ function BossSlime(startX, startY) {
     this.targetDirection;
     this.framesUntilDirectionUpdate = 0;
     this.turnRate = 0.025;
-    this.shotRate = 300;
+    this.shotRate = 200;
     this.nextShot = this.shotRate;
     this.lifeTime = 0
+    this.state = "spawning"
     //this.useSpecularShineEffect = false;
 
     this.life = 60; // very high (is literally the boss)
@@ -182,7 +183,44 @@ function BossSlime(startX, startY) {
             enemyList.push(new Slime(this.x, this.y - 20));
         }
         this.lifeTime++;*/
-        
+        this.nextShot--
+        if(this.state == "spawning" && this.nextShot <= 0) {
+            this.state = "normal";
+            this.nextShot = 100;
+            this.sprite.setSprite(slimeBossSheet1, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+            return;
+        }
+        if(this.state == "normal" && this.nextShot <= 0) {
+            this.state = "telegraph";
+            this.nextShot = 100;
+            this.framesUntilDirectionUpdate = -1
+            this.sprite.setSprite(slimeBossSheet4, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+            return;
+        }
+        if(this.state == "telegraph" && this.nextShot <= 0) {
+            this.state = "attack";
+            this.nextShot = 30;
+            this.velocity = 3;
+            this.framesUntilDirectionUpdate = -1
+            this.sprite.setSprite(slimeBossSheet3, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+
+        }
+        if(this.state == "attack" && this.nextShot <= 0) {
+            this.state = "normal";
+            this.nextShot = 300;
+            this.velocity = .6;
+            this.sprite.setSprite(slimeBossSheet1, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+        }
+
+
         this.framesUntilDirectionUpdate--;
         if (this.framesUntilDirectionUpdate <= 0) {
             this.framesUntilDirectionUpdate = 10;
@@ -203,6 +241,9 @@ function BossSlime(startX, startY) {
 
         this.parentMove();
     };
+    this.attack = function(){
+
+    }
 
     this.gotHit = function(damage, back) {
         var backHit = back || false; //defaults to false
