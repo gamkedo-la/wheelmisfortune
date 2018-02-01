@@ -1,7 +1,8 @@
 Slime.prototype = new Enemy();
 Slime.prototype.constructor = Slime;
 const Slime_THINK_DELAY = 300;
-
+const Slime_THINK_DELAY_CULL = 20;
+var slimesCount = []
 function Slime(startX, startY) {
 
     this.spriteSheet = slimeMainSheet; //bit hacky to rely on ordering like this, but works for now
@@ -13,7 +14,7 @@ function Slime(startX, startY) {
     Enemy.call(this, startX, startY);
 
 
-
+    this.name = "slime";
     this.velocity = .3;
     this.parentMove = this.move;
     this.targetDirection;
@@ -29,8 +30,15 @@ function Slime(startX, startY) {
 
     // reflect player shot dynamic light? NO: the effect only works with circles
     this.useSpecularShineEffect = false;
-
+    this.startCull = function(){
+        this.state = "culling"
+        this.velocity = .8;
+        this.sprite.setSprite(slimeMainSheet, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, 4, true);
+    }
     this.move = function() {
+
         if(this.state == "normal" && Math.floor(Math.random() * 10) < 2 && this.nextShot < 0){
             this.state = "doubling"
             this.nextShot = 200; //time till end of doubling state
@@ -45,6 +53,46 @@ function Slime(startX, startY) {
                 this.spriteWidth, this.spriteHeight,
                 this.spriteFrames, 4, true);
             enemyList.push(new LilSlime(this.x, this.y - 20));
+            
+        }
+        if(this.state == "culling"){
+            if(!this.bossSlimeRef){
+                for(var i in enemyList){
+                    if(enemyList[i].name && enemyList[i].name == "bossSlime"){
+                      this.bossSlimeRef = enemyList[i]
+                    }
+                }
+                
+            }
+            
+            if(!this.bossSlimeRef){
+                return
+            }
+            if(Math.abs(this.bossSlimeRef.x - this.x) < 10 && Math.abs(this.bossSlimeRef.y - this.y) < 10){
+                this.life = 0
+                this.bossSlimeRef.slimesEaten += 1;
+
+            }
+            this.framesUntilDirectionUpdate--;
+            if (this.framesUntilDirectionUpdate <= 0) {
+                this.framesUntilDirectionUpdate = Slime_THINK_DELAY_CULL;
+                var targetX = this.bossSlimeRef.x - this.x;
+                var targetY = this.bossSlimeRef.y - this.y;
+                this.targetDirection = Math.atan2(targetY, targetX);
+
+                this.normalizeHeading();
+            }
+            // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+            if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+                this.heading -= this.turnRate;
+            } else {
+                this.heading += this.turnRate;
+            }
+
+            this.normalizeHeading();
+
+            this.parentMove();
+            return;
             
         }
 
@@ -91,7 +139,7 @@ function LilSlime(startX, startY) {
     this.spriteSpeed = 4;
 
     Enemy.call(this, startX, startY);
-
+    this.name = "slime";
 
 
     this.velocity = .6;
@@ -110,8 +158,55 @@ function LilSlime(startX, startY) {
 
     // reflect player shot dynamic light? NO: the effect only works with circles
     this.useSpecularShineEffect = false;
-
+    this.startCull = function(){
+        this.state = "culling"
+        this.velocity = .8;
+        this.sprite.setSprite(slimeMainSheet, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, 4, true);
+    }
     this.move = function() {
+        if(this.state == "culling"){
+            if(!this.bossSlimeRef){
+                for(var i in enemyList){
+                    if(enemyList[i].name && enemyList[i].name == "bossSlime"){
+                      this.bossSlimeRef = enemyList[i]
+                    }
+                }
+                
+            }
+            
+            if(!this.bossSlimeRef){
+                return
+            }
+            if(Math.abs(this.bossSlimeRef.x - this.x) < 10 && Math.abs(this.bossSlimeRef.y - this.y) < 10){
+                this.life = 0
+                this.bossSlimeRef.slimesEaten += 1;
+
+            }
+            this.framesUntilDirectionUpdate--;
+            if (this.framesUntilDirectionUpdate <= 0) {
+                this.framesUntilDirectionUpdate = Slime_THINK_DELAY_CULL;
+                var targetX = this.bossSlimeRef.x - this.x;
+                var targetY = this.bossSlimeRef.y - this.y;
+                this.targetDirection = Math.atan2(targetY, targetX);
+
+                this.normalizeHeading();
+            }
+            // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+            if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+                this.heading -= this.turnRate;
+            } else {
+                this.heading += this.turnRate;
+            }
+
+            this.normalizeHeading();
+
+            this.parentMove();
+            return;
+            
+        }
+
         if(this.lifeTime > 400){
             this.life = 0
             enemyList.push(new Slime(this.x, this.y - 20));
@@ -148,24 +243,26 @@ function LilSlime(startX, startY) {
 
 function BossSlime(startX, startY) {
 
-    this.spriteSheet = slimeBossSheet2; //bit hacky to rely on ordering like this, but works for now
-    this.spriteWidth = 150;
-    this.spriteHeight = 150;
+    this.spriteSheet = slimeMultiSheet; //bit hacky to rely on ordering like this, but works for now
+    this.spriteWidth = 32;
+    this.spriteHeight = 32;
     this.spriteFrames = 4;
     this.spriteSpeed = 4;
 
     Enemy.call(this, startX, startY);
 	
+    this.name = "bossSlime"
 	this.size = 60;
-    this.velocity = .6;
+    this.velocity = 0;
     this.parentMove = this.move;
     this.targetDirection;
     this.framesUntilDirectionUpdate = 0;
     this.turnRate = 0.025;
     this.shotRate = 200;
     this.nextShot = this.shotRate;
-    this.lifeTime = 0
-    this.state = "spawning"
+    this.lifeTime = 0;
+    this.state = "spawning1"
+    this.slimesEaten = 0;
     //this.useSpecularShineEffect = false;
 
     this.life = 60; // very high (is literally the boss)
@@ -184,7 +281,22 @@ function BossSlime(startX, startY) {
         }
         this.lifeTime++;*/
         this.nextShot--
-        if(this.state == "spawning" && this.nextShot <= 0) {
+        if(this.state == "spawning1" && this.slimesEaten > 5) {
+            this.velocity = 0;
+            this.state = "spawning2";
+            this.nextShot = 100;
+            this.spriteWidth = 150;
+            this.spriteHeight = 150;
+            this.spriteFrames = 4;
+            this.spriteSpeed = 4;
+            
+            this.sprite.setSprite(slimeBossSheet2, //note these values must be defined from the deriving class
+                this.spriteWidth, this.spriteHeight,
+                this.spriteFrames, this.spriteSpeed, true);
+            return;
+        }
+        if(this.state == "spawning2" && this.slimesEaten > 20) {
+            this.velocity = .6;
             this.state = "normal";
             this.nextShot = 100;
             this.sprite.setSprite(slimeBossSheet1, //note these values must be defined from the deriving class
@@ -192,9 +304,11 @@ function BossSlime(startX, startY) {
                 this.spriteFrames, this.spriteSpeed, true);
             return;
         }
+
         if(this.state == "normal" && this.nextShot <= 0) {
             this.state = "telegraph";
-            this.nextShot = 100;
+            this.nextShot = 150;
+            this.velocity = 0;
             this.framesUntilDirectionUpdate = -1
             this.sprite.setSprite(slimeBossSheet4, //note these values must be defined from the deriving class
                 this.spriteWidth, this.spriteHeight,
@@ -204,7 +318,7 @@ function BossSlime(startX, startY) {
         if(this.state == "telegraph" && this.nextShot <= 0) {
             this.state = "attack";
             this.nextShot = 30;
-            this.velocity = 3;
+            this.velocity = 2;
             this.framesUntilDirectionUpdate = -1
             this.sprite.setSprite(slimeBossSheet3, //note these values must be defined from the deriving class
                 this.spriteWidth, this.spriteHeight,
@@ -247,7 +361,9 @@ function BossSlime(startX, startY) {
 
     this.gotHit = function(damage, back) {
         var backHit = back || false; //defaults to false
-
+        if(this.life - damage < 1){
+            isBossFight = false;
+        }
         Slime.prototype.gotHit.call(this, damage); //redirects to the normal parent function
     }
 } // Slime enemy end

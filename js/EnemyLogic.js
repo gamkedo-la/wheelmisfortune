@@ -36,9 +36,14 @@ function spawnDangerousEnemies(){
 }
 
 function startBossFight() {
-    enemyList = [];
+    //enemyList = [];
     isBossFight = true;
     enemyList.push(new BossSlime(canvas.width/2,canvas.height/2));
+    for(var i = 0; i < enemyList.length; i++){
+        if(enemyList[i].isDangerous && enemyList[i].name == "slime"){
+            enemyList[i].startCull();
+        }
+    }
 }
 
 function centerOfRandomEdge(){
@@ -98,6 +103,17 @@ function spawnEnemiesIfTooFew(){
         kickWheel();
 	}
 }
+function bossCheck(){
+    var slimeCount = 0;
+    for(var i = 0; i < enemyList.length; i++){
+        if(enemyList[i].isDangerous && enemyList[i].name == "slime"){
+            slimeCount++;
+        }
+    }
+    if(slimeCount > 30){
+        startBossFight()
+    }
+}
 
 function moveEnemies() {
     for (var i = enemyList.length - 1; i >= 0; i--) { //backwards since we are splicing out
@@ -107,7 +123,10 @@ function moveEnemies() {
             enemyList.splice(i, 1);
         }
     }
-	spawnEnemiesIfTooFew();
+    if(!isBossFight){
+    	spawnEnemiesIfTooFew();
+        bossCheck();
+    }
 }
 
 function Enemy(startX, startY) {
@@ -141,7 +160,7 @@ function Enemy(startX, startY) {
             this.remove = true;
             return;
         }
-        if(this.state == "normal"){
+        
             this.x += Math.cos(this.heading) * this.velocity;
             this.y += Math.sin(this.heading) * this.velocity;
 
@@ -162,7 +181,7 @@ function Enemy(startX, startY) {
                 this.heading = (TWO_PI - this.heading) % TWO_PI;
             }
             this.facing += this.spinSpeed;
-        }
+        
     };
     this.checkIfFacingLeft = function() {
         if (Math.abs(this.heading) > Math.PI / 2) {
