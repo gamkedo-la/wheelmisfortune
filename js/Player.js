@@ -11,8 +11,10 @@ function pointNotTooCloseToPlayer(minDist){
 	var testX, testY;
 	var safetyLimit = 300; //if it takes more than 300 checks something is wrong, BAIL
 	do {
-		testX = Math.random() * canvas.width;
-		testY = Math.random() * canvas.height;
+        testX = Math.floor(Math.random()*40)*16;
+        var vertRow = Math.floor(Math.random()*22);
+        testY = vertRow*16;
+        testX -= vertRow * 13; // offsetting to roughly match angle of floor tiles
 		safetyLimit--;
 		if(safetyLimit < 0){
 			console.log("pointNotTooCloseToPlayer exhausted attempts, was min dist too high? "+minDist);
