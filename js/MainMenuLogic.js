@@ -107,14 +107,28 @@ function MainMenuState(){
         var lineY = 80;
         var lineYskip = 10;
 
-        canvasContext.fillText("Cameron Button: project lead", lineX, lineY);
-        lineY+= lineYskip;
-        canvasContext.fillText("Other names coming soon", lineX, lineY);
+        canvasContext.fillText("Cameron Button: project lead, main code, wheel, background", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Marc Silva: Art and code for slimes, wizard", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jose Contreras: Player-enemy collision code", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Dan Dela Rosa: Sword functionality", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jerry McClellan Jr.: Player character sprites", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Vighnesh: Menu, main, end music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Nicholas Polchies: Optimizations, mute on focus loss", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Asix Jin: Monocle Monarch sprite", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jeremy Jackson: Shadows, audio manager, vampire mode", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Herleen Dualan: Rock music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Michael \"Misha\" Fewkes: boss music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("SirKawaine: Player sprite integration", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Kyle Thomas: Crates and stone walls", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Rémy Lapointe: Slug enemy", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Barış Köklü: Main menu, health bar functionality", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Christer Kaitila: hearts, wheel art, knockback, gamepad, lighting", lineX, lineY); lineY+= lineYskip;
+
         lineY+= lineYskip;
 
         lineY+= lineYskip; // extra skip
         canvasContext.fillStyle = "cyan";
-        canvasContext.fillText("Game made by members of gamkedo.com", lineX, lineY);
+        canvasContext.fillText("Game made by members of gamkedo.com - click anywhere to return", lineX, lineY);
 
         scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
     }
