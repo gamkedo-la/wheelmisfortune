@@ -81,6 +81,10 @@ function spawnInitialEnemies() {
         var nextPt = pointNotTooCloseToPlayer(50);
         enemyList.push(new BigBox(nextPt.x, nextPt.y));
     }
+    for (var i = 0; i < 5; i++) {
+        var nextPt = pointNotTooCloseToPlayer(50);
+        enemyList.push(new StoneWall(nextPt.x, nextPt.y));
+    }
 }
 
 function spawnEnemiesIfTooFew(){
@@ -520,6 +524,31 @@ function BigBox(startX, startY) {
     Enemy.call(this, startX, startY); //calls base class constructor
 	this.isDangerous = false;
     this.hitKnockback = -1.0; // heavy box
+
+    this.parentMove = this.move;
+
+    this.move = function() {
+        this.velocity = 0; // it's a box, too
+        this.parentMove();
+    };
+}
+//BigBox end
+
+StoneWall.prototype = new Enemy();
+StoneWall.prototype.constructor = BigBox;
+
+function StoneWall(startX, startY) {
+
+    this.spriteSheet = stoneWallPic; //bit hacky to rely on ordering like this, but works for now
+    this.spriteWidth = 16;
+    this.spriteHeight = 16;
+    this.spriteFrames = 1;
+    this.spriteSpeed = 1;
+
+    Enemy.call(this, startX, startY); //calls base class constructor
+    this.isDangerous = false;
+    this.hitKnockback = -999.0; // very heavy
+    this.life = 999; // very tough
 
     this.parentMove = this.move;
 

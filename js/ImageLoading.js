@@ -33,6 +33,7 @@ var ninjaStarPic = document.createElement("img");
 
 var crateShortPic = document.createElement("img");
 var crateTallPic = document.createElement("img");
+var stoneWallPic = document.createElement("img");
 
 var swordPic = document.createElement("img");
 var heartPic = document.createElement("img");
@@ -76,6 +77,7 @@ function loadImages() {
 		{ varName: smokeTrailPic, theFile: "smokeTrail.png"},
 		{ varName: crateShortPic, theFile: "Crate.png"},
 		{ varName: crateTallPic, theFile: "CrateLarge.png"},
+		{ varName: stoneWallPic, theFile: "StoneWallTile_3.png"},
 		{ varName: swordPic, theFile: "swordRotateTest.png"},
 		{ varName: ninjaStarPic, theFile: "ninjastar.png"},
 		{ varName: heartPic, theFile: "playerHeart.png"},
