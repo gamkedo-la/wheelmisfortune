@@ -8,6 +8,7 @@ function spawnDangerousEnemies(){
 	var deathSphereCount = 1 + Math.floor(Math.random() * 2);
     var slugCount = 1 + Math.floor(Math.random() * 2);
     var slimeCount = 1 + Math.floor(Math.random() * 2);
+    var monocleCount = 1;
     var darkmageCount = 0;
 
     isBossFight = false;
@@ -27,6 +28,11 @@ function spawnDangerousEnemies(){
     for (var i = 0; i < slimeCount; i++) {
         var nextPt = centerOfRandomEdge();
         enemyList.push(new Slime(nextPt.x, nextPt.y));
+    }
+    
+    for (var i = 0; i < monocleCount; i++) {
+        var nextPt = centerOfRandomEdge();
+        enemyList.push(new MonocleMonarch(nextPt.x, nextPt.y));
     }
 
     for (var i = 0; i < darkmageCount; i++) {
@@ -336,7 +342,7 @@ function darkmage(startX, startY) {
         }
     };
 }
-//shadowmage end
+//darkmage end
 
 //Slug enemy start
 
@@ -484,7 +490,77 @@ function DeathSphere(startX, startY) {
         }
     };
 }
-//darkmage end
+//DeathSphere end
+
+//MonocleMonarch begin
+MonocleMonarch.prototype = new Enemy();
+MonocleMonarch.prototype.constructor = MonocleMonarch;
+
+function MonocleMonarch(startX, startY) {
+
+    this.spriteSheet = monarchPic; //bit hacky to rely on ordering like this, but works for now
+    this.spriteWidth = 32;
+    this.spriteHeight = 32;
+    this.spriteFrames = 1;
+    this.spriteSpeed = 1;
+
+    Enemy.call(this, startX, startY); //calls base class constructor
+
+    this.parentMove = this.move;
+    this.parentDraw = this.draw;
+    this.targetDirection;
+    this.turnRate = 0.025;
+    this.shotRate = 100;
+    this.nextShot = this.shotRate;
+
+    this.move = function() {
+        var targetX = player.x - this.x;
+        var targetY = player.y - this.y;
+        this.targetDirection = Math.atan2(targetY, targetX);
+
+        this.normalizeHeading();
+
+        // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
+        if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
+            this.heading -= this.turnRate;
+        } else {
+            this.heading += this.turnRate;
+        }
+
+        this.normalizeHeading();
+
+        if (this.nextShot <= 0) {
+            this.shoot();
+        }
+        this.nextShot--;
+
+        this.parentMove();
+    };
+
+    // Draw an oval shadow beneath
+    this.draw = function() {
+        var shadowX = this.x;
+        var shadowY = this.y + 12;
+        var radiusX = 3;
+        var radiusY = 5;
+        var rotation = 90 * Math.PI / 180;
+        var startAngle = 0;
+        var endAngle = 2 * Math.PI;
+
+        canvasContext.beginPath();
+        canvasContext.fillStyle = 'rgba(0,0,0,0.75)';
+        canvasContext.ellipse(shadowX, shadowY, radiusX, radiusY, rotation, startAngle, endAngle);
+        canvasContext.fill();
+
+        this.parentDraw();
+    }
+
+    this.shoot = function() {
+        this.nextShot = this.shotRate;
+        shotList.push(new shotClass(this.x, this.y, this.heading, true));
+    };
+}
+//Monocle Monarch end
 
 LilBox.prototype = new Enemy();
 LilBox.prototype.constructor = LilBox;
@@ -549,6 +625,7 @@ function StoneWall(startX, startY) {
     this.isDangerous = false;
     this.hitKnockback = -999.0; // very heavy
     this.life = 999; // very tough
+    this.useSpecularShineEffect = false;
 
     this.parentMove = this.move;
 
