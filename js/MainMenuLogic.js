@@ -3,6 +3,7 @@ MainMenuState.prototype = new GameController();
 
 var menubuttonY = 20;
 var buttonYJump = 30;
+var showingCredits = false;
 
 function MainMenuState(){
     var mainMenuOptions = [
@@ -31,12 +32,12 @@ function MainMenuState(){
             'action': function() {playerKind = PLAYER_KIND_KNIGHT; gameController.changeState(inGameState);}
         },
         {
-            'displayName' : "Credits (tbd)",
+            'displayName' : "Credits",
             'x': 180,
             'y': 240,
             'width': 100,
             'height': 20,
-            'action': function(){console.log("Example Button");}
+            'action': function(){ showingCredits = true;}
         }
     ];
     
@@ -59,11 +60,21 @@ function MainMenuState(){
     
     this.handleInput = function(){
         if(mouse_Left) {
-            this.checkButtons();
+            if(showingCredits) {
+                showingCredits = false;
+            } else {
+                this.checkButtons();
+            }
+            mouse_Left = false; // prevent repeat fire flipping menu screens
         }
         
         if (key_Menu_Select) {
-            mainMenuOptions[selected].action();
+            if(showingCredits) {
+                showingCredits = false;
+            } else {
+                mainMenuOptions[selected].action();
+            }
+            key_Menu_Select = false; // prevent repeat fire flipping menu screens
         }
         
         //This is the timer that delays the keyboard selections
@@ -71,18 +82,48 @@ function MainMenuState(){
             delayTimer--;
             return;
         }
-        
-        if (key_Move_Down) {
-            selected = mod(selected + 1, mainMenuOptions.length);
-            delayTimer = chosenDelayTime;
-        }
-        if (key_Move_Up) {
-            selected = mod(selected - 1, mainMenuOptions.length);
-            delayTimer = chosenDelayTime;
+
+        if(showingCredits == false) {
+            if (key_Move_Down) {
+                selected = mod(selected + 1, mainMenuOptions.length);
+                delayTimer = chosenDelayTime;
+            }
+            if (key_Move_Up) {
+                selected = mod(selected - 1, mainMenuOptions.length);
+                delayTimer = chosenDelayTime;
+            }
         }
     };
+
+    this.drawCreditsScreen = function() {
+        canvasContext.font = "20px Verdana";
+        canvasContext.fillStyle = "cyan";
+        canvasContext.textAlign = "center";
+        canvasContext.fillText("Credits", canvas.width/2, 60);
+        canvasContext.textAlign = "left";
+        canvasContext.fillStyle = "white";
+        canvasContext.font = "8px Verdana";
+        var lineX = 80;
+        var lineY = 80;
+        var lineYskip = 10;
+
+        canvasContext.fillText("Cameron Button: project lead", lineX, lineY);
+        lineY+= lineYskip;
+        canvasContext.fillText("Other names coming soon", lineX, lineY);
+        lineY+= lineYskip;
+
+        lineY+= lineYskip; // extra skip
+        canvasContext.fillStyle = "cyan";
+        canvasContext.fillText("Game made by members of gamkedo.com", lineX, lineY);
+
+        scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
+    }
     
     this.drawEverything = function(){
+        if(showingCredits) {
+            this.drawCreditsScreen();
+            return;
+        }
         canvasContext.font = "20px Verdana";
 
         canvasContext.fillStyle = "yellow";
