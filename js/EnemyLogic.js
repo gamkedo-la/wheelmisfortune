@@ -43,6 +43,10 @@ function spawnDangerousEnemies(){
 
 function startBossFight() {
     //enemyList = [];
+    
+    sounds.mainTheme.pause();
+    sounds.bossTheme.play();
+
     isBossFight = true;
     enemyList.push(new BossSlime(canvas.width/2,canvas.height/2));
     for(var i = 0; i < enemyList.length; i++){

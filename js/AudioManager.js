@@ -21,6 +21,10 @@ var sounds = {
         'src': './audio/mainTheme',
         'loop': true
     },
+    'bossTheme': {
+        'src': './audio/bossTheme',
+        'loop': true
+    },
     'pauseTheme': {
         'src': './audio/pauseOrmenu',
         'loop': true

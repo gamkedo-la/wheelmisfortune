@@ -46,13 +46,15 @@ function MainMenuState(){
     var chosenDelayTime = 12; //number of frames to wait between selection
     var delayTimer = 0; //this gets increased by 1 every frame
     
-    this.enter = function(){};
+    this.enter = function(){
+        sounds.pauseTheme.play();
+    };
     
     this.update = function(){
         this.handleInput();
         this.clearScreen();
-        this.drawEverything();
-        
+        this.drawEverything();        
+
         if(gameRunning) {
             animationFrameNumber = requestAnimationFrame(gameController.update);
         }
@@ -109,20 +111,21 @@ function MainMenuState(){
 
         canvasContext.fillText("Cameron Button: project lead, main code, wheel, background", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Marc Silva: Art and code for slimes, wizard", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Jose Contreras: Player-enemy collision code", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Dan Dela Rosa: Sword functionality", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Jerry McClellan Jr.: Player character sprites", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Vighnesh: Menu, main, end music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jose Contreras: Player-enemy collision code, addl wheel logic", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Nicholas Polchies: Optimizations, mute on focus loss", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Asix Jin: Monocle Monarch sprite", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Dan Dela Rosa: Sword functionality", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Jeremy Jackson: Shadows, audio manager, vampire mode", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Herleen Dualan: Rock music", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Michael \"Misha\" Fewkes: boss music", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("SirKawaine: Player sprite integration", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Kyle Thomas: Crates and stone walls", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jerry McClellan Jr.: Player character sprites", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Rémy Lapointe: Slug enemy", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Herleen Dualan: Main rock music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Michael \"Misha\" Fewkes: boss music", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Barış Köklü: Main menu, health bar functionality", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Kyle Thomas: Crates and stone walls", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Asix Jin: Monocle Monarch sprite", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Christer Kaitila: hearts, wheel art, knockback, gamepad, lighting", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Eugene Meidinger: Shot collision code", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Vignesh Ramesh: Menu music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("SirKawaine: Player sprite integration", lineX, lineY); lineY+= lineYskip;
 
         lineY+= lineYskip;
 
