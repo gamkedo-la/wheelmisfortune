@@ -11,6 +11,8 @@ function InGameState(){
     inGamePaused = false;
     // Don't pause if you hold down enter when the game starts
     this.canChangePauseState = !key_Menu_Select;
+    
+    sounds.pauseTheme.pause();   
     sounds.mainTheme.play();
 	};
     
