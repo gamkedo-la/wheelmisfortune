@@ -58,6 +58,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
     this.bulletHeight = 2;
     this.enemy = enemy;
     this.rotation = 0;
+    this.spriteHeight = 20; // used to find ground for sorting
 
     this.move = function() {
         this.x += this.xv;

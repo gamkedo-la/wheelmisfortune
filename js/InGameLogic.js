@@ -101,7 +101,8 @@ function InGameState(){
         
         var allObjectsToDrawDepthSorted = enemyList.concat([player],shotList);
         allObjectsToDrawDepthSorted.sort(function(a, b) {
-            return a.y - b.y; // technically we want to sort on their feet, using center as approximation to start
+            return (a.y+a.spriteHeight/2) -
+                   (b.y+b.spriteHeight/2); // sorting on their feet
         });
         for (var i=0;i<allObjectsToDrawDepthSorted.length; i++) {
             allObjectsToDrawDepthSorted[i].draw();

@@ -47,6 +47,7 @@ function Player(positionX, positionY) {
 	this.invulFrames = 0;
 	
     this.drawMask = false;
+    this.spriteHeight = 41; // used to find ground for sorting
 
     // temporary mask for collision made to work the current sprite
     this.mask = {
