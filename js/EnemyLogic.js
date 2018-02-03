@@ -441,24 +441,26 @@ function DeathSphere(startX, startY) {
     this.parentDraw = this.draw;
     this.targetDirection;
     this.turnRate = 0.025;
-    this.shotRate = 100;
+    this.shotRate = 150;
     this.nextShot = this.shotRate;
 
     this.move = function() {
-        var targetX = player.x - this.x;
-        var targetY = player.y - this.y;
-        this.targetDirection = Math.atan2(targetY, targetX);
+        //var targetX = player.x - this.x;
+        //var targetY = player.y - this.y;
+        //this.targetDirection = Math.atan2(targetY, targetX);
 
-        this.normalizeHeading();
+        //this.normalizeHeading();
 
+/*
         // If the target is clockwise, rotate clockwise, unless the target is greater than PI in that direction
         if ((this.targetDirection - this.heading > 0) != (Math.abs(this.targetDirection - this.heading) < Math.PI)) {
             this.heading -= this.turnRate;
         } else {
             this.heading += this.turnRate;
         }
+*/
 
-        this.normalizeHeading();
+        //this.normalizeHeading();
 
         if (this.nextShot <= 0) {
             this.shoot();
