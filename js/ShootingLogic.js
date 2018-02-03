@@ -121,10 +121,7 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
 
             if (currentEnemy.remove) continue;
 
-            //Hacky collision code, replace at some point
-            distX = this.x - currentEnemy.x;
-            distY = this.y - currentEnemy.y;
-            if ((distX * distX + distY * distY) <= currentEnemy.size) {
+            if (sqrDist(this.x, this.y, currentEnemy.x, currentEnemy.y) <= square(currentEnemy.size)) {
 
                 //check for back hits
                 var back;

@@ -84,13 +84,13 @@ function Player(positionX, positionY) {
         }
 		
 		for(var i = 0; i < enemyList.length; i++){
-			var distToBadGuy = dist(enemyList[i].x, enemyList[i].y, this.x, this.y);
-			if(distToBadGuy < PLAYER_BUMP_RADIUS + enemyList[i].size){
+			var distToBadGuy = sqrDist(enemyList[i].x, enemyList[i].y, this.x, this.y);
+			var minDist = PLAYER_BUMP_RADIUS + enemyList[i].size;
+			if(distToBadGuy < square(minDist)){
 				//console.log("Too close to bad guy");
 				var angToBadGuy = Math.atan2(this.y - enemyList[i].y, this.x - enemyList[i].x);
-				var newDistFromCenter = PLAYER_BUMP_RADIUS + enemyList[i].size;
-				this.x = enemyList[i].x + Math.cos(angToBadGuy) * newDistFromCenter;
-				this.y = enemyList[i].y + Math.sin(angToBadGuy) * newDistFromCenter;
+				this.x = enemyList[i].x + Math.cos(angToBadGuy) * minDist;
+				this.y = enemyList[i].y + Math.sin(angToBadGuy) * minDist;
 				
 				if(enemyList[i].isDangerous){
 					this.takeDamage(1);
