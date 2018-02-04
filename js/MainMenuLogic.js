@@ -136,7 +136,7 @@ function MainMenuState(){
         canvasContext.fillText("Rémy Lapointe: Slug enemy", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Herleen Dualan: Main rock music", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Michael \"Misha\" Fewkes: boss music", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Barış Köklü: Main menu, health bar functionality", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Barış Köklü: Main menu, health bar functionality, game over", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Kyle Thomas: Crates and stone walls", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Asix Jin: Monocle Monarch sprite", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Christer Kaitila: hearts, wheel art, knockback, gamepad, lighting", lineX, lineY); lineY+= lineYskip;
