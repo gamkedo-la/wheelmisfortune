@@ -52,7 +52,7 @@ window.onload = function() {
 	scaledContext.webkitImageSmoothingEnabled = false;
 
 	particleCanvasManager = new ParticleCanvasManager();
-	
+
 	loadImages();
 	loadSounds();
 };
@@ -90,9 +90,9 @@ function loadingDoneSoStartGame() {
 	setUpMisfortuneTimer();
 	player = new Player(canvas.width/2, canvas.height/2);
 	applyPlayerKind();
-	
+
 	spawnInitialEnemies();
-	
+
 } //end of loadingDoneSoStartGame
 
 function windowOnFocus() {

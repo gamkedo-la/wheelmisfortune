@@ -45,7 +45,7 @@ function pointNotTooCloseToPlayer(minDist){
 			return {x: 5, y: 5};
 		}
 	} while(dist(testX,testY, player.x,player.y) < minDist);
-			
+
 	return {x: testX, y: testY};
 }
 
@@ -57,7 +57,7 @@ function Player(positionX, positionY) {
     this.speed = 1;
     this.playerHeight = 48;
     this.playerWidth = 30;
-	
+
 	this.gunMuzzleX = 0.0;
 	this.gunMuzzleY = 0.0;
 
@@ -71,7 +71,7 @@ function Player(positionX, positionY) {
     this.maxHealth = 3; // gets overriden by player class selection
     this.health = this.maxHealth;
 	this.invulFrames = 0;
-	
+
     this.drawMask = false;
     this.spriteHeight = 41; // used to find ground for sorting
 
@@ -111,7 +111,7 @@ function Player(positionX, positionY) {
             this.y += speedNow;
             this.isWalking = true;
         }
-		
+
 		for(var i = 0; i < enemyList.length; i++){
 			var distToBadGuy = sqrDist(enemyList[i].x, enemyList[i].y, this.x, this.y);
 			var minDist = PLAYER_BUMP_RADIUS + enemyList[i].size;
@@ -120,13 +120,13 @@ function Player(positionX, positionY) {
 				var angToBadGuy = Math.atan2(this.y - enemyList[i].y, this.x - enemyList[i].x);
 				this.x = enemyList[i].x + Math.cos(angToBadGuy) * minDist;
 				this.y = enemyList[i].y + Math.sin(angToBadGuy) * minDist;
-				
+
 				if(enemyList[i].isDangerous){
 					this.takeDamage(1);
 				}//bumped bad guy
 			}//seeing if too close to bad guy or crate
 		}//checking every bad guy and crate
-		
+
         if (this.x < this.playerWidth / 2) {
             this.x = this.playerWidth / 2;
         }
@@ -145,7 +145,7 @@ function Player(positionX, positionY) {
         }
 
         this.gunRotation = Math.atan2(mouseY - this.y, mouseX - this.x);
-    
+
 		this.gunMuzzleX = this.x + Math.cos(this.gunRotation) * playerWeapon.width/2;
 		this.gunMuzzleY = this.y + Math.sin(this.gunRotation) * playerWeapon.width/2;
         if(playerKind == PLAYER_KIND_WIZARD ||
@@ -240,10 +240,12 @@ function Player(positionX, positionY) {
 		}
         this.health -= damage;
 		this.invulFrames = FRAMES_BETWEEN_PLAYER_DAMAGE;
-        
+
         if (this.health == 0) {
-            console.log("You died")
-            gameController.changeState(MainMenuState); // return to main menu
+            console.log("You died");
+            inGamePaused = true;
+            secondsOnThisMisfortune = 0;
+            gameController.changeState(GameOverState); // return to main menu
         }
     };
 }

@@ -56,27 +56,27 @@ function MainMenuState(){
             'action': function(){ showingCredits = true;}
         }
     ];
-    
+
     var selected = 0;
-    
+
     var chosenDelayTime = 12; //number of frames to wait between selection
     var delayTimer = 0; //this gets increased by 1 every frame
-    
+
     this.enter = function(){
         sounds.mainTheme.pause();
         sounds.pauseTheme.play();
     };
-    
+
     this.update = function(){
         this.handleInput();
         this.clearScreen();
-        this.drawEverything();        
+        this.drawEverything();
 
         if(gameRunning) {
             animationFrameNumber = requestAnimationFrame(gameController.update);
         }
     };
-    
+
     this.handleInput = function(){
         if(mouse_Left) {
             if(showingCredits) {
@@ -86,7 +86,7 @@ function MainMenuState(){
             }
             mouse_Left = false; // prevent repeat fire flipping menu screens
         }
-        
+
         if (key_Menu_Select) {
             if(showingCredits) {
                 showingCredits = false;
@@ -95,7 +95,7 @@ function MainMenuState(){
             }
             key_Menu_Select = false; // prevent repeat fire flipping menu screens
         }
-        
+
         //This is the timer that delays the keyboard selections
         if (delayTimer > 0){
             delayTimer--;
@@ -152,7 +152,7 @@ function MainMenuState(){
 
         scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
     }
-    
+
     this.drawEverything = function(){
         if(showingCredits) {
             this.drawCreditsScreen();
@@ -169,24 +169,24 @@ function MainMenuState(){
         canvasContext.font = "10px Verdana";
         for (var i = 0; i < mainMenuOptions.length; i++) {
             canvasContext.fillStyle = "white";
-            
+
             colorRect(mainMenuOptions[i].x, mainMenuOptions[i].y, mainMenuOptions[i].width, mainMenuOptions[i].height, 'green');
-            
+
             canvasContext.fillStyle = "white";
             canvasContext.fillText(" "+mainMenuOptions[i].displayName, mainMenuOptions[i].x, mainMenuOptions[i].y + 15);
-            
+
             if (i === selected) {
                 colorRect(mainMenuOptions[i].x -10, mainMenuOptions[i].y + 10, 5, 5, 'white');
             }
         }
         scaledContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, scaledCanvas.width, scaledCanvas.height);
     };
-    
+
     this.clearScreen = function(){
         canvasContext.fillStyle = "black";
         canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     };
-    
+
     this.checkButtons = function(){
         for(var i = 0; i < mainMenuOptions.length; i++){
             var opt = mainMenuOptions[i];
