@@ -63,6 +63,7 @@ function MainMenuState(){
     var delayTimer = 0; //this gets increased by 1 every frame
     
     this.enter = function(){
+        sounds.mainTheme.pause();
         sounds.pauseTheme.play();
     };
     
@@ -158,6 +159,7 @@ function MainMenuState(){
             return;
         }
         canvasContext.font = "20px Verdana";
+        canvasContext.textAlign = "left";
 
         canvasContext.fillStyle = "yellow";
         canvasContext.fillText("Wheel of Misfortune", 140+1, 60+1);

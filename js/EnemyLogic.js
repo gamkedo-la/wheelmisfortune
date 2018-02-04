@@ -82,6 +82,7 @@ function centerOfRandomEdge(){
 	}
 }
 function spawnInitialEnemies() {
+    enemyList = [];
     spawnDangerousEnemies();
     for (var i = 0; i < 15; i++) {
         var nextPt = pointNotTooCloseToPlayer(50);

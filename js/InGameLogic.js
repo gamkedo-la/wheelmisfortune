@@ -7,13 +7,15 @@ var inGamePaused = false;
 //This is how it works!
 function InGameState(){
     this.enter = function(){
-	applyPlayerKind();
-    inGamePaused = false;
-    // Don't pause if you hold down enter when the game starts
-    this.canChangePauseState = !key_Menu_Select;
-    
-    sounds.pauseTheme.pause();   
-    sounds.mainTheme.play();
+    	applyPlayerKind();
+        inGamePaused = false;
+        // Don't pause if you hold down enter when the game starts
+        this.canChangePauseState = !key_Menu_Select;
+        spawnInitialEnemies();
+        shotList = [];
+        sounds.pauseTheme.pause();   
+        sounds.mainTheme.play();
+
 	};
     
     this.update = function() {

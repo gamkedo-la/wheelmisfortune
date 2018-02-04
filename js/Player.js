@@ -3,9 +3,13 @@ const FRAMES_BETWEEN_PLAYER_DAMAGE = 60;
 const PLAYER_SPRITE_FRAME_WIDTH = 32;
 
 function applyPlayerKind() {
+    player.x = player.startX;
+    player.y = player.startY;
     if (playerKind === PLAYER_KIND_KNIGHT ||
         playerKind === PLAYER_KIND_BARBARIAN) {
         selectSpecificWeapon('Sword');
+    } else {
+        selectSpecificWeapon('Gun');
     }
     switch(playerKind) {
         case PLAYER_KIND_NINJA:
@@ -46,6 +50,8 @@ function pointNotTooCloseToPlayer(minDist){
 }
 
 function Player(positionX, positionY) {
+    this.startX = positionX;
+    this.startY = positionY;
     this.x = positionX;
     this.y = positionY;
     this.speed = 1;
@@ -234,11 +240,10 @@ function Player(positionX, positionY) {
 		}
         this.health -= damage;
 		this.invulFrames = FRAMES_BETWEEN_PLAYER_DAMAGE;
-        console.log("Current player health", this.health);
+        
         if (this.health == 0) {
-            console.log("You died, but what the heck -- keep going!")
-            this.health = this.maxHealth;
-            console.log("Player health restored back to", this.health);
+            console.log("You died")
+            gameController.changeState(MainMenuState); // return to main menu
         }
     };
 }
