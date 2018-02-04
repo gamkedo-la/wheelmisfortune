@@ -3,6 +3,7 @@ const SHOT_SPEED = 2;
 const ORIENT_SPRITE_FORWARD = false; // rotate bullet sprites to face forward? (good for rockets and laser bolts)
 const TRAILS_ON = true;
 const TRAIL_MAX_SIZE = 16; // how many previous xy to remember
+const FIREBALL_SPRITE_FRAME_WIDTH = 12;
 
 function moveShots() {
     for (var i = shotList.length - 1; i >= 0; i--) {
@@ -91,10 +92,16 @@ function shotClass(startX, startY, shotAng, enemy, shotSpeed = SHOT_SPEED) {
         }
 
         if (ORIENT_SPRITE_FORWARD) this.rotation = Math.atan2(this.yv,this.xv);
-		if(this.enemy == false && playerKind == PLAYER_KIND_NINJA){
+		if( (this.enemy == false && playerKind == PLAYER_KIND_NINJA) ){
 			drawBitmapCenteredAtLocationWithRotation(ninjaStarPic, this.x, this.y, this.rotation);
 			this.rotation += 0.15;
-		} else{
+		} else if( (this.enemy == false && playerKind == PLAYER_KIND_WIZARD) ){
+            drawFacingLeftOption(firebulletPic,
+                this.x, this.y, this.xv < 0,
+                Math.floor( this.rotation ) % 4,
+                FIREBALL_SPRITE_FRAME_WIDTH);
+            this.rotation += 0.1; // abusing this as an animation value, last minute hack (:
+        } else {
 			drawBitmapCenteredAtLocationWithRotation(bulletPic, this.x, this.y, this.rotation);
 		}
     };

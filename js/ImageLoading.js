@@ -1,10 +1,14 @@
 var ninjaPic = document.createElement("img");
 var cowboyPic = document.createElement("img");
 var knightPic = document.createElement("img");
-var playerSpritePics = [ninjaPic,cowboyPic,knightPic];
+var wizardPic = document.createElement("img");
+var barbarianPic = document.createElement("img");
+var playerSpritePics = [ninjaPic,cowboyPic,knightPic,wizardPic,barbarianPic];
 const PLAYER_KIND_NINJA = 0;
 const PLAYER_KIND_COWBOY = 1;
 const PLAYER_KIND_KNIGHT = 2;
+const PLAYER_KIND_WIZARD = 3;
+const PLAYER_KIND_BARBARIAN = 4;
 
 var playerKind = 0; // will randomize/set at top of Player.js
 
@@ -65,6 +69,9 @@ function loadImages() {
 		{ varName: ninjaPic, theFile: "ninjaPlayer.png"}, ////
 		{ varName: cowboyPic, theFile: "cowboyPlayer.png"}, ////
 		{ varName: knightPic, theFile: "knightPlayer.png"}, ////
+		{ varName: wizardPic, theFile: "wizardPlayer.png"}, ////
+		{ varName: barbarianPic, theFile: "barbarianPlayer.png"}, ////
+
 		{ varName: bulletPic, theFile: "bullet.png" }, ////
 		{ varName: firebulletPic, theFile: "firebit.png" }, ////
 		{ varName: backGroundPic, theFile: "arena01-test.png" },

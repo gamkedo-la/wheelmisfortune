@@ -29,7 +29,8 @@ var swordHandleX = 0;
 var swordHandleY = 0;
 var swordSwingTimer = 0;
 var swordSwingMaxTimer = 10;
-var swordDamage = 2;
+var swordDamageBarbarian = 10;
+var swordDamageKnight = 2;
 
 function moveWeapons() {
     var angle = Math.atan2(mouseY - player.y, mouseX - player.x);
@@ -86,7 +87,9 @@ function checkSwordCollisions() {
                 back = true;
             }
             else back = false;
-            currentEnemy.gotHit(swordDamage, back);
+            currentEnemy.gotHit(
+                    (player.playerKind == PLAYER_KIND_BARBARIAN ?
+                         swordDamageBarbarian : swordDamageKnight), back);
         }
     }
 }

@@ -112,15 +112,8 @@ function InGameState(){
             drawWheel();
         }
         
-        playerHealthArray.length = player.maxHealth;
-        for (var i = 0; i < player.maxHealth; i++) {
-            playerHealthArray[i] = i < player.health;
-        }
         for (var i = 0; i < player.health; i++) {
-            if (playerHealthArray[i]) {
-                //colorRect(i*20,0,19,19,"red");
-                canvasContext.drawImage(heartPic,4+i*12,4,8,8);
-            }
+            canvasContext.drawImage(heartPic,4+i*12,4,8,8);
         }
         displayMisfortuneTimer();
         //Scale and redraw the game canvas to the screen

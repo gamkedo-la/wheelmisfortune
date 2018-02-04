@@ -1,10 +1,30 @@
 const PLAYER_BUMP_RADIUS = 6;
 const FRAMES_BETWEEN_PLAYER_DAMAGE = 60;
+const PLAYER_SPRITE_FRAME_WIDTH = 32;
 
 function applyPlayerKind() {
-    if (playerKind === playerSpritePics.indexOf(knightPic)) {
+    if (playerKind === PLAYER_KIND_KNIGHT ||
+        playerKind === PLAYER_KIND_BARBARIAN) {
         selectSpecificWeapon('Sword');
     }
+    switch(playerKind) {
+        case PLAYER_KIND_NINJA:
+            player.maxHealth = 3;
+            break;
+        case PLAYER_KIND_COWBOY:
+            player.maxHealth = 3;
+            break;
+        case PLAYER_KIND_KNIGHT:
+            player.maxHealth = 5;
+            break;
+        case PLAYER_KIND_WIZARD:
+            player.maxHealth = 1;
+            break;
+        case PLAYER_KIND_BARBARIAN:
+            player.maxHealth = 2;
+            break;
+    }
+    player.health = player.maxHealth;
 }
 
 function pointNotTooCloseToPlayer(minDist){
@@ -42,7 +62,7 @@ function Player(positionX, positionY) {
     this.isWalking = false; // for animation
     this.animCycleCounter = 0; // lazy frame rate controller
 
-    this.maxHealth = 3;
+    this.maxHealth = 3; // gets overriden by player class selection
     this.health = this.maxHealth;
 	this.invulFrames = 0;
 	
@@ -122,6 +142,11 @@ function Player(positionX, positionY) {
     
 		this.gunMuzzleX = this.x + Math.cos(this.gunRotation) * playerWeapon.width/2;
 		this.gunMuzzleY = this.y + Math.sin(this.gunRotation) * playerWeapon.width/2;
+        if(playerKind == PLAYER_KIND_WIZARD ||
+            playerKind == PLAYER_KIND_NINJA) { // spells/stars closer to body
+            this.gunMuzzleX = (this.x + this.gunMuzzleX)*0.5;
+            this.gunMuzzleY = (this.y + this.gunMuzzleY)*0.5;
+        }
 
 	}; //end of playerMove
 
@@ -135,9 +160,14 @@ function Player(positionX, positionY) {
         } else {
             frameNow = 0; // stand
         }
+
+        if (currentWeapon === 'Sword' && this.gunRotation <= 0) {
+            drawSword(); // draw behind player
+        }
+
         drawFacingLeftOption(playerSpritePics[playerKind],
                 this.x, this.y, this.gunMuzzleX < this.x,
-                frameNow);
+                frameNow, PLAYER_SPRITE_FRAME_WIDTH);
 
         // muzzle flashes oriented to gun
         if (this.muzzleFlashFrames>0)
@@ -150,7 +180,7 @@ function Player(positionX, positionY) {
             this.gunRotation
             );
         }
-		if(playerKind != PLAYER_KIND_NINJA){
+		if(playerKind != PLAYER_KIND_NINJA && playerKind != PLAYER_KIND_WIZARD){
         // mirror image the gun sprite if it is pointing left
 			var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
 			if (currentWeapon === 'Gun') {
@@ -162,8 +192,8 @@ function Player(positionX, positionY) {
 					flipGunSprite
 				);
 			}
-			else if (currentWeapon === 'Sword') {
-				drawSword();
+			else if (currentWeapon === 'Sword' && this.gunRotation > 0) {
+				drawSword(); // draw in front of player
 			}
 		}
 
@@ -184,12 +214,17 @@ function Player(positionX, positionY) {
             this.nextFire = this.fireRate;
             var direction = Math.atan2(mouseY - this.y, mouseX - this.x);
             shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction, false));
-			if(playerKind != PLAYER_KIND_NINJA){
+
+            if(playerKind == PLAYER_KIND_WIZARD) {
+                var forkAngle = 0.2;
+                shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction-forkAngle, false));
+                shotList.push(new shotClass(this.gunMuzzleX, this.gunMuzzleY, direction+forkAngle, false));
+            }
+
+			if(playerKind != PLAYER_KIND_NINJA && playerKind != PLAYER_KIND_WIZARD){
 				this.muzzleFlashFrames = 3;
 				sounds.bullet.play();
 			}
-
-
         }
     };
 

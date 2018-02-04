@@ -10,7 +10,7 @@ function MainMenuState(){
         {
             'displayName' : "Play as Ninja",
             'x': 180,
-            'y': 150,
+            'y': 90,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_NINJA; gameController.changeState(inGameState);}
@@ -18,7 +18,7 @@ function MainMenuState(){
 		{
             'displayName' : "Play as Cowboy",
             'x': 180,
-            'y': 180,
+            'y': 120,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_COWBOY; gameController.changeState(inGameState);}
@@ -26,10 +26,26 @@ function MainMenuState(){
 		        {
             'displayName' : "Play as Knight",
             'x': 180,
-            'y': 210,
+            'y': 150,
             'width': 100,
             'height': 20,
             'action': function() {playerKind = PLAYER_KIND_KNIGHT; gameController.changeState(inGameState);}
+        },
+        {
+            'displayName' : "Play as Wizard",
+            'x': 180,
+            'y': 180,
+            'width': 100,
+            'height': 20,
+            'action': function() {playerKind = PLAYER_KIND_WIZARD; gameController.changeState(inGameState);}
+        },
+                {
+            'displayName' : "Play as Barbarian",
+            'x': 180,
+            'y': 210,
+            'width': 100,
+            'height': 20,
+            'action': function() {playerKind = PLAYER_KIND_BARBARIAN; gameController.changeState(inGameState);}
         },
         {
             'displayName' : "Credits",
@@ -172,7 +188,7 @@ function MainMenuState(){
     this.checkButtons = function(){
         for(var i = 0; i < mainMenuOptions.length; i++){
             var opt = mainMenuOptions[i];
-            console.log(opt.x, opt.y, opt.width, opt.height, mouseX, mouseY);
+            //console.log(opt.x, opt.y, opt.width, opt.height, mouseX, mouseY);
             if(mouseInside(opt.x, opt.y, opt.width, opt.height)) {
                 opt.action();
             }

@@ -9,8 +9,6 @@ const TIME_PER_TICK = 1/30; //30 is the FPS
 
 var player;
 
-var playerHealthArray = [];
-
 const PIXEL_SCALE_UP = 2; // Number of times to scale up art tiles
 
 function calculateMousePos(evt) {

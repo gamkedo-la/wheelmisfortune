@@ -38,8 +38,7 @@ function drawBitmapFlipped(graphic, atX, atY, flipToFaceLeft) {
 	canvasContext.restore();
 }
 
-function drawFacingLeftOption(image,atX,atY,flipToFaceLeft, frameNum) {
-  var frameDim = 32; // hard coded at the moment
+function drawFacingLeftOption(image,atX,atY,flipToFaceLeft, frameNum, frameDim) {
   var offX, offY;
   if(flipToFaceLeft) {
     canvasContext.save();
