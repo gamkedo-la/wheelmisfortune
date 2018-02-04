@@ -131,7 +131,7 @@ function Player(positionX, positionY) {
 		}
         var frameNow;
         if(this.isWalking) {
-            frameNow = Math.floor(this.animCycleCounter/6)%3;
+            frameNow = Math.floor(this.animCycleCounter/6)%4;
         } else {
             frameNow = 0; // stand
         }
