@@ -141,7 +141,7 @@ function MainMenuState(){
         canvasContext.fillText("Asix Jin: Monocle Monarch sprite", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Christer Kaitila: hearts, wheel art, knockback, gamepad, lighting", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Eugene Meidinger: Shot collision code", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Vignesh Ramesh: Menu music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Vignesh Ramesh: Menu music, shooting sounds, hit sounds", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("SirKawaine: Player sprite integration", lineX, lineY); lineY+= lineYskip;
 
         lineY+= lineYskip;
