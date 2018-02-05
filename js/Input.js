@@ -112,6 +112,7 @@ function keyReleased(evt) {
 }
 
 function mousePressed(evt) {
+	window.focus();
 	switch (evt.button) {
 		case 0:
 			mouse_Left = true;
