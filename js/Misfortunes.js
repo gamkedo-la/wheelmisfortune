@@ -103,10 +103,10 @@ function handleVampireMode() {
     var now = new Date().getTime();
     var lastDrainedAt = misfortunes.vampire.properties.lastDrainedAt;
     var differenceInTime = now - lastDrainedAt;
-
+    /*
     if (differenceInTime >= depletionRate && player.health > 0) {
         drainPlayerHealth();
-    }
+    }*/
 
     var canRestoreHealth = (
        misfortunes.vampire.properties.canRestoreHealth &&

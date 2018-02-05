@@ -156,6 +156,20 @@ function Player(positionX, positionY) {
 
 	}; //end of playerMove
 
+    this.drawGun = function() {
+        // mirror image the gun sprite if it is pointing left
+        var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
+        if (currentWeapon === 'Gun') {
+            drawBitmapCenteredAtLocationWithRotation(
+                playerWeapon,
+                this.x,
+                this.y,
+                flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
+                flipGunSprite
+            );
+        }
+    }
+
     this.draw = function() {
 		if(this.invulFrames > 0 && this.invulFrames%4 < 2){
 			return;//skip drawing so player flashes when hurt
@@ -167,8 +181,14 @@ function Player(positionX, positionY) {
             frameNow = 0; // stand
         }
 
-        if (currentWeapon === 'Sword' && this.gunRotation <= 0) {
-            drawSword(); // draw behind player
+        if(playerKind != PLAYER_KIND_NINJA && playerKind != PLAYER_KIND_WIZARD){
+            if(this.gunRotation <= 0) {
+                if (currentWeapon === 'Sword') {
+                    drawSword(); // draw behind player
+                } else {
+                    this.drawGun();
+                }
+            }
         }
 
         drawFacingLeftOption(playerSpritePics[playerKind],
@@ -187,21 +207,14 @@ function Player(positionX, positionY) {
             );
         }
 		if(playerKind != PLAYER_KIND_NINJA && playerKind != PLAYER_KIND_WIZARD){
-        // mirror image the gun sprite if it is pointing left
-			var flipGunSprite = (this.gunRotation > Math.PI/2 || this.gunRotation < -Math.PI/2);
-			if (currentWeapon === 'Gun') {
-				drawBitmapCenteredAtLocationWithRotation(
-					playerWeapon,
-					this.x,
-					this.y,
-					flipGunSprite?this.gunRotation-Math.PI:this.gunRotation, // if sprite is flipped we need to face "backwards"
-					flipGunSprite
-				);
-			}
-			else if (currentWeapon === 'Sword' && this.gunRotation > 0) {
-				drawSword(); // draw in front of player
-			}
-		}
+            if(this.gunRotation > 0) { // draw in front of player
+                if (currentWeapon === 'Sword') {
+                    drawSword();
+                } else {
+                    this.drawGun();
+                }
+            }
+        }
 
         if (this.drawMask) {
             canvasContext.fillStyle = 'rgba(0, 0, 0, 0.5)';

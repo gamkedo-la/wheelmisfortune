@@ -88,7 +88,7 @@ function loadingDoneSoStartGame() {
 	};
 
 	setUpMisfortuneTimer();
-	player = new Player(canvas.width/2, canvas.height/2);
+	player = new Player(canvas.width/2-10, canvas.height/2-10);
 	applyPlayerKind();
 
 	spawnInitialEnemies();

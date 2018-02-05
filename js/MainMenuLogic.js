@@ -63,6 +63,10 @@ function MainMenuState(){
     var delayTimer = 0; //this gets increased by 1 every frame
 
     this.enter = function(){
+        activeMisfortunes = [];
+        for (type in misfortunes) {
+            misfortunes[type].isActive = false;
+        }
         sounds.mainTheme.pause();
         sounds.pauseTheme.play();
     };
@@ -118,17 +122,17 @@ function MainMenuState(){
         canvasContext.font = "20px Verdana";
         canvasContext.fillStyle = "cyan";
         canvasContext.textAlign = "center";
-        canvasContext.fillText("Credits", canvas.width/2, 60);
+        canvasContext.fillText("Credits", canvas.width/2, 30);
         canvasContext.textAlign = "left";
         canvasContext.fillStyle = "white";
-        canvasContext.font = "8px Verdana";
-        var lineX = 80;
-        var lineY = 80;
-        var lineYskip = 10;
+        canvasContext.font = "13px Verdana";
+        var lineX = 20;
+        var lineY = 50;
+        var lineYskip = 12;
 
         canvasContext.fillText("Cameron Button: project lead, main code, wheel, background", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Marc Silva: Art and code for slimes, wizard", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Jose Contreras: Player-enemy collision code, addl wheel logic", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Jose Contreras: Player-enemy collision, enemy spawns code", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Nicholas Polchies: Optimizations, mute on focus loss", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Dan Dela Rosa: Sword functionality", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Jeremy Jackson: Shadows, audio manager, vampire mode", lineX, lineY); lineY+= lineYskip;
@@ -143,8 +147,6 @@ function MainMenuState(){
         canvasContext.fillText("Eugene Meidinger: Shot collision code", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Vignesh Ramesh: Menu music, shooting sounds, hit sounds", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("SirKawaine: Player sprite integration", lineX, lineY); lineY+= lineYskip;
-
-        lineY+= lineYskip;
 
         lineY+= lineYskip; // extra skip
         canvasContext.fillStyle = "cyan";
