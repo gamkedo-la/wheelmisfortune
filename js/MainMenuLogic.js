@@ -138,7 +138,7 @@ function MainMenuState(){
         canvasContext.fillText("Jeremy Jackson: Shadows, audio manager, vampire mode", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Jerry McClellan Jr.: Player character sprites", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Rémy Lapointe: Slug enemy", lineX, lineY); lineY+= lineYskip;
-        canvasContext.fillText("Herleen Dualan: Main rock music", lineX, lineY); lineY+= lineYskip;
+        canvasContext.fillText("Kise: Main rock music", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Michael \"Misha\" Fewkes: boss music", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Barış Köklü: Main menu, health bar functionality, game over", lineX, lineY); lineY+= lineYskip;
         canvasContext.fillText("Kyle Thomas: Crates and stone walls", lineX, lineY); lineY+= lineYskip;
